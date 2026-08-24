@@ -2,37 +2,94 @@ import streamlit as st
 import requests
 import pandas as pd
 import numpy as np
-from datetime import datetime
 
 st.set_page_config(
-    page_title="Crypto Dashboard",
+    page_title="Bitvavo Market Scanner",
     page_icon="📈",
     layout="wide"
 )
 
-st.title("📈 Crypto Dashboard")
-st.caption("Marktdata via Bitvavo • Geen echte orders • Alleen analyse en paper trading")
+st.title("📈 Bitvavo Market Scanner")
+st.caption(
+    "Alle actieve EUR-assets • Live Bitvavo-data • "
+    "Technische ranking • Geen automatische orders"
+)
 
-COINS = {
-    "Bitcoin": "BTC-EUR",
-    "Ethereum": "ETH-EUR",
-    "Solana": "SOL-EUR",
-    "XRP": "XRP-EUR",
-    "Cardano": "ADA-EUR"
-}
+BASE_URL = "https://api.bitvavo.com/v2"
 
 
-def get_candles(market, interval="1h", limit=200):
-    url = f"https://api.bitvavo.com/v2/{market}/candles"
-    params = {
-        "interval": interval,
-        "limit": limit
-    }
+# =========================================================
+# DATA
+# =========================================================
 
-    response = requests.get(url, params=params, timeout=10)
+@st.cache_data(ttl=900)
+def get_markets():
+
+    response = requests.get(
+        f"{BASE_URL}/markets",
+        timeout=15
+    )
+
+    response.raise_for_status()
+
+    markets = response.json()
+
+    eur_markets = []
+
+    for market in markets:
+
+        if (
+            market.get("quote") == "EUR"
+            and market.get("status") == "trading"
+        ):
+            eur_markets.append({
+                "market": market["market"],
+                "asset": market["base"]
+            })
+
+    return eur_markets
+
+
+@st.cache_data(ttl=300)
+def get_ticker_24h():
+
+    response = requests.get(
+        f"{BASE_URL}/ticker/24h",
+        timeout=20
+    )
+
     response.raise_for_status()
 
     data = response.json()
+
+    return {
+        item["market"]: item
+        for item in data
+    }
+
+
+@st.cache_data(ttl=300)
+def get_candles(
+    market,
+    interval="1h",
+    limit=250
+):
+
+    response = requests.get(
+        f"{BASE_URL}/{market}/candles",
+        params={
+            "interval": interval,
+            "limit": limit
+        },
+        timeout=15
+    )
+
+    response.raise_for_status()
+
+    data = response.json()
+
+    if not data:
+        return pd.DataFrame()
 
     df = pd.DataFrame(
         data,
@@ -46,377 +103,896 @@ def get_candles(market, interval="1h", limit=200):
         ]
     )
 
-    df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
+    df["timestamp"] = pd.to_datetime(
+        df["timestamp"],
+        unit="ms"
+    )
 
-    for col in ["open", "high", "low", "close", "volume"]:
-        df[col] = pd.to_numeric(df[col])
+    for col in [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+    ]:
+        df[col] = pd.to_numeric(
+            df[col],
+            errors="coerce"
+        )
 
-    df = df.sort_values("timestamp").reset_index(drop=True)
+    df = (
+        df
+        .dropna()
+        .sort_values("timestamp")
+        .reset_index(drop=True)
+    )
 
     return df
 
 
-def calculate_rsi(series, period=14):
+# =========================================================
+# INDICATORS
+# =========================================================
+
+def calculate_rsi(
+    series,
+    period=14
+):
+
     delta = series.diff()
 
-    gain = delta.where(delta > 0, 0.0)
-    loss = -delta.where(delta < 0, 0.0)
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
 
-    avg_gain = gain.rolling(period).mean()
-    avg_loss = loss.rolling(period).mean()
+    avg_gain = gain.ewm(
+        alpha=1 / period,
+        adjust=False,
+        min_periods=period
+    ).mean()
 
-    rs = avg_gain / avg_loss.replace(0, np.nan)
-    rsi = 100 - (100 / (1 + rs))
+    avg_loss = loss.ewm(
+        alpha=1 / period,
+        adjust=False,
+        min_periods=period
+    ).mean()
 
-    return rsi
+    rs = (
+        avg_gain
+        / avg_loss.replace(0, np.nan)
+    )
+
+    return (
+        100
+        - (
+            100
+            / (1 + rs)
+        )
+    )
 
 
-def analyze_coin(df):
+def add_indicators(df):
+
     df = df.copy()
 
-    df["MA20"] = df["close"].rolling(20).mean()
-    df["MA50"] = df["close"].rolling(50).mean()
-    df["RSI"] = calculate_rsi(df["close"])
+    df["EMA20"] = (
+        df["close"]
+        .ewm(
+            span=20,
+            adjust=False
+        )
+        .mean()
+    )
+
+    df["EMA50"] = (
+        df["close"]
+        .ewm(
+            span=50,
+            adjust=False
+        )
+        .mean()
+    )
+
+    df["EMA200"] = (
+        df["close"]
+        .ewm(
+            span=200,
+            adjust=False
+        )
+        .mean()
+    )
+
+    df["RSI"] = calculate_rsi(
+        df["close"]
+    )
+
+    ema12 = (
+        df["close"]
+        .ewm(
+            span=12,
+            adjust=False
+        )
+        .mean()
+    )
+
+    ema26 = (
+        df["close"]
+        .ewm(
+            span=26,
+            adjust=False
+        )
+        .mean()
+    )
+
+    df["MACD"] = (
+        ema12 - ema26
+    )
+
+    df["MACD_SIGNAL"] = (
+        df["MACD"]
+        .ewm(
+            span=9,
+            adjust=False
+        )
+        .mean()
+    )
+
+    df["VOL_AVG20"] = (
+        df["volume"]
+        .rolling(20)
+        .mean()
+    )
+
+    return df
+
+
+# =========================================================
+# SCORE
+# =========================================================
+
+def classify_score(score):
+
+    if score >= 75:
+        return "🟢 Sterk interessant"
+
+    if score >= 65:
+        return "🟢 Interessant"
+
+    if score >= 45:
+        return "🟡 Afwachten"
+
+    if score >= 35:
+        return "🟠 Voorzichtig"
+
+    return "🔴 Ongunstig"
+
+
+def analyze_timeframe(df):
+
+    if len(df) < 50:
+        return None
+
+    df = add_indicators(df)
 
     latest = df.iloc[-1]
-
-    current_price = latest["close"]
-    previous_24h = df.iloc[-25]["close"] if len(df) >= 25 else df.iloc[0]["close"]
-
-    change_24h = ((current_price - previous_24h) / previous_24h) * 100
+    previous = df.iloc[-2]
 
     score = 50
     reasons = []
 
-    if latest["MA20"] > latest["MA50"]:
-        score += 15
-        reasons.append("korte trend ligt boven lange trend")
-    else:
-        score -= 15
-        reasons.append("korte trend ligt onder lange trend")
+    # ------------------------------------------------
+    # TREND
+    # ------------------------------------------------
 
-    if latest["close"] > latest["MA20"]:
-        score += 10
-        reasons.append("koers ligt boven het 20-uurs gemiddelde")
+    if (
+        latest["close"]
+        > latest["EMA20"]
+        > latest["EMA50"]
+    ):
+
+        score += 15
+        reasons.append(
+            "Koers en korte EMA's wijzen omhoog"
+        )
+
+    elif (
+        latest["close"]
+        < latest["EMA20"]
+        < latest["EMA50"]
+    ):
+
+        score -= 15
+        reasons.append(
+            "Koers en korte EMA's wijzen omlaag"
+        )
+
     else:
-        score -= 10
-        reasons.append("koers ligt onder het 20-uurs gemiddelde")
+
+        reasons.append(
+            "Korte trend is gemengd"
+        )
+
+    # ------------------------------------------------
+    # LONGER TREND
+    # ------------------------------------------------
+
+    if len(df) >= 200:
+
+        if (
+            latest["close"]
+            > latest["EMA200"]
+        ):
+
+            score += 8
+            reasons.append(
+                "Koers boven EMA200"
+            )
+
+        else:
+
+            score -= 8
+            reasons.append(
+                "Koers onder EMA200"
+            )
+
+    # ------------------------------------------------
+    # RSI
+    # ------------------------------------------------
 
     rsi = latest["RSI"]
 
     if pd.notna(rsi):
-        if rsi < 30:
-            score += 15
-            reasons.append("RSI wijst op mogelijke oversold situatie")
-        elif rsi > 70:
-            score -= 15
-            reasons.append("RSI wijst op mogelijke overbought situatie")
-        elif 45 <= rsi <= 60:
+
+        if rsi < 25:
+
+            score += 3
+            reasons.append(
+                "RSI zeer laag / oversold"
+            )
+
+        elif 25 <= rsi < 40:
+
+            score += 7
+            reasons.append(
+                "RSI laat herstelruimte zien"
+            )
+
+        elif 40 <= rsi <= 60:
+
             score += 5
-            reasons.append("RSI is relatief gezond")
-        else:
-            reasons.append("RSI is neutraal")
+            reasons.append(
+                "RSI neutraal en gezond"
+            )
 
-    recent_volume = df["volume"].tail(5).mean()
-    average_volume = df["volume"].tail(50).mean()
+        elif 60 < rsi <= 70:
 
-    if recent_volume > average_volume * 1.25:
-        score += 10
-        reasons.append("recent handelsvolume ligt duidelijk hoger")
-    elif recent_volume < average_volume * 0.75:
-        score -= 5
-        reasons.append("recent handelsvolume is relatief laag")
+            score += 3
+            reasons.append(
+                "Positief momentum"
+            )
 
-    score = int(max(0, min(100, score)))
+        elif rsi > 70:
 
-    if score >= 70:
-        signal = "BUY WATCH"
-    elif score <= 35:
-        signal = "SELL WATCH"
+            score -= 8
+            reasons.append(
+                "RSI mogelijk overbought"
+            )
+
+    # ------------------------------------------------
+    # MACD
+    # ------------------------------------------------
+
+    if (
+        latest["MACD"]
+        > latest["MACD_SIGNAL"]
+        and
+        previous["MACD"]
+        <= previous["MACD_SIGNAL"]
+    ):
+
+        score += 12
+        reasons.append(
+            "Bullish MACD crossover"
+        )
+
+    elif (
+        latest["MACD"]
+        < latest["MACD_SIGNAL"]
+        and
+        previous["MACD"]
+        >= previous["MACD_SIGNAL"]
+    ):
+
+        score -= 12
+        reasons.append(
+            "Bearish MACD crossover"
+        )
+
+    elif (
+        latest["MACD"]
+        > latest["MACD_SIGNAL"]
+    ):
+
+        score += 5
+        reasons.append(
+            "MACD positief"
+        )
+
     else:
-        signal = "WAIT"
+
+        score -= 5
+        reasons.append(
+            "MACD negatief"
+        )
+
+    # ------------------------------------------------
+    # VOLUME
+    # ------------------------------------------------
+
+    if (
+        pd.notna(
+            latest["VOL_AVG20"]
+        )
+        and
+        latest["VOL_AVG20"] > 0
+    ):
+
+        volume_ratio = (
+            latest["volume"]
+            / latest["VOL_AVG20"]
+        )
+
+        if volume_ratio >= 1.5:
+
+            score += 8
+            reasons.append(
+                "Sterk bovengemiddeld volume"
+            )
+
+        elif volume_ratio >= 1.15:
+
+            score += 4
+            reasons.append(
+                "Volume boven gemiddeld"
+            )
+
+        elif volume_ratio < 0.60:
+
+            score -= 3
+            reasons.append(
+                "Laag handelsvolume"
+            )
+
+    score = int(
+        max(
+            0,
+            min(
+                100,
+                round(score)
+            )
+        )
+    )
 
     return {
-        "price": current_price,
-        "change_24h": change_24h,
-        "rsi": rsi,
         "score": score,
-        "signal": signal,
+        "rating": classify_score(score),
+        "rsi": rsi,
         "reasons": reasons,
         "df": df
     }
 
 
-results = {}
+# =========================================================
+# MARKET SCANNER
+# =========================================================
 
-for name, market in COINS.items():
-    try:
-        candles = get_candles(market)
-        results[name] = analyze_coin(candles)
-    except Exception as e:
-        results[name] = {
-            "error": str(e)
-        }
+markets = get_markets()
+ticker_data = get_ticker_24h()
 
+st.write(
+    f"**{len(markets)} actieve EUR-assets gevonden op Bitvavo**"
+)
 
-st.subheader("Marktoverzicht")
-
-cols = st.columns(len(COINS))
-
-for col, (name, market) in zip(cols, COINS.items()):
-    result = results[name]
-
-    with col:
-        if "error" in result:
-            st.error(f"{name}\nData niet beschikbaar")
-        else:
-            st.metric(
-                label=name,
-                value=f"€ {result['price']:,.4f}",
-                delta=f"{result['change_24h']:.2f}%"
-            )
-
-            st.write(f"Score: **{result['score']}/100**")
-            st.write(f"Signaal: **{result['signal']}**")
-
-
-st.divider()
-
-st.subheader("Scanner")
+progress = st.progress(0)
 
 scanner_rows = []
 
-for name, result in results.items():
-    if "error" not in result:
+total = len(markets)
+
+for index, item in enumerate(markets):
+
+    market = item["market"]
+    asset = item["asset"]
+
+    try:
+
+        candles = get_candles(
+            market,
+            "1h",
+            250
+        )
+
+        analysis = analyze_timeframe(
+            candles
+        )
+
+        ticker = ticker_data.get(
+            market,
+            {}
+        )
+
+        if analysis is None:
+            continue
+
+        last_price = float(
+            ticker.get(
+                "last",
+                candles.iloc[-1]["close"]
+            )
+        )
+
+        open_24h = float(
+            ticker.get(
+                "open",
+                last_price
+            )
+        )
+
+        if open_24h > 0:
+
+            change_24h = (
+                (
+                    last_price
+                    - open_24h
+                )
+                / open_24h
+                * 100
+            )
+
+        else:
+
+            change_24h = 0
+
+        volume_eur = float(
+            ticker.get(
+                "volumeQuote",
+                0
+            )
+        )
+
         scanner_rows.append({
-            "Coin": name,
-            "Prijs": result["price"],
-            "24u %": result["change_24h"],
-            "RSI": result["rsi"],
-            "Score": result["score"],
-            "Signaal": result["signal"]
+            "Asset": asset,
+            "Market": market,
+            "Koers": last_price,
+            "24u %": round(
+                change_24h,
+                2
+            ),
+            "24u volume €": round(
+                volume_eur,
+                0
+            ),
+            "RSI": round(
+                analysis["rsi"],
+                1
+            )
+            if pd.notna(
+                analysis["rsi"]
+            )
+            else None,
+            "Score": analysis["score"],
+            "Beoordeling":
+                analysis["rating"]
         })
 
-scanner_df = pd.DataFrame(scanner_rows)
+    except Exception:
+        pass
 
-st.dataframe(
-    scanner_df,
-    use_container_width=True,
-    hide_index=True
+    progress.progress(
+        min(
+            (index + 1) / total,
+            1.0
+        )
+    )
+
+progress.empty()
+
+
+scanner_df = pd.DataFrame(
+    scanner_rows
 )
 
+scanner_df = scanner_df.sort_values(
+    [
+        "Score",
+        "24u volume €"
+    ],
+    ascending=[
+        False,
+        False
+    ]
+).reset_index(
+    drop=True
+)
+
+scanner_df.insert(
+    0,
+    "#",
+    range(
+        1,
+        len(scanner_df) + 1
+    )
+)
+
+
+# =========================================================
+# TOP OPPORTUNITIES
+# =========================================================
 
 st.divider()
 
-st.subheader("Coin analyse")
-
-selected_coin = st.selectbox(
-    "Kies een coin",
-    list(COINS.keys())
+st.subheader(
+    "🏆 Hoogste scores"
 )
 
-selected_result = results[selected_coin]
+top = scanner_df.head(5)
 
-if "error" in selected_result:
-    st.error("Kon geen data ophalen voor deze coin.")
-else:
-    df = selected_result["df"]
+top_cols = st.columns(5)
 
-    left, right = st.columns([2, 1])
+for col, (_, row) in zip(
+    top_cols,
+    top.iterrows()
+):
 
-    with left:
-        chart_df = df.set_index("timestamp")[["close", "MA20", "MA50"]]
+    with col:
+
+        st.metric(
+            row["Asset"],
+            f"{row['Score']}/100",
+            f"{row['24u %']:+.2f}%"
+        )
+
+        st.write(
+            row["Beoordeling"]
+        )
+
+
+# =========================================================
+# FILTERS
+# =========================================================
+
+st.divider()
+
+st.subheader(
+    "🔎 Alle Bitvavo-assets"
+)
+
+search = st.text_input(
+    "Zoek asset",
+    placeholder="Bijvoorbeeld BTC, SOL, LINK..."
+)
+
+minimum_volume = st.number_input(
+    "Minimaal 24u handelsvolume in €",
+    min_value=0,
+    value=0,
+    step=10000
+)
+
+filtered_df = scanner_df.copy()
+
+if search:
+
+    filtered_df = filtered_df[
+        filtered_df[
+            "Asset"
+        ].str.contains(
+            search.upper(),
+            case=False,
+            na=False
+        )
+    ]
+
+if minimum_volume > 0:
+
+    filtered_df = filtered_df[
+        filtered_df[
+            "24u volume €"
+        ]
+        >= minimum_volume
+    ]
+
+
+st.dataframe(
+    filtered_df[
+        [
+            "#",
+            "Asset",
+            "Koers",
+            "24u %",
+            "24u volume €",
+            "RSI",
+            "Score",
+            "Beoordeling"
+        ]
+    ],
+    hide_index=True,
+    use_container_width=True,
+    height=600
+)
+
+
+# =========================================================
+# DETAILED COIN ANALYSIS
+# =========================================================
+
+st.divider()
+
+st.subheader(
+    "📊 Uitgebreide analyse"
+)
+
+available_assets = (
+    scanner_df["Asset"]
+    .tolist()
+)
+
+selected_asset = st.selectbox(
+    "Selecteer een asset",
+    available_assets
+)
+
+selected_row = scanner_df[
+    scanner_df["Asset"]
+    == selected_asset
+].iloc[0]
+
+selected_market = (
+    selected_row["Market"]
+)
+
+timeframes = {
+    "1 uur": "1h",
+    "4 uur": "4h",
+    "1 dag": "1d"
+}
+
+detailed_results = {}
+
+for label, interval in (
+    timeframes.items()
+):
+
+    try:
+
+        df = get_candles(
+            selected_market,
+            interval,
+            250
+        )
+
+        detailed_results[
+            label
+        ] = analyze_timeframe(
+            df
+        )
+
+    except Exception:
+
+        detailed_results[
+            label
+        ] = None
+
+
+valid_results = {
+    key: value
+    for key, value
+    in detailed_results.items()
+    if value is not None
+}
+
+if valid_results:
+
+    detailed_score = round(
+        sum(
+            result["score"]
+            for result
+            in valid_results.values()
+        )
+        / len(
+            valid_results
+        )
+    )
+
+    detailed_rating = (
+        classify_score(
+            detailed_score
+        )
+    )
+
+    positive_timeframes = sum(
+        result["score"] >= 65
+        for result
+        in valid_results.values()
+    )
+
+    negative_timeframes = sum(
+        result["score"] < 45
+        for result
+        in valid_results.values()
+    )
+
+    if (
+        positive_timeframes
+        == len(valid_results)
+        or
+        negative_timeframes
+        == len(valid_results)
+    ):
+
+        confidence = "HOOG"
+
+    elif (
+        positive_timeframes >= 2
+        or
+        negative_timeframes >= 2
+    ):
+
+        confidence = "GEMIDDELD"
+
+    else:
+
+        confidence = "LAAG"
+
+
+    c1, c2, c3, c4 = (
+        st.columns(4)
+    )
+
+    c1.metric(
+        "Asset",
+        selected_asset
+    )
+
+    c2.metric(
+        "Multi-timeframe score",
+        f"{detailed_score}/100"
+    )
+
+    c3.metric(
+        "Beoordeling",
+        detailed_rating
+    )
+
+    c4.metric(
+        "Confidence",
+        confidence
+    )
+
+
+    # ---------------------------------------------
+    # TIMEFRAME TABLE
+    # ---------------------------------------------
+
+    timeframe_rows = []
+
+    for label, result in (
+        valid_results.items()
+    ):
+
+        timeframe_rows.append({
+            "Timeframe": label,
+            "Score": result["score"],
+            "RSI": round(
+                result["rsi"],
+                1
+            )
+            if pd.notna(
+                result["rsi"]
+            )
+            else None,
+            "Beoordeling":
+                result["rating"]
+        })
+
+    st.write(
+        "### Timeframes"
+    )
+
+    st.dataframe(
+        pd.DataFrame(
+            timeframe_rows
+        ),
+        hide_index=True,
+        use_container_width=True
+    )
+
+
+    # ---------------------------------------------
+    # CHART
+    # ---------------------------------------------
+
+    if (
+        detailed_results[
+            "1 uur"
+        ]
+        is not None
+    ):
+
+        chart_df = (
+            detailed_results[
+                "1 uur"
+            ]["df"]
+            .set_index(
+                "timestamp"
+            )
+        )
+
+        st.write(
+            "### Koers & EMA-trend"
+        )
 
         st.line_chart(
-            chart_df,
+            chart_df[
+                [
+                    "close",
+                    "EMA20",
+                    "EMA50"
+                ]
+            ],
             use_container_width=True
         )
 
-    with right:
-        st.metric(
-            "Huidige prijs",
-            f"€ {selected_result['price']:,.4f}"
+
+    # ---------------------------------------------
+    # WHY
+    # ---------------------------------------------
+
+    st.write(
+        "### Waarom deze beoordeling?"
+    )
+
+    tabs = st.tabs(
+        list(
+            timeframes.keys()
         )
+    )
 
-        st.metric(
-            "24 uur",
-            f"{selected_result['change_24h']:.2f}%"
-        )
+    for tab, label in zip(
+        tabs,
+        timeframes.keys()
+    ):
 
-        st.metric(
-            "RSI",
-            f"{selected_result['rsi']:.1f}"
-            if pd.notna(selected_result["rsi"])
-            else "n.v.t."
-        )
+        with tab:
 
-        st.metric(
-            "Signaalscore",
-            f"{selected_result['score']}/100"
-        )
+            result = (
+                detailed_results[
+                    label
+                ]
+            )
 
-        st.write(f"### {selected_result['signal']}")
+            if result is None:
 
+                st.write(
+                    "Onvoldoende data."
+                )
 
-    st.write("### Waarom dit signaal?")
+            else:
 
-    for reason in selected_result["reasons"]:
-        st.write(f"• {reason}")
+                st.write(
+                    f"**{result['rating']} "
+                    f"— {result['score']}/100**"
+                )
+
+                for reason in (
+                    result["reasons"]
+                ):
+
+                    st.write(
+                        f"• {reason}"
+                    )
 
 
 st.divider()
 
-st.subheader("Paper trading")
-
-if "paper_cash" not in st.session_state:
-    st.session_state.paper_cash = 1000.0
-
-if "paper_positions" not in st.session_state:
-    st.session_state.paper_positions = {}
-
-if "paper_history" not in st.session_state:
-    st.session_state.paper_history = []
-
-paper_col1, paper_col2 = st.columns(2)
-
-with paper_col1:
-    st.metric(
-        "Virtueel cash",
-        f"€ {st.session_state.paper_cash:,.2f}"
-    )
-
-with paper_col2:
-    total_position_value = 0
-
-    for coin, amount in st.session_state.paper_positions.items():
-        if coin in results and "error" not in results[coin]:
-            total_position_value += amount * results[coin]["price"]
-
-    total_portfolio = st.session_state.paper_cash + total_position_value
-
-    st.metric(
-        "Totale paper portfolio",
-        f"€ {total_portfolio:,.2f}",
-        delta=f"{total_portfolio - 1000:.2f} EUR"
-    )
-
-
-paper_coin = st.selectbox(
-    "Coin voor paper trade",
-    list(COINS.keys()),
-    key="paper_coin"
-)
-
-paper_amount = st.number_input(
-    "Bedrag in euro",
-    min_value=10.0,
-    max_value=1000.0,
-    value=100.0,
-    step=10.0
-)
-
-buy_col, sell_col = st.columns(2)
-
-with buy_col:
-    if st.button("Virtueel kopen", use_container_width=True):
-
-        price = results[paper_coin]["price"]
-
-        if paper_amount <= st.session_state.paper_cash:
-            units = paper_amount / price
-
-            current_units = st.session_state.paper_positions.get(
-                paper_coin,
-                0
-            )
-
-            st.session_state.paper_positions[paper_coin] = (
-                current_units + units
-            )
-
-            st.session_state.paper_cash -= paper_amount
-
-            st.session_state.paper_history.append({
-                "Tijd": datetime.now(),
-                "Actie": "BUY",
-                "Coin": paper_coin,
-                "Bedrag": paper_amount,
-                "Prijs": price
-            })
-
-            st.success("Virtuele aankoop uitgevoerd.")
-        else:
-            st.warning("Niet genoeg virtueel cash.")
-
-
-with sell_col:
-    if st.button("Alles virtueel verkopen", use_container_width=True):
-
-        units = st.session_state.paper_positions.get(
-            paper_coin,
-            0
-        )
-
-        if units > 0:
-            price = results[paper_coin]["price"]
-
-            value = units * price
-
-            st.session_state.paper_cash += value
-            st.session_state.paper_positions[paper_coin] = 0
-
-            st.session_state.paper_history.append({
-                "Tijd": datetime.now(),
-                "Actie": "SELL",
-                "Coin": paper_coin,
-                "Bedrag": value,
-                "Prijs": price
-            })
-
-            st.success("Virtuele positie verkocht.")
-        else:
-            st.warning("Je hebt geen virtuele positie in deze coin.")
-
-
-if st.session_state.paper_positions:
-
-    st.write("### Virtuele posities")
-
-    position_rows = []
-
-    for coin, units in st.session_state.paper_positions.items():
-
-        if units > 0 and coin in results:
-
-            current_price = results[coin]["price"]
-
-            position_rows.append({
-                "Coin": coin,
-                "Aantal": units,
-                "Huidige prijs": current_price,
-                "Waarde": units * current_price
-            })
-
-    if position_rows:
-        st.dataframe(
-            pd.DataFrame(position_rows),
-            use_container_width=True,
-            hide_index=True
-        )
-
-
-if st.session_state.paper_history:
-
-    st.write("### Trade history")
-
-    st.dataframe(
-        pd.DataFrame(st.session_state.paper_history),
-        use_container_width=True,
-        hide_index=True
-    )
-
-
 st.caption(
-    "Deze signalen zijn experimenteel en geen financieel advies. "
-    "We gebruiken eerst paper trading om te testen of de strategie werkt."
 )
