@@ -12,7 +12,7 @@ st.set_page_config(
 st.title("📈 Bitvavo Market Scanner")
 st.caption(
     "Alle actieve EUR-assets • Live Bitvavo-data • "
-    "Technische ranking • Geen automatische orders"
+    "Technische analyse + liquiditeit • Geen automatische orders"
 )
 
 BASE_URL = "https://api.bitvavo.com/v2"
@@ -26,10 +26,10 @@ BASE_URL = "https://api.bitvavo.com/v2"
 def get_markets():
     response = requests.get(
         f"{BASE_URL}/markets",
-        timeout=15
+        timeout=20
     )
-
     response.raise_for_status()
+
     markets = response.json()
 
     eur_markets = []
@@ -51,15 +51,13 @@ def get_markets():
 def get_ticker_24h():
     response = requests.get(
         f"{BASE_URL}/ticker/24h",
-        timeout=20
+        timeout=30
     )
-
     response.raise_for_status()
-    data = response.json()
 
     return {
         item["market"]: item
-        for item in data
+        for item in response.json()
     }
 
 
@@ -75,10 +73,11 @@ def get_candles(
             "interval": interval,
             "limit": limit
         },
-        timeout=15
+        timeout=20
     )
 
     response.raise_for_status()
+
     data = response.json()
 
     if not data:
@@ -113,14 +112,12 @@ def get_candles(
             errors="coerce"
         )
 
-    df = (
+    return (
         df
         .dropna()
         .sort_values("timestamp")
         .reset_index(drop=True)
     )
-
-    return df
 
 
 # =========================================================
@@ -171,7 +168,9 @@ def add_indicators(df):
         .mean()
     )
 
-    df["RSI"] = calculate_rsi(df["close"])
+    df["RSI"] = calculate_rsi(
+        df["close"]
+    )
 
     ema12 = (
         df["close"]
@@ -203,7 +202,7 @@ def add_indicators(df):
 
 
 # =========================================================
-# SCORE
+# CLASSIFICATIONS
 # =========================================================
 
 def classify_score(score):
@@ -221,6 +220,29 @@ def classify_score(score):
 
     return "🔴 Ongunstig"
 
+
+def liquidity_info(volume_eur):
+    if volume_eur >= 10_000_000:
+        return 100, "🟢 Zeer hoog"
+
+    if volume_eur >= 2_000_000:
+        return 90, "🟢 Hoog"
+
+    if volume_eur >= 500_000:
+        return 75, "🟡 Goed"
+
+    if volume_eur >= 100_000:
+        return 55, "🟠 Beperkt"
+
+    if volume_eur >= 25_000:
+        return 35, "🟠 Laag"
+
+    return 15, "🔴 Zeer laag"
+
+
+# =========================================================
+# TECHNICAL ANALYSIS
+# =========================================================
 
 def analyze_timeframe(df):
     if len(df) < 50:
@@ -240,26 +262,37 @@ def analyze_timeframe(df):
         and latest["EMA20"] > latest["EMA50"]
     ):
         score += 15
-        reasons.append("Koers en korte EMA's wijzen omhoog")
+        reasons.append(
+            "Koers en korte EMA's wijzen omhoog"
+        )
 
     elif (
         latest["close"] < latest["EMA20"]
         and latest["EMA20"] < latest["EMA50"]
     ):
         score -= 15
-        reasons.append("Koers en korte EMA's wijzen omlaag")
+        reasons.append(
+            "Koers en korte EMA's wijzen omlaag"
+        )
 
     else:
-        reasons.append("Korte trend is gemengd")
+        reasons.append(
+            "Korte trend is gemengd"
+        )
 
-    # EMA200
+    # LONG-TERM TREND
     if len(df) >= 200:
         if latest["close"] > latest["EMA200"]:
             score += 8
-            reasons.append("Koers boven EMA200")
+            reasons.append(
+                "Koers ligt boven EMA200"
+            )
+
         else:
             score -= 8
-            reasons.append("Koers onder EMA200")
+            reasons.append(
+                "Koers ligt onder EMA200"
+            )
 
     # RSI
     rsi = latest["RSI"]
@@ -267,23 +300,33 @@ def analyze_timeframe(df):
     if pd.notna(rsi):
         if rsi < 25:
             score += 3
-            reasons.append("RSI zeer laag / oversold")
+            reasons.append(
+                "RSI zeer laag / oversold"
+            )
 
         elif 25 <= rsi < 40:
             score += 7
-            reasons.append("RSI laat herstelruimte zien")
+            reasons.append(
+                "RSI laat herstelruimte zien"
+            )
 
         elif 40 <= rsi <= 60:
             score += 5
-            reasons.append("RSI neutraal en gezond")
+            reasons.append(
+                "RSI neutraal en gezond"
+            )
 
         elif 60 < rsi <= 70:
             score += 3
-            reasons.append("Positief momentum")
+            reasons.append(
+                "Positief momentum"
+            )
 
         elif rsi > 70:
             score -= 8
-            reasons.append("RSI mogelijk overbought")
+            reasons.append(
+                "RSI mogelijk overbought"
+            )
 
     # MACD
     if (
@@ -291,24 +334,32 @@ def analyze_timeframe(df):
         and previous["MACD"] <= previous["MACD_SIGNAL"]
     ):
         score += 12
-        reasons.append("Bullish MACD crossover")
+        reasons.append(
+            "Bullish MACD crossover"
+        )
 
     elif (
         latest["MACD"] < latest["MACD_SIGNAL"]
         and previous["MACD"] >= previous["MACD_SIGNAL"]
     ):
         score -= 12
-        reasons.append("Bearish MACD crossover")
+        reasons.append(
+            "Bearish MACD crossover"
+        )
 
     elif latest["MACD"] > latest["MACD_SIGNAL"]:
         score += 5
-        reasons.append("MACD positief")
+        reasons.append(
+            "MACD positief"
+        )
 
     else:
         score -= 5
-        reasons.append("MACD negatief")
+        reasons.append(
+            "MACD negatief"
+        )
 
-    # VOLUME
+    # VOLUME MOMENTUM
     if (
         pd.notna(latest["VOL_AVG20"])
         and latest["VOL_AVG20"] > 0
@@ -320,15 +371,21 @@ def analyze_timeframe(df):
 
         if volume_ratio >= 1.5:
             score += 8
-            reasons.append("Sterk bovengemiddeld volume")
+            reasons.append(
+                "Sterk bovengemiddeld handelsvolume"
+            )
 
         elif volume_ratio >= 1.15:
             score += 4
-            reasons.append("Volume boven gemiddeld")
+            reasons.append(
+                "Handelsvolume boven gemiddeld"
+            )
 
         elif volume_ratio < 0.60:
             score -= 3
-            reasons.append("Laag handelsvolume")
+            reasons.append(
+                "Recent handelsvolume is laag"
+            )
 
     score = int(
         max(
@@ -350,7 +407,7 @@ def analyze_timeframe(df):
 
 
 # =========================================================
-# MARKET SCANNER
+# LOAD BITVAVO MARKET
 # =========================================================
 
 markets = get_markets()
@@ -366,6 +423,11 @@ scanner_rows = []
 
 total = len(markets)
 
+
+# =========================================================
+# SCAN ALL ASSETS
+# =========================================================
+
 for index, item in enumerate(markets):
     market = item["market"]
     asset = item["asset"]
@@ -377,15 +439,17 @@ for index, item in enumerate(markets):
             250
         )
 
-        analysis = analyze_timeframe(candles)
+        analysis = analyze_timeframe(
+            candles
+        )
+
+        if analysis is None:
+            continue
 
         ticker = ticker_data.get(
             market,
             {}
         )
-
-        if analysis is None:
-            continue
 
         last_price = float(
             ticker.get(
@@ -403,10 +467,7 @@ for index, item in enumerate(markets):
 
         if open_24h > 0:
             change_24h = (
-                (
-                    last_price
-                    - open_24h
-                )
+                (last_price - open_24h)
                 / open_24h
                 * 100
             )
@@ -417,6 +478,30 @@ for index, item in enumerate(markets):
             ticker.get(
                 "volumeQuote",
                 0
+            )
+        )
+
+        liquidity_score, liquidity_label = (
+            liquidity_info(volume_eur)
+        )
+
+        technical_score = analysis["score"]
+
+        # Eindranking:
+        # 80% technische setup
+        # 20% liquiditeit
+        final_score = round(
+            technical_score * 0.80
+            + liquidity_score * 0.20
+        )
+
+        final_score = int(
+            max(
+                0,
+                min(
+                    100,
+                    final_score
+                )
             )
         )
 
@@ -440,8 +525,12 @@ for index, item in enumerate(markets):
                 analysis["rsi"]
             )
             else None,
-            "Score": analysis["score"],
-            "Beoordeling": analysis["rating"]
+            "Technische score": technical_score,
+            "Liquiditeit": liquidity_label,
+            "Score": final_score,
+            "Beoordeling": classify_score(
+                final_score
+            )
         })
 
     except Exception:
@@ -449,7 +538,8 @@ for index, item in enumerate(markets):
 
     progress.progress(
         min(
-            (index + 1) / total,
+            (index + 1)
+            / total,
             1.0
         )
     )
@@ -457,7 +547,13 @@ for index, item in enumerate(markets):
 progress.empty()
 
 
-scanner_df = pd.DataFrame(scanner_rows)
+# =========================================================
+# DATAFRAME
+# =========================================================
+
+scanner_df = pd.DataFrame(
+    scanner_rows
+)
 
 if scanner_df.empty:
     st.error(
@@ -470,9 +566,11 @@ scanner_df = (
     .sort_values(
         [
             "Score",
+            "Technische score",
             "24u volume €"
         ],
         ascending=[
+            False,
             False,
             False
         ]
@@ -491,12 +589,14 @@ scanner_df.insert(
 
 
 # =========================================================
-# TOP OPPORTUNITIES
+# TOP 5
 # =========================================================
 
 st.divider()
 
-st.subheader("🏆 Hoogste scores")
+st.subheader(
+    "🏆 Hoogste scores"
+)
 
 top = scanner_df.head(5)
 
@@ -522,26 +622,36 @@ for col, (_, row) in zip(
             row["Beoordeling"]
         )
 
+        st.caption(
+            row["Liquiditeit"]
+        )
+
 
 # =========================================================
-# FILTERS
+# MARKET TABLE
 # =========================================================
 
 st.divider()
 
-st.subheader("🔎 Alle Bitvavo-assets")
-
-search = st.text_input(
-    "Zoek asset",
-    placeholder="Bijvoorbeeld BTC, SOL, LINK..."
+st.subheader(
+    "🔎 Alle Bitvavo-assets"
 )
 
-minimum_volume = st.number_input(
-    "Minimaal 24u handelsvolume in €",
-    min_value=0,
-    value=0,
-    step=10000
-)
+f1, f2 = st.columns(2)
+
+with f1:
+    search = st.text_input(
+        "Zoek asset",
+        placeholder="Bijvoorbeeld BTC, SOL, LINK..."
+    )
+
+with f2:
+    minimum_volume = st.number_input(
+        "Minimaal 24u handelsvolume in €",
+        min_value=0,
+        value=0,
+        step=10000
+    )
 
 filtered_df = scanner_df.copy()
 
@@ -572,24 +682,28 @@ st.dataframe(
             "Koers",
             "24u %",
             "24u volume €",
+            "Liquiditeit",
             "RSI",
+            "Technische score",
             "Score",
             "Beoordeling"
         ]
     ],
     hide_index=True,
     use_container_width=True,
-    height=600
+    height=650
 )
 
 
 # =========================================================
-# DETAILED COIN ANALYSIS
+# DETAILED ANALYSIS
 # =========================================================
 
 st.divider()
 
-st.subheader("📊 Uitgebreide analyse")
+st.subheader(
+    "📊 Uitgebreide analyse"
+)
 
 available_assets = (
     scanner_df["Asset"]
@@ -608,10 +722,21 @@ selected_row = scanner_df[
 
 selected_market = selected_row["Market"]
 
+
+# =========================================================
+# MULTI-TIMEFRAME
+# =========================================================
+
 timeframes = {
     "1 uur": "1h",
     "4 uur": "4h",
     "1 dag": "1d"
+}
+
+weights = {
+    "1 uur": 0.40,
+    "4 uur": 0.35,
+    "1 dag": 0.25
 }
 
 detailed_results = {}
@@ -624,12 +749,16 @@ for label, interval in timeframes.items():
             250
         )
 
-        detailed_results[label] = (
-            analyze_timeframe(df)
+        detailed_results[
+            label
+        ] = analyze_timeframe(
+            df
         )
 
     except Exception:
-        detailed_results[label] = None
+        detailed_results[
+            label
+        ] = None
 
 
 valid_results = {
@@ -639,22 +768,72 @@ valid_results = {
     if value is not None
 }
 
+
+# =========================================================
+# DETAIL SCORE
+# =========================================================
+
 if valid_results:
-    detailed_score = round(
-        sum(
+    weighted_total = 0
+    weight_total = 0
+
+    for label, result in valid_results.items():
+        weight = weights[label]
+
+        weighted_total += (
             result["score"]
-            for result
-            in valid_results.values()
+            * weight
         )
-        / len(valid_results)
+
+        weight_total += weight
+
+    technical_multi_score = round(
+        weighted_total
+        / weight_total
     )
 
-    detailed_rating = classify_score(
-        detailed_score
+    liquidity_score, liquidity_label = (
+        liquidity_info(
+            selected_row[
+                "24u volume €"
+            ]
+        )
     )
+
+    final_multi_score = round(
+        technical_multi_score
+        * 0.80
+        + liquidity_score
+        * 0.20
+    )
+
+    final_multi_score = int(
+        max(
+            0,
+            min(
+                100,
+                final_multi_score
+            )
+        )
+    )
+
+    final_rating = classify_score(
+        final_multi_score
+    )
+
+
+    # =====================================================
+    # CONFIDENCE
+    # =====================================================
 
     positive_timeframes = sum(
         result["score"] >= 65
+        for result
+        in valid_results.values()
+    )
+
+    neutral_timeframes = sum(
+        45 <= result["score"] < 65
         for result
         in valid_results.values()
     )
@@ -665,11 +844,15 @@ if valid_results:
         in valid_results.values()
     )
 
+    total_timeframes = len(
+        valid_results
+    )
+
     if (
         positive_timeframes
-        == len(valid_results)
+        == total_timeframes
         or negative_timeframes
-        == len(valid_results)
+        == total_timeframes
     ):
         confidence = "HOOG"
 
@@ -683,7 +866,13 @@ if valid_results:
         confidence = "LAAG"
 
 
-    c1, c2, c3, c4 = st.columns(4)
+    # =====================================================
+    # SUMMARY METRICS
+    # =====================================================
+
+    c1, c2, c3, c4, c5 = (
+        st.columns(5)
+    )
 
     c1.metric(
         "Asset",
@@ -691,13 +880,13 @@ if valid_results:
     )
 
     c2.metric(
-        "Multi-timeframe score",
-        f"{detailed_score}/100"
+        "Koers",
+        f"€ {selected_row['Koers']:,.6f}"
     )
 
     c3.metric(
-        "Beoordeling",
-        detailed_rating
+        "Score",
+        f"{final_multi_score}/100"
     )
 
     c4.metric(
@@ -705,17 +894,34 @@ if valid_results:
         confidence
     )
 
+    c5.metric(
+        "24u",
+        f"{selected_row['24u %']:+.2f}%"
+    )
+
+    st.write(
+        f"### {final_rating}"
+    )
+
+    st.caption(
+        f"Liquiditeit: {liquidity_label}"
+    )
+
 
     # =====================================================
     # TIMEFRAME TABLE
     # =====================================================
+
+    st.write(
+        "### Timeframes"
+    )
 
     timeframe_rows = []
 
     for label, result in valid_results.items():
         timeframe_rows.append({
             "Timeframe": label,
-            "Score": result["score"],
+            "Technische score": result["score"],
             "RSI": round(
                 result["rsi"],
                 1
@@ -726,8 +932,6 @@ if valid_results:
             else None,
             "Beoordeling": result["rating"]
         })
-
-    st.write("### Timeframes")
 
     st.dataframe(
         pd.DataFrame(
@@ -742,7 +946,10 @@ if valid_results:
     # CHART
     # =====================================================
 
-    if detailed_results["1 uur"] is not None:
+    if detailed_results[
+        "1 uur"
+    ] is not None:
+
         chart_df = (
             detailed_results[
                 "1 uur"
@@ -753,7 +960,7 @@ if valid_results:
         )
 
         st.write(
-            "### Koers & EMA-trend"
+            "### Koers & trend"
         )
 
         st.line_chart(
@@ -769,7 +976,7 @@ if valid_results:
 
 
     # =====================================================
-    # WHY
+    # EXPLANATION
     # =====================================================
 
     st.write(
@@ -777,14 +984,20 @@ if valid_results:
     )
 
     tabs = st.tabs(
-        list(
-            timeframes.keys()
-        )
+        [
+            "1 uur",
+            "4 uur",
+            "1 dag"
+        ]
     )
 
     for tab, label in zip(
         tabs,
-        timeframes.keys()
+        [
+            "1 uur",
+            "4 uur",
+            "1 dag"
+        ]
     ):
         with tab:
             result = detailed_results[
@@ -793,13 +1006,22 @@ if valid_results:
 
             if result is None:
                 st.write(
-                    "Onvoldoende data."
+                    "Onvoldoende historische data."
                 )
 
             else:
                 st.write(
                     f"**{result['rating']} "
                     f"— {result['score']}/100**"
+                )
+
+                st.write(
+                    f"**RSI:** "
+                    f"{result['rsi']:.1f}"
+                    if pd.notna(
+                        result["rsi"]
+                    )
+                    else "**RSI:** n.v.t."
                 )
 
                 for reason in result[
