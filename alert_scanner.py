@@ -1,6 +1,5 @@
 import os
 import json
-import re
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from urllib.parse import urlparse
@@ -30,18 +29,13 @@ AMSTERDAM = ZoneInfo("Europe/Amsterdam")
 
 TOP_N = 5
 
-# Algemene drempels
 INTERESTING_THRESHOLD = 65
-STRONG_THRESHOLD = 75
-
-# Voor tussentijdse "vroeg momentum"-alerts
 EARLY_ALERT_THRESHOLD = 70
 EARLY_ALERT_COOLDOWN_HOURS = 12
 
-# Vaste samenvatting
 DIGEST_HOURS = {8, 12, 16, 20}
 
-# Bekende projectnamen om nieuwszoekopdrachten beter te maken
+
 NEWS_NAMES = {
     "BTC": "Bitcoin",
     "ETH": "Ethereum",
@@ -88,9 +82,7 @@ NEWS_NAMES = {
 
 def send_telegram(message):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        raise RuntimeError(
-            "Telegram secrets ontbreken."
-        )
+        raise RuntimeError("Telegram secrets ontbreken.")
 
     url = (
         "https://api.telegram.org/"
@@ -111,16 +103,21 @@ def send_telegram(message):
 
 
 # =========================================================
-# STATE / MEMORY
+# STATE
 # =========================================================
+
+def default_state():
+    return {
+        "assets": {},
+        "last_digest": None,
+        "last_event_alerts": {},
+        "forecast_history": [],
+    }
+
 
 def load_state():
     if not os.path.exists(STATE_FILE):
-        return {
-            "assets": {},
-            "last_digest": None,
-            "last_event_alerts": {},
-        }
+        return default_state()
 
     try:
         with open(
@@ -130,26 +127,23 @@ def load_state():
         ) as file:
             state = json.load(file)
 
-        # Migratie van onze oude state-structuur
         if "assets" not in state:
             state = {
                 "assets": state,
                 "last_digest": None,
                 "last_event_alerts": {},
+                "forecast_history": [],
             }
 
         state.setdefault("assets", {})
         state.setdefault("last_digest", None)
         state.setdefault("last_event_alerts", {})
+        state.setdefault("forecast_history", [])
 
         return state
 
     except Exception:
-        return {
-            "assets": {},
-            "last_digest": None,
-            "last_event_alerts": {},
-        }
+        return default_state()
 
 
 def save_state(state):
@@ -167,7 +161,7 @@ def save_state(state):
 
 
 # =========================================================
-# BITVAVO DATA
+# BITVAVO
 # =========================================================
 
 def get_markets():
@@ -347,11 +341,23 @@ def add_indicators(df):
         .mean()
     )
 
+    # Volatiliteit
+    df["RETURN"] = (
+        df["close"]
+        .pct_change()
+    )
+
+    df["VOLATILITY_24H"] = (
+        df["RETURN"]
+        .rolling(24)
+        .std()
+    )
+
     return df
 
 
 # =========================================================
-# HISTORICAL PRICE CHANGE
+# PRICE CHANGE
 # =========================================================
 
 def price_change_since(df, hours):
@@ -401,10 +407,7 @@ def analyze_timeframe(df):
     score = 50
     reasons = []
 
-    # -----------------------------------------------------
-    # EMA TREND
-    # -----------------------------------------------------
-
+    # EMA trend
     if (
         latest["close"] > latest["EMA20"]
         and latest["EMA20"] > latest["EMA50"]
@@ -428,10 +431,7 @@ def analyze_timeframe(df):
             "EMA-trend is gemengd"
         )
 
-    # -----------------------------------------------------
     # EMA200
-    # -----------------------------------------------------
-
     if len(df) >= 200:
         if latest["close"] > latest["EMA200"]:
             score += 8
@@ -444,10 +444,7 @@ def analyze_timeframe(df):
                 "Koers onder EMA200"
             )
 
-    # -----------------------------------------------------
     # RSI
-    # -----------------------------------------------------
-
     rsi = latest["RSI"]
 
     if pd.notna(rsi):
@@ -478,13 +475,10 @@ def analyze_timeframe(df):
         elif rsi > 70:
             score -= 8
             reasons.append(
-                "RSI is mogelijk overbought"
+                "RSI mogelijk overbought"
             )
 
-    # -----------------------------------------------------
     # MACD
-    # -----------------------------------------------------
-
     if (
         latest["MACD"] > latest["MACD_SIGNAL"]
         and previous["MACD"]
@@ -520,10 +514,7 @@ def analyze_timeframe(df):
             "MACD negatief"
         )
 
-    # -----------------------------------------------------
-    # VOLUME MOMENTUM
-    # -----------------------------------------------------
-
+    # Volume
     volume_ratio = 1.0
 
     if (
@@ -553,6 +544,14 @@ def analyze_timeframe(df):
                 "Handelsvolume relatief laag"
             )
 
+    volatility = (
+        float(latest["VOLATILITY_24H"])
+        if pd.notna(
+            latest["VOLATILITY_24H"]
+        )
+        else 0.0
+    )
+
     score = int(
         max(
             0,
@@ -571,6 +570,7 @@ def analyze_timeframe(df):
             else None
         ),
         "volume_ratio": float(volume_ratio),
+        "volatility": volatility,
         "reasons": reasons,
         "df": df,
     }
@@ -600,7 +600,7 @@ def liquidity_info(volume_eur):
 
 
 # =========================================================
-# MOMENTUM / ENTRY TIMING
+# ENTRY TIMING
 # =========================================================
 
 def timing_analysis(
@@ -618,7 +618,6 @@ def timing_analysis(
     penalty = 0
     risk_reasons = []
 
-    # Zeer harde korte pump
     if c1 >= 20:
         penalty += 18
         risk_reasons.append(
@@ -631,7 +630,6 @@ def timing_analysis(
             "forse stijging in de laatste 24u"
         )
 
-    # Meerdere dagen al hard omhoog
     if c3 >= 35:
         penalty += 18
         risk_reasons.append(
@@ -644,7 +642,6 @@ def timing_analysis(
             "koers al sterk opgelopen in 3 dagen"
         )
 
-    # Weekmove
     if c7 >= 60:
         penalty += 12
         risk_reasons.append(
@@ -657,7 +654,6 @@ def timing_analysis(
             "sterke stijging over 7 dagen"
         )
 
-    # Overbought
     if rsi_value >= 78:
         penalty += 10
         risk_reasons.append(
@@ -670,7 +666,6 @@ def timing_analysis(
             "RSI aan hoge kant"
         )
 
-    # Extreme volume spike na stijging
     if (
         volume_ratio >= 3.0
         and c1 >= 10
@@ -685,7 +680,6 @@ def timing_analysis(
         35,
     )
 
-    # Timing label
     if penalty >= 20:
         phase = "🟠 Mogelijk laat"
 
@@ -880,12 +874,12 @@ def classify_news(articles):
         return {
             "label": "⚪ Geen duidelijke katalysator",
             "context": (
-                "Geen relevant recent nieuws gevonden "
-                "in de gebruikte nieuwsbron."
+                "Geen relevant recent nieuws gevonden."
             ),
             "positive": 0,
             "negative": 0,
             "momentum": 0,
+            "score_adjustment": 0,
         }
 
     positive = 0
@@ -916,6 +910,7 @@ def classify_news(articles):
             "Recente headlines bevatten vooral "
             "negatieve of risicovolle ontwikkelingen."
         )
+        adjustment = -8
 
     elif positive > negative and positive > 0:
         label = "🟢 Positieve katalysator"
@@ -923,14 +918,15 @@ def classify_news(articles):
             "Recente headlines bevatten mogelijk "
             "fundamenteel positieve ontwikkelingen."
         )
+        adjustment = 6
 
     elif momentum > 0:
         label = "🟡 Vooral momentum-nieuws"
         context = (
-            "De recente berichtgeving gaat vooral "
-            "over koersbeweging/momentum en minder "
-            "over een duidelijke fundamentele katalysator."
+            "Nieuws gaat vooral over koersbeweging "
+            "en minder over een fundamentele katalysator."
         )
+        adjustment = 0
 
     else:
         label = "⚪ Neutrale nieuwscontext"
@@ -938,6 +934,7 @@ def classify_news(articles):
             "Er is recente berichtgeving, maar geen "
             "duidelijke positieve of negatieve katalysator."
         )
+        adjustment = 0
 
     return {
         "label": label,
@@ -945,6 +942,320 @@ def classify_news(articles):
         "positive": positive,
         "negative": negative,
         "momentum": momentum,
+        "score_adjustment": adjustment,
+    }
+
+
+# =========================================================
+# MARKET CONTEXT
+# =========================================================
+
+def get_market_context():
+    try:
+        btc_df = get_candles(
+            "BTC-EUR",
+            "1h",
+            200,
+        )
+
+        btc_analysis = analyze_timeframe(
+            btc_df
+        )
+
+        btc_1d = price_change_since(
+            btc_df,
+            24,
+        )
+
+        btc_3d = price_change_since(
+            btc_df,
+            72,
+        )
+
+        if btc_analysis is None:
+            raise RuntimeError()
+
+        score = btc_analysis[
+            "technical_score"
+        ]
+
+        if (
+            score >= 65
+            and (btc_1d or 0) >= 0
+        ):
+            regime = "🟢 Positieve cryptomarkt"
+            adjustment = 5
+
+        elif (
+            score < 45
+            and (btc_1d or 0) < 0
+        ):
+            regime = "🔴 Zwakke cryptomarkt"
+            adjustment = -7
+
+        else:
+            regime = "🟡 Gemengde cryptomarkt"
+            adjustment = 0
+
+        return {
+            "regime": regime,
+            "adjustment": adjustment,
+            "btc_score": score,
+            "btc_1d": btc_1d,
+            "btc_3d": btc_3d,
+        }
+
+    except Exception:
+        return {
+            "regime": "⚪ Marktcontext onbekend",
+            "adjustment": 0,
+            "btc_score": None,
+            "btc_1d": None,
+            "btc_3d": None,
+        }
+
+
+# =========================================================
+# 72H FORECAST
+# =========================================================
+
+def build_forecast(
+    coin,
+    news=None,
+    market_context=None,
+):
+    if news is None:
+        news = {
+            "score_adjustment": 0,
+            "label": "⚪ Geen nieuwscontext",
+        }
+
+    if market_context is None:
+        market_context = {
+            "adjustment": 0,
+            "regime": "⚪ Marktcontext onbekend",
+        }
+
+    technical = coin[
+        "technical_score"
+    ]
+
+    score = 50
+
+    # Technische richting
+    score += (
+        technical - 50
+    ) * 0.55
+
+    # Momentum
+    c1 = coin["change_1d"] or 0
+    c3 = coin["change_3d"] or 0
+
+    if 0 < c1 <= 8:
+        score += 5
+
+    elif 8 < c1 <= 15:
+        score += 2
+
+    elif c1 >= 20:
+        score -= 8
+
+    if 0 < c3 <= 18:
+        score += 5
+
+    elif c3 >= 35:
+        score -= 10
+
+    # Volume bevestiging
+    volume_ratio = coin[
+        "volume_ratio"
+    ]
+
+    if volume_ratio >= 1.5:
+        score += 5
+
+    elif volume_ratio < 0.6:
+        score -= 4
+
+    # Late-entry risico
+    score -= (
+        coin["late_penalty"]
+        * 0.65
+    )
+
+    # Nieuws
+    score += news.get(
+        "score_adjustment",
+        0,
+    )
+
+    # Brede cryptomarkt
+    score += market_context.get(
+        "adjustment",
+        0,
+    )
+
+    score = int(
+        max(
+            0,
+            min(
+                100,
+                round(score),
+            ),
+        )
+    )
+
+    # Direction
+    if score >= 65:
+        bias = "🟢 Bullish"
+        direction = 1
+
+    elif score <= 40:
+        bias = "🔴 Bearish"
+        direction = -1
+
+    else:
+        bias = "🟡 Sideways / onzeker"
+        direction = 0
+
+    # Confidence
+    distance = abs(
+        score - 50
+    )
+
+    confidence = int(
+        min(
+            85,
+            45 + distance * 1.25,
+        )
+    )
+
+    if (
+        coin["liquidity_score"] < 55
+    ):
+        confidence -= 10
+
+    if (
+        coin["late_penalty"] >= 20
+    ):
+        confidence -= 8
+
+    confidence = int(
+        max(
+            35,
+            min(
+                85,
+                confidence,
+            ),
+        )
+    )
+
+    # Volatiliteit gebruiken voor range
+    volatility = coin.get(
+        "volatility",
+        0.02,
+    )
+
+    if not volatility or volatility <= 0:
+        volatility = 0.02
+
+    # Geschatte 72u volatiliteitsband
+    expected_move = (
+        volatility
+        * np.sqrt(72)
+        * 100
+    )
+
+    expected_move = float(
+        max(
+            2.0,
+            min(
+                30.0,
+                expected_move,
+            ),
+        )
+    )
+
+    # Richtingscomponent
+    directional_strength = (
+        abs(score - 50)
+        / 50
+    )
+
+    center_move = (
+        expected_move
+        * directional_strength
+        * direction
+        * 0.65
+    )
+
+    if direction == 0:
+        center_move = 0
+
+    band = (
+        expected_move
+        * 0.65
+    )
+
+    low = center_move - band
+    high = center_move + band
+
+    # Voorkom absurde ranges
+    low = max(
+        low,
+        -35,
+    )
+
+    high = min(
+        high,
+        35,
+    )
+
+    if bias == "🟢 Bullish":
+        scenario = (
+            "Opwaartse voortzetting heeft op dit moment "
+            "meer technische ondersteuning dan een daling."
+        )
+
+    elif bias == "🔴 Bearish":
+        scenario = (
+            "Neerwaarts risico is momenteel groter dan "
+            "de kans op directe trendvoortzetting omhoog."
+        )
+
+    else:
+        scenario = (
+            "Er is onvoldoende overtuiging voor een "
+            "duidelijke richting in de komende 72 uur."
+        )
+
+    return {
+        "forecast_score": score,
+        "bias": bias,
+        "confidence": confidence,
+        "low_pct": round(
+            low,
+            1,
+        ),
+        "high_pct": round(
+            high,
+            1,
+        ),
+        "center_pct": round(
+            center_move,
+            1,
+        ),
+        "scenario": scenario,
+        "market_regime":
+            market_context.get(
+                "regime",
+                "Onbekend",
+            ),
+        "news_label":
+            news.get(
+                "label",
+                "Geen nieuwscontext",
+            ),
     }
 
 
@@ -1024,7 +1335,6 @@ def scan_market():
                 analysis["volume_ratio"],
             )
 
-            # Eerst techniek + liquiditeit
             base_score = (
                 analysis["technical_score"]
                 * 0.80
@@ -1032,8 +1342,6 @@ def scan_market():
                 * 0.20
             )
 
-            # Daarna aftrek als we waarschijnlijk
-            # achter de beweging aanlopen.
             final_score = round(
                 base_score
                 - timing["late_penalty"]
@@ -1072,26 +1380,44 @@ def scan_market():
                     volume_eur,
                     0,
                 ),
-                "liquidity": liquidity_label,
-                "technical_score":
-                    analysis["technical_score"],
+                "liquidity":
+                    liquidity_label,
                 "liquidity_score":
                     liquidity_score,
+                "technical_score":
+                    analysis[
+                        "technical_score"
+                    ],
                 "late_penalty":
-                    timing["late_penalty"],
-                "score": final_score,
+                    timing[
+                        "late_penalty"
+                    ],
+                "score":
+                    final_score,
                 "rating":
-                    classify_score(final_score),
+                    classify_score(
+                        final_score
+                    ),
                 "phase":
                     timing["phase"],
                 "rsi":
                     analysis["rsi"],
                 "volume_ratio":
-                    analysis["volume_ratio"],
+                    analysis[
+                        "volume_ratio"
+                    ],
+                "volatility":
+                    analysis[
+                        "volatility"
+                    ],
                 "reasons":
-                    analysis["reasons"],
+                    analysis[
+                        "reasons"
+                    ],
                 "risk_reasons":
-                    timing["risk_reasons"],
+                    timing[
+                        "risk_reasons"
+                    ],
             })
 
         except Exception:
@@ -1120,84 +1446,8 @@ def fmt_pct(value):
     return f"{value:+.1f}%"
 
 
-def build_coin_message(
-    coin,
-    news_articles,
-):
-    news = classify_news(
-        news_articles
-    )
-
-    lines = [
-        (
-            f"{coin['rating']} "
-            f"{coin['asset']} — "
-            f"{coin['score']}/100"
-        ),
-        (
-            f"1d {fmt_pct(coin['change_1d'])} | "
-            f"3d {fmt_pct(coin['change_3d'])} | "
-            f"7d {fmt_pct(coin['change_7d'])}"
-        ),
-        (
-            f"Timing: {coin['phase']} | "
-            f"Liquiditeit: {coin['liquidity']}"
-        ),
-    ]
-
-    # Kort technisch beeld
-    technical_reasons = coin[
-        "reasons"
-    ][:3]
-
-    if technical_reasons:
-        lines.append(
-            "Technisch: "
-            + ", ".join(
-                technical_reasons
-            )
-        )
-
-    lines.append(
-        f"Nieuws: {news['label']}"
-    )
-
-    lines.append(
-        f"Context: {news['context']}"
-    )
-
-    if coin["risk_reasons"]:
-        lines.append(
-            "⚠️ Timing-risico: "
-            + "; ".join(
-                coin["risk_reasons"][:2]
-            )
-        )
-
-    if news_articles:
-        lines.append(
-            "Gevonden:"
-        )
-
-        for article in news_articles[:2]:
-            title = article["title"]
-
-            if len(title) > 105:
-                title = (
-                    title[:102]
-                    + "..."
-                )
-
-            lines.append(
-                f"• {title} "
-                f"({article['domain']})"
-            )
-
-    return "\n".join(lines)
-
-
 # =========================================================
-# DIGEST LOGIC
+# DIGEST
 # =========================================================
 
 def digest_key(now):
@@ -1216,12 +1466,83 @@ def should_send_digest(
     if now.hour not in DIGEST_HOURS:
         return False
 
-    current_key = digest_key(now)
-
     return (
         state.get("last_digest")
-        != current_key
+        != digest_key(now)
     )
+
+
+def build_digest_coin(
+    coin,
+    market_context,
+):
+    articles = get_recent_news(
+        coin["asset"],
+        max_records=4,
+    )
+
+    news = classify_news(
+        articles
+    )
+
+    forecast = build_forecast(
+        coin,
+        news,
+        market_context,
+    )
+
+    lines = [
+        (
+            f"{coin['rating']} "
+            f"{coin['asset']} — "
+            f"{coin['score']}/100"
+        ),
+        (
+            f"1d {fmt_pct(coin['change_1d'])} | "
+            f"3d {fmt_pct(coin['change_3d'])} | "
+            f"7d {fmt_pct(coin['change_7d'])}"
+        ),
+        (
+            f"Timing: {coin['phase']}"
+        ),
+        (
+            f"🔮 72h: {forecast['bias']} "
+            f"({forecast['confidence']}%)"
+        ),
+        (
+            f"Scenario-range: "
+            f"{forecast['low_pct']:+.1f}% "
+            f"tot {forecast['high_pct']:+.1f}%"
+        ),
+        (
+            f"Nieuws: {news['label']}"
+        ),
+    ]
+
+    if articles:
+        title = articles[0]["title"]
+
+        if len(title) > 120:
+            title = (
+                title[:117]
+                + "..."
+            )
+
+        lines.append(
+            f"• {title}"
+        )
+
+    if coin["risk_reasons"]:
+        lines.append(
+            "⚠️ "
+            + "; ".join(
+                coin[
+                    "risk_reasons"
+                ][:2]
+            )
+        )
+
+    return "\n".join(lines)
 
 
 def send_top_digest(
@@ -1234,13 +1555,22 @@ def send_top_digest(
     if not top:
         return
 
+    market_context = (
+        get_market_context()
+    )
+
     lines = [
         "📊 CRYPTO UPDATE",
         now.strftime(
             "%d-%m-%Y %H:%M"
         ),
         "",
-        "Top 5 op dit moment:",
+        (
+            f"Markt: "
+            f"{market_context['regime']}"
+        ),
+        "",
+        "Top 5:",
         "",
     ]
 
@@ -1248,39 +1578,26 @@ def send_top_digest(
         top,
         start=1,
     ):
-        # Nieuws alleen voor top 5 ophalen
-        articles = get_recent_news(
-            coin["asset"],
-            max_records=4,
-        )
-
-        coin_text = build_coin_message(
-            coin,
-            articles,
-        )
-
         lines.append(
             f"#{index}"
         )
 
         lines.append(
-            coin_text
+            build_digest_coin(
+                coin,
+                market_context,
+            )
         )
 
         lines.append("")
 
-    lines.append(
-        "Een hoge score betekent een gunstige "
-        "technische setup volgens deze scanner, "
-        "niet dat verdere stijging zeker is."
-    )
-
     message = "\n".join(lines)
 
-    # Telegram heeft een limiet;
-    # deze versie houdt de tekst bewust compact.
     if len(message) > 4000:
-        message = message[:3950] + "\n..."
+        message = (
+            message[:3950]
+            + "\n..."
+        )
 
     send_telegram(
         message
@@ -1292,7 +1609,7 @@ def send_top_digest(
 
 
 # =========================================================
-# EARLY OPPORTUNITY ALERTS
+# EARLY ALERTS
 # =========================================================
 
 def parse_iso(value):
@@ -1332,7 +1649,8 @@ def can_send_event_alert(
     return (
         now - previous_time
         >= timedelta(
-            hours=EARLY_ALERT_COOLDOWN_HOURS
+            hours=
+            EARLY_ALERT_COOLDOWN_HOURS
         )
     )
 
@@ -1350,8 +1668,10 @@ def detect_early_opportunities(
         ):
             continue
 
-        # We willen juist GEEN late pump-alert
-        if coin["late_penalty"] >= 10:
+        if (
+            coin["late_penalty"]
+            >= 10
+        ):
             continue
 
         if (
@@ -1360,8 +1680,10 @@ def detect_early_opportunities(
         ):
             continue
 
-        # Redelijke liquiditeit vereist
-        if coin["liquidity_score"] < 55:
+        if (
+            coin["liquidity_score"]
+            < 55
+        ):
             continue
 
         previous = previous_assets.get(
@@ -1376,29 +1698,26 @@ def detect_early_opportunities(
             )
         )
 
-        # Nieuwe doorbraak naar interessant
-        crossed_threshold = (
+        crossed = (
             previous_score
             < INTERESTING_THRESHOLD
             and coin["score"]
             >= EARLY_ALERT_THRESHOLD
         )
 
-        # Of sterke verbetering
-        score_jump = (
+        jumped = (
             coin["score"]
             - previous_score
             >= 10
         )
 
-        # Volume moet minimaal gezond zijn
         volume_confirmed = (
             coin["volume_ratio"]
             >= 1.15
         )
 
         if (
-            (crossed_threshold or score_jump)
+            (crossed or jumped)
             and volume_confirmed
         ):
             alerts.append(
@@ -1413,6 +1732,10 @@ def send_early_alerts(
     state,
     now,
 ):
+    market_context = (
+        get_market_context()
+    )
+
     sent = 0
 
     for coin in alerts:
@@ -1435,26 +1758,69 @@ def send_early_alerts(
             articles
         )
 
-        # Als het nieuws expliciet negatief is,
-        # geen enthousiaste early opportunity-alert.
-        if news["negative"] > news["positive"]:
+        if (
+            news["negative"]
+            > news["positive"]
+        ):
             continue
+
+        forecast = build_forecast(
+            coin,
+            news,
+            market_context,
+        )
 
         lines = [
             "🚨 VROEG SIGNAAL",
             "",
-            build_coin_message(
-                coin,
-                articles,
+            (
+                f"{coin['asset']} — "
+                f"{coin['score']}/100"
+            ),
+            (
+                f"Timing: "
+                f"{coin['phase']}"
+            ),
+            (
+                f"1d {fmt_pct(coin['change_1d'])} | "
+                f"3d {fmt_pct(coin['change_3d'])}"
             ),
             "",
             (
-                "Dit signaal verschijnt omdat de "
-                "technische score vroeg verbetert "
-                "zonder dat de koers volgens onze "
-                "late-entry-regels al extreem is opgelopen."
+                f"🔮 72h forecast: "
+                f"{forecast['bias']}"
+            ),
+            (
+                f"Confidence: "
+                f"{forecast['confidence']}%"
+            ),
+            (
+                f"Range: "
+                f"{forecast['low_pct']:+.1f}% "
+                f"tot "
+                f"{forecast['high_pct']:+.1f}%"
+            ),
+            "",
+            (
+                f"Nieuws: "
+                f"{news['label']}"
+            ),
+            (
+                f"Markt: "
+                f"{market_context['regime']}"
             ),
         ]
+
+        if articles:
+            lines.append("")
+            lines.append(
+                "Recent nieuws:"
+            )
+
+            for article in articles[:2]:
+                lines.append(
+                    f"• {article['title']}"
+                )
 
         message = "\n".join(
             lines
@@ -1485,20 +1851,159 @@ def send_early_alerts(
 
 
 # =========================================================
-# SAVE CURRENT MARKET STATE
+# FORECAST HISTORY
+# =========================================================
+
+def record_forecasts(
+    rows,
+    state,
+    now,
+):
+    history = state.setdefault(
+        "forecast_history",
+        [],
+    )
+
+    market_context = (
+        get_market_context()
+    )
+
+    # Alleen top 5 bewaren om state klein te houden
+    for coin in rows[:5]:
+        forecast = build_forecast(
+            coin,
+            news=None,
+            market_context=
+                market_context,
+        )
+
+        history.append({
+            "created_at":
+                now.isoformat(),
+            "target_at":
+                (
+                    now
+                    + timedelta(hours=72)
+                ).isoformat(),
+            "asset":
+                coin["asset"],
+            "start_price":
+                coin["price"],
+            "bias":
+                forecast["bias"],
+            "confidence":
+                forecast["confidence"],
+            "low_pct":
+                forecast["low_pct"],
+            "high_pct":
+                forecast["high_pct"],
+            "actual_pct":
+                None,
+        })
+
+    # Max ongeveer 30 dagen historie
+    if len(history) > 500:
+        state[
+            "forecast_history"
+        ] = history[-500:]
+
+
+def evaluate_old_forecasts(
+    rows,
+    state,
+    now,
+):
+    current_prices = {
+        coin["asset"]:
+            coin["price"]
+        for coin in rows
+    }
+
+    history = state.get(
+        "forecast_history",
+        [],
+    )
+
+    for item in history:
+        if (
+            item.get(
+                "actual_pct"
+            )
+            is not None
+        ):
+            continue
+
+        try:
+            target = (
+                datetime
+                .fromisoformat(
+                    item[
+                        "target_at"
+                    ]
+                )
+            )
+
+            if target.tzinfo is None:
+                target = target.replace(
+                    tzinfo=AMSTERDAM
+                )
+
+            if now < target:
+                continue
+
+            asset = item[
+                "asset"
+            ]
+
+            current = (
+                current_prices
+                .get(asset)
+            )
+
+            start = item[
+                "start_price"
+            ]
+
+            if (
+                current is None
+                or start <= 0
+            ):
+                continue
+
+            actual = (
+                (current - start)
+                / start
+                * 100
+            )
+
+            item[
+                "actual_pct"
+            ] = round(
+                actual,
+                2,
+            )
+
+        except Exception:
+            continue
+
+
+# =========================================================
+# ASSET STATE
 # =========================================================
 
 def build_asset_state(rows):
-    state = {}
+    result = {}
 
     for coin in rows:
-        state[
+        result[
             coin["asset"]
         ] = {
             "score":
                 coin["score"],
             "technical_score":
-                coin["technical_score"],
+                coin[
+                    "technical_score"
+                ],
             "change_1d":
                 coin["change_1d"],
             "change_3d":
@@ -1511,7 +2016,7 @@ def build_asset_state(rows):
                 coin["price"],
         }
 
-    return state
+    return result
 
 
 # =========================================================
@@ -1525,22 +2030,28 @@ def main():
 
     state = load_state()
 
-    previous_assets = state.get(
-        "assets",
-        {},
+    previous_assets = (
+        state.get(
+            "assets",
+            {},
+        )
     )
 
     rows = scan_market()
 
     if not rows:
         raise RuntimeError(
-            "Geen Bitvavo-assets konden worden geanalyseerd."
+            "Geen assets konden worden geanalyseerd."
         )
 
-    # ---------------------------------------------
-    # VASTE TOP-5 UPDATE
-    # ---------------------------------------------
+    # Eerdere forecasts beoordelen
+    evaluate_old_forecasts(
+        rows,
+        state,
+        now,
+    )
 
+    # Vaste update
     if should_send_digest(
         now,
         state,
@@ -1551,10 +2062,13 @@ def main():
             now,
         )
 
-    # ---------------------------------------------
-    # TUSSENTIJDSE VROEGE SIGNALEN
-    # ---------------------------------------------
+        record_forecasts(
+            rows,
+            state,
+            now,
+        )
 
+    # Tussentijdse vroege signalen
     early_alerts = (
         detect_early_opportunities(
             rows,
@@ -1568,10 +2082,7 @@ def main():
         now,
     )
 
-    # ---------------------------------------------
-    # NIEUWE SCORES OPSLAAN
-    # ---------------------------------------------
-
+    # Nieuwe marktstatus
     state["assets"] = (
         build_asset_state(
             rows
