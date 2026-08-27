@@ -1,12 +1,21 @@
-name: Crypto Alerts
+name: Crypto Alerts V2
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "15 8,12,16,20 * * *"
+      timezone: "Europe/Amsterdam"
+
+    - cron: "45 8,9,10,11,12,13,14,15,16,17,18,19 * * *"
+      timezone: "Europe/Amsterdam"
+
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: crypto-alert-scanner
+  cancel-in-progress: false
 
 jobs:
   scan:
@@ -32,12 +41,17 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python alert_scanner.py
 
-      - name: Save alert state
+      - name: Save scanner state
         run: |
           if [ -f alert_state.json ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
             git add alert_state.json
-            git diff --cached --quiet || git commit -m "Update crypto alert state"
-            git push
+
+            if ! git diff --cached --quiet; then
+              git commit -m "Update crypto scanner state"
+              git pull --rebase origin main
+              git push origin main
+            fi
           fi
