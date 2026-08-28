@@ -1,5 +1,7 @@
 import os
 import json
+import hashlib
+import re
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from urllib.parse import urlparse
@@ -29,6 +31,11 @@ FAST_MODE = (
     os.getenv("FAST_MODE", "false").lower() == "true"
 )
 
+# NEWS_MODE draait alleen de lichte nieuwsmonitor.
+NEWS_MODE = (
+    os.getenv("NEWS_MODE", "false").lower() == "true"
+)
+
 STATE_FILE = "alert_state.json"
 
 AMSTERDAM = ZoneInfo("Europe/Amsterdam")
@@ -40,8 +47,11 @@ EARLY_ALERT_THRESHOLD = 70
 EARLY_ALERT_COOLDOWN_HOURS = 12
 
 # Fast-mover instellingen
-FAST_ALERT_COOLDOWN_MINUTES = 60
+FAST_ALERT_COOLDOWN_MINUTES = 120
 FAST_MIN_LIQUIDITY_EUR = 25_000
+FAST_MAX_ALERTS_PER_MESSAGE = 3
+NEWS_MAX_ALERTS_PER_MESSAGE = 3
+NEWS_LOOKBACK = "2h"
 
 DIGEST_HOURS = {8, 12, 16, 20}
 
@@ -123,6 +133,7 @@ def default_state():
         "last_event_alerts": {},
         "last_fast_alerts": {},
         "known_markets": [],
+        "seen_news": {},
         "forecast_history": [],
     }
 
@@ -146,6 +157,7 @@ def load_state():
                 "last_event_alerts": {},
                 "last_fast_alerts": {},
                 "known_markets": [],
+                "seen_news": {},
                 "forecast_history": [],
             }
 
@@ -154,6 +166,7 @@ def load_state():
         state.setdefault("last_event_alerts", {})
         state.setdefault("last_fast_alerts", {})
         state.setdefault("known_markets", [])
+        state.setdefault("seen_news", {})
         state.setdefault("forecast_history", [])
 
         return state
@@ -575,21 +588,16 @@ def send_new_listing_alerts(new_markets, state, now):
 
 def scan_fast_movers(state, now):
     """
-    Lichte scanner voor GitHub Actions.
-    Haalt voor iedere actieve EUR-market alleen een klein blok 15m candles op.
-    Hiermee kunnen we echte korte-termijn bewegingen detecteren zonder de
-    volledige EMA/RSI/MACD scan te draaien.
+    Lichte scanner voor korte-termijn momentum.
+    Scant alle actieve EUR-markten, maar verstuurt maximaal één
+    gebundeld Telegrambericht met de drie beste NIEUWE signalen.
     """
     markets = get_markets()
     ticker_data = get_ticker_24h()
 
     new_markets = detect_new_markets(markets, state)
     if new_markets:
-        send_new_listing_alerts(
-            new_markets,
-            state,
-            now,
-        )
+        send_new_listing_alerts(new_markets, state, now)
 
     alerts = []
 
@@ -599,20 +607,12 @@ def scan_fast_movers(state, now):
 
         try:
             ticker = ticker_data.get(market, {})
-            volume_eur = float(
-                ticker.get("volumeQuote", 0) or 0
-            )
+            volume_eur = float(ticker.get("volumeQuote", 0) or 0)
 
-            # Hele dunne markten negeren voor momentum-alerts.
             if volume_eur < FAST_MIN_LIQUIDITY_EUR:
                 continue
 
-            candles = get_candles(
-                market,
-                "15m",
-                16,
-            )
-
+            candles = get_candles(market, "15m", 16)
             if len(candles) < 10:
                 continue
 
@@ -621,27 +621,31 @@ def scan_fast_movers(state, now):
             c2 = candle_change(candles, 8)
             vr = fast_volume_ratio(candles)
 
-            event = classify_fast_momentum(
-                c15,
-                c1,
-                c2,
-                vr,
-            )
-
+            event = classify_fast_momentum(c15, c1, c2, vr)
             if event is None:
                 continue
 
-            latest_price = float(
-                ticker.get(
-                    "last",
-                    candles.iloc[-1]["close"],
-                )
+            if not can_send_fast_alert(asset, event["type"], state, now):
+                continue
+
+            # Extra kwaliteitsscore: vroeg + volume + opbouw over meerdere candles.
+            continuity = 0
+            if c15 is not None and c1 is not None and c2 is not None:
+                if 0 < c15 <= c1 <= max(c2, c1):
+                    continuity = 2
+                if c1 > 0 and c2 > 0:
+                    continuity += 1
+
+            quality = (
+                (3 if event["type"] == "early" else 2 if event["type"] == "fast" else 1)
+                + min(vr, 5) * 0.7
+                + min(max(c1 or 0, 0), 10) * 0.15
+                + continuity
             )
 
             alerts.append({
                 "asset": asset,
                 "market": market,
-                "price": latest_price,
                 "volume_eur": volume_eur,
                 "change_15m": round(c15, 2) if c15 is not None else None,
                 "change_1h": round(c1, 2) if c1 is not None else None,
@@ -649,76 +653,53 @@ def scan_fast_movers(state, now):
                 "fast_volume_ratio": round(vr, 2),
                 "event_type": event["type"],
                 "event_label": event["label"],
-                "priority": event["priority"],
+                "quality": quality,
             })
-
         except Exception:
             continue
 
-    # Eerst late/extreme movers, daarna fast, daarna early;
-    # binnen elk type grootste 1u-beweging eerst.
+    # Voor Telegram: early krijgt voorrang boven een coin die al extreem gepumpt is.
+    type_rank = {"early": 3, "fast": 2, "late": 1}
     alerts.sort(
         key=lambda x: (
-            x["priority"],
-            x["change_1h"] or 0,
-            x["change_15m"] or 0,
+            type_rank.get(x["event_type"], 0),
+            x["quality"],
+            x["fast_volume_ratio"],
         ),
         reverse=True,
     )
 
-    sent = 0
+    selected = alerts[:FAST_MAX_ALERTS_PER_MESSAGE]
+    if not selected:
+        return alerts
 
-    for coin in alerts:
-        if sent >= 5:
-            break
+    lines = [
+        f"⚡ CRYPTO MOMENTUM — {now.strftime('%H:%M')}",
+        "",
+    ]
 
-        if not can_send_fast_alert(
-            coin["asset"],
-            coin["event_type"],
-            state,
-            now,
-        ):
-            continue
-
+    for idx, coin in enumerate(selected, 1):
         if coin["event_type"] == "early":
-            explanation = (
-                "🟢 De beweging lijkt recent te starten en volume bevestigt."
-            )
+            explanation = "🟢 Vroege acceleratie + volume"
         elif coin["event_type"] == "fast":
-            explanation = (
-                "🟠 Sterke versnelling. Instaprisico loopt snel op."
-            )
+            explanation = "🟠 Sterke versnelling — instaprisico stijgt"
         else:
-            explanation = (
-                "🔴 De beweging is al extreem groot. Hoog late-entry/FOMO-risico."
-            )
+            explanation = "🔴 Al sterk gepumpt — hoog FOMO/late-entry-risico"
 
-        lines = [
-            coin["event_label"],
-            "",
-            f"{coin['asset']} ({coin['market']})",
-            f"15m {fmt_pct(coin['change_15m'])}",
-            f"1u  {fmt_pct(coin['change_1h'])}",
-            f"2u  {fmt_pct(coin['change_2h'])}",
-            f"Volume laatste 15m: {coin['fast_volume_ratio']:.1f}× normaal",
-            f"24u volume: €{coin['volume_eur']:,.0f}",
-            "",
+        lines.extend([
+            f"{idx}. {coin['event_label']} — {coin['asset']}",
+            f"15m {fmt_pct(coin['change_15m'])} | 1u {fmt_pct(coin['change_1h'])} | 2u {fmt_pct(coin['change_2h'])}",
+            f"Volume 15m: {coin['fast_volume_ratio']:.1f}× normaal | 24u €{coin['volume_eur']:,.0f}",
             explanation,
-        ]
+            "",
+        ])
 
-        send_telegram(
-            "\n".join(lines)
-        )
+        state.setdefault("last_fast_alerts", {})[
+            fast_alert_key(coin["asset"], coin["event_type"])
+        ] = now.isoformat()
 
-        state.setdefault(
-            "last_fast_alerts",
-            {},
-        )[fast_alert_key(
-            coin["asset"],
-            coin["event_type"],
-        )] = now.isoformat()
-
-        sent += 1
+    lines.append(f"{len(selected)} nieuw(e) signaal/signalen gevonden.")
+    send_telegram("\n".join(lines))
 
     return alerts
 
@@ -1276,6 +1257,245 @@ def classify_news(articles):
         "momentum": momentum,
         "score_adjustment": adjustment,
     }
+
+
+# =========================================================
+# REAL-TIME NEWS MONITOR
+# =========================================================
+
+CATALYST_POSITIVE = [
+    "listing", "listed", "launch", "mainnet", "testnet", "partnership",
+    "partners with", "integration", "integrates", "adoption", "approved",
+    "approval", "buyback", "burn", "airdrop", "staking", "upgrade",
+    "funding", "investment", "collaboration", "rollout", "expansion",
+]
+
+CATALYST_NEGATIVE = [
+    "hack", "hacked", "exploit", "breach", "attack", "delisting",
+    "delisted", "lawsuit", "investigation", "outage", "shutdown",
+    "bankruptcy", "vulnerability", "fraud", "warning", "suspension",
+]
+
+# Tickers die als gewone woorden vaak false positives geven.
+AMBIGUOUS_TICKERS = {
+    "ONE", "GAS", "GO", "ON", "IN", "AI", "API", "DATA", "MASK",
+    "MOVE", "HOOK", "HIGH", "MAGIC", "SPELL", "ACE", "METAL", "CITY",
+}
+
+TRUSTED_NEWS_DOMAINS = {
+    "coindesk.com", "cointelegraph.com", "theblock.co", "decrypt.co",
+    "blockworks.co", "dlnews.com", "cryptoslate.com", "bitcoin.com",
+}
+
+
+def news_fingerprint(article):
+    raw = (article.get("url") or article.get("title") or "").strip().lower()
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:20]
+
+
+def fetch_crypto_catalyst_feed():
+    """Haalt één brede, recente crypto-feed op; dus niet 400 losse nieuwsqueries."""
+    positive = " OR ".join(f'"{x}"' if " " in x else x for x in CATALYST_POSITIVE)
+    negative = " OR ".join(f'"{x}"' if " " in x else x for x in CATALYST_NEGATIVE)
+    query = (
+        f'(crypto OR cryptocurrency OR blockchain OR token) '
+        f'(({positive}) OR ({negative}))'
+    )
+    params = {
+        "query": query,
+        "mode": "ArtList",
+        "format": "json",
+        "maxrecords": 250,
+        "timespan": NEWS_LOOKBACK,
+        "sort": "DateDesc",
+    }
+    try:
+        response = requests.get(GDELT_URL, params=params, timeout=30)
+        response.raise_for_status()
+        return response.json().get("articles", [])
+    except Exception:
+        return []
+
+
+def catalyst_direction(title):
+    text = (title or "").lower()
+    pos = sum(term in text for term in CATALYST_POSITIVE)
+    neg = sum(term in text for term in CATALYST_NEGATIVE)
+    if neg > pos and neg > 0:
+        return "negative"
+    if pos > 0:
+        return "positive"
+    return None
+
+
+def match_article_to_assets(article, markets):
+    title = (article.get("title") or "").strip()
+    if not title:
+        return []
+
+    upper = title.upper()
+    lower = title.lower()
+    found = []
+
+    for item in markets:
+        asset = item["asset"].upper()
+        project = NEWS_NAMES.get(asset)
+
+        # Bekende projectnaam is de veiligste match.
+        if project and project.lower() in lower:
+            found.append(item)
+            continue
+
+        # $TICKER is vrijwel altijd expliciet crypto-context.
+        if f"${asset}" in upper:
+            found.append(item)
+            continue
+
+        # Langere tickers als los woord. Korte/ambiguë tickers alleen met crypto/token ernaast.
+        ticker_match = re.search(rf"(?<![A-Z0-9]){re.escape(asset)}(?![A-Z0-9])", upper)
+        if not ticker_match:
+            continue
+
+        if len(asset) >= 4 and asset not in AMBIGUOUS_TICKERS:
+            found.append(item)
+        elif re.search(rf"{re.escape(asset)}\s+(TOKEN|CRYPTO|COIN)", upper):
+            found.append(item)
+
+    return found
+
+
+def article_source_quality(article):
+    domain = (article.get("domain") or urlparse(article.get("url") or "").netloc or "").lower()
+    domain = domain.removeprefix("www.")
+    if domain in TRUSTED_NEWS_DOMAINS:
+        return "✅ gevestigde cryptobron"
+    return f"📰 {domain or 'nieuwsbron'}"
+
+
+def quick_price_context(market, ticker_data):
+    try:
+        candles = get_candles(market, "15m", 10)
+        if len(candles) < 9:
+            return None
+        return {
+            "15m": candle_change(candles, 1),
+            "1h": candle_change(candles, 4),
+            "2h": candle_change(candles, 8),
+            "vr": fast_volume_ratio(candles),
+            "volume_eur": float(ticker_data.get(market, {}).get("volumeQuote", 0) or 0),
+        }
+    except Exception:
+        return None
+
+
+def scan_news_catalysts(state, now):
+    """
+    Zoekt recente nieuws-catalysts en stuurt alleen NIEUWE relevante matches.
+    Maximaal één Telegrambericht per run, met maximaal drie nieuwsitems.
+    """
+    markets = get_markets()
+    ticker_data = get_ticker_24h()
+    articles = fetch_crypto_catalyst_feed()
+    seen = state.setdefault("seen_news", {})
+
+    candidates = []
+
+    for article in articles:
+        title = (article.get("title") or "").strip()
+        direction = catalyst_direction(title)
+        if not title or direction is None:
+            continue
+
+        fp = news_fingerprint(article)
+        if fp in seen:
+            continue
+
+        matches = match_article_to_assets(article, markets)
+        if not matches:
+            continue
+
+        # Eén artikel kan meerdere assets noemen; cap voorkomt spam bij marktbrede stukken.
+        for item in matches[:3]:
+            context = quick_price_context(item["market"], ticker_data)
+            if context:
+                c1 = context["1h"] or 0
+                c2 = context["2h"] or 0
+                if abs(c1) < 2 and abs(c2) < 4:
+                    phase = "👀 NEWS FIRST — koers heeft nog weinig gereageerd"
+                    phase_rank = 3
+                elif direction == "positive" and c1 > 0:
+                    phase = "🚀 NEWS + MOMENTUM — eerste koersreactie zichtbaar"
+                    phase_rank = 2
+                else:
+                    phase = "⚠️ NIEUWS + GROTE REACTIE — mogelijk al ingeprijsd"
+                    phase_rank = 1
+            else:
+                phase = "📰 NIEUWSCATALYST — koerscontext nog niet beschikbaar"
+                phase_rank = 2
+
+            candidates.append({
+                "asset": item["asset"],
+                "market": item["market"],
+                "title": title,
+                "url": (article.get("url") or "").strip(),
+                "domain": article.get("domain") or "",
+                "fingerprint": fp,
+                "direction": direction,
+                "context": context,
+                "phase": phase,
+                "phase_rank": phase_rank,
+                "quality": article_source_quality(article),
+            })
+
+    # NEWS FIRST bovenaan, daarna bronkwaliteit en recent feed-volgorde.
+    candidates.sort(
+        key=lambda x: (
+            x["phase_rank"],
+            1 if "✅" in x["quality"] else 0,
+        ),
+        reverse=True,
+    )
+
+    selected = candidates[:NEWS_MAX_ALERTS_PER_MESSAGE]
+    if selected:
+        lines = [f"📰 CRYPTO NEWS ALERT — {now.strftime('%H:%M')}", ""]
+
+        for idx, item in enumerate(selected, 1):
+            sentiment = "🟢 Mogelijk positief" if item["direction"] == "positive" else "🔴 Mogelijk negatief/risico"
+            lines.extend([
+                f"{idx}. {item['asset']} — {sentiment}",
+                item["title"],
+                item["phase"],
+            ])
+
+            ctx = item["context"]
+            if ctx:
+                lines.append(
+                    f"Koers: 15m {fmt_pct(ctx['15m'])} | 1u {fmt_pct(ctx['1h'])} | 2u {fmt_pct(ctx['2h'])}"
+                )
+                lines.append(f"Volume 15m: {ctx['vr']:.1f}× normaal")
+
+            lines.append(f"Bron: {item['quality']}")
+            if item["url"]:
+                lines.append(item["url"])
+            lines.append("")
+
+            seen[item["fingerprint"]] = now.isoformat()
+
+        lines.append("Nieuws is een mogelijke catalyst, geen garantie op koersstijging.")
+        send_telegram("\n".join(lines))
+
+    # Bewaar seen-news compact: alleen laatste 7 dagen.
+    cutoff = now - timedelta(days=7)
+    for key, value in list(seen.items()):
+        dt = parse_iso(value)
+        if dt is not None:
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=AMSTERDAM)
+            if dt < cutoff:
+                seen.pop(key, None)
+
+    return candidates
 
 
 # =========================================================
@@ -2363,10 +2583,17 @@ def main():
     state = load_state()
 
     # ---------------------------------------------------------
+    # NEWS MODE
+    # ---------------------------------------------------------
+    if NEWS_MODE:
+        scan_news_catalysts(state, now)
+        save_state(state)
+        return
+
+    # ---------------------------------------------------------
     # FAST MODE
     # ---------------------------------------------------------
-    # Wordt later door GitHub Actions iedere 15 minuten gestart.
-    # Deze route doet alleen listing + 15m/1u/2u momentum checks.
+    # Lichte listing + 15m/1u/2u momentum check.
     if FAST_MODE:
         scan_fast_movers(
             state,
@@ -2388,17 +2615,6 @@ def main():
             {},
         )
     )
-
-    # Houd ook bij welke Bitvavo-markten bestaan.
-    # Dit zorgt dat de fast scanner later nieuwe listings kan herkennen.
-    try:
-        markets = get_markets()
-        detect_new_markets(
-            markets,
-            state,
-        )
-    except Exception:
-        pass
 
     rows = scan_market()
 
