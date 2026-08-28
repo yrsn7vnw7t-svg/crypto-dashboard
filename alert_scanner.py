@@ -23,6 +23,12 @@ FORCE_DIGEST = (
     os.getenv("FORCE_DIGEST", "false").lower() == "true"
 )
 
+# FAST_MODE wordt later door GitHub Actions gebruikt voor de lichte
+# 15-minuten scanner. De normale dashboard/full scan blijft hetzelfde.
+FAST_MODE = (
+    os.getenv("FAST_MODE", "false").lower() == "true"
+)
+
 STATE_FILE = "alert_state.json"
 
 AMSTERDAM = ZoneInfo("Europe/Amsterdam")
@@ -32,6 +38,10 @@ TOP_N = 5
 INTERESTING_THRESHOLD = 65
 EARLY_ALERT_THRESHOLD = 70
 EARLY_ALERT_COOLDOWN_HOURS = 12
+
+# Fast-mover instellingen
+FAST_ALERT_COOLDOWN_MINUTES = 60
+FAST_MIN_LIQUIDITY_EUR = 25_000
 
 DIGEST_HOURS = {8, 12, 16, 20}
 
@@ -111,6 +121,8 @@ def default_state():
         "assets": {},
         "last_digest": None,
         "last_event_alerts": {},
+        "last_fast_alerts": {},
+        "known_markets": [],
         "forecast_history": [],
     }
 
@@ -132,12 +144,16 @@ def load_state():
                 "assets": state,
                 "last_digest": None,
                 "last_event_alerts": {},
+                "last_fast_alerts": {},
+                "known_markets": [],
                 "forecast_history": [],
             }
 
         state.setdefault("assets", {})
         state.setdefault("last_digest", None)
         state.setdefault("last_event_alerts", {})
+        state.setdefault("last_fast_alerts", {})
+        state.setdefault("known_markets", [])
         state.setdefault("forecast_history", [])
 
         return state
@@ -389,6 +405,322 @@ def price_change_since(df, hours):
         / old_price
         * 100
     )
+
+
+
+# =========================================================
+# FAST MOMENTUM HELPERS
+# =========================================================
+
+def candle_change(df, candles_back):
+    """
+    Percentage change from N completed 15m candles back to the latest candle.
+    candles_back=1  -> roughly 15 minutes
+    candles_back=4  -> roughly 1 hour
+    candles_back=8  -> roughly 2 hours
+    """
+    if df.empty or len(df) <= candles_back:
+        return None
+
+    old_price = float(df.iloc[-(candles_back + 1)]["close"])
+    new_price = float(df.iloc[-1]["close"])
+
+    if old_price <= 0:
+        return None
+
+    return (new_price - old_price) / old_price * 100
+
+
+def fast_volume_ratio(df):
+    """
+    Vergelijkt het volume van de laatste 15m candle met het gemiddelde
+    van de 8 candles daarvoor (ongeveer 2 uur).
+    """
+    if df.empty or len(df) < 10:
+        return 1.0
+
+    previous = df.iloc[-9:-1]["volume"]
+    average = float(previous.mean()) if not previous.empty else 0.0
+    latest = float(df.iloc[-1]["volume"])
+
+    if average <= 0:
+        return 1.0
+
+    return latest / average
+
+
+def classify_fast_momentum(change_15m, change_1h, change_2h, volume_ratio):
+    """
+    Geeft een event-type terug voor plotselinge korte-termijn bewegingen.
+
+    EARLY:
+      beweging begint nu en wordt door volume bevestigd.
+
+    FAST:
+      duidelijke sterke versnelling, maar nog niet per se extreem laat.
+
+    LATE:
+      beweging is al zo groot dat FOMO/terugvalrisico duidelijk hoger is.
+    """
+    c15 = change_15m or 0
+    c1 = change_1h or 0
+    c2 = change_2h or 0
+    vr = volume_ratio or 1.0
+
+    # Eerst de late/pump-regels, zodat +30% in 1u nooit "vroeg" kan heten.
+    if c1 >= 15 or c2 >= 25 or c15 >= 10:
+        return {
+            "type": "late",
+            "label": "⚠️ EXTREME MOVER / LATE ENTRY",
+            "priority": 3,
+        }
+
+    if c1 >= 7 or c2 >= 10 or c15 >= 4:
+        return {
+            "type": "fast",
+            "label": "🔥 FAST MOVER",
+            "priority": 2,
+        }
+
+    early = (
+        (
+            c15 >= 1.5
+            and c1 >= 2.0
+        )
+        or c15 >= 2.5
+        or (
+            c1 >= 3.5
+            and c2 < 8
+        )
+    )
+
+    if early and vr >= 1.35 and c2 < 12:
+        return {
+            "type": "early",
+            "label": "🚀 EARLY MOMENTUM",
+            "priority": 1,
+        }
+
+    return None
+
+
+def fast_alert_key(asset, event_type):
+    return f"{asset}:{event_type}"
+
+
+def can_send_fast_alert(asset, event_type, state, now):
+    key = fast_alert_key(asset, event_type)
+
+    previous_time = parse_iso(
+        state.get("last_fast_alerts", {}).get(key)
+    )
+
+    if previous_time is None:
+        return True
+
+    if previous_time.tzinfo is None:
+        previous_time = previous_time.replace(tzinfo=AMSTERDAM)
+
+    return (
+        now - previous_time
+        >= timedelta(minutes=FAST_ALERT_COOLDOWN_MINUTES)
+    )
+
+
+def detect_new_markets(markets, state):
+    """
+    Detecteert nieuwe Bitvavo EUR-markten.
+    Bij de allereerste run wordt alleen een baseline opgeslagen, zodat
+    niet alle bestaande markten als 'nieuw' worden gemeld.
+    """
+    current = sorted(
+        item["market"]
+        for item in markets
+    )
+
+    previous = state.get("known_markets", [])
+
+    if not previous:
+        state["known_markets"] = current
+        return []
+
+    previous_set = set(previous)
+
+    new_items = [
+        item
+        for item in markets
+        if item["market"] not in previous_set
+    ]
+
+    state["known_markets"] = current
+    return new_items
+
+
+def send_new_listing_alerts(new_markets, state, now):
+    for item in new_markets[:5]:
+        asset = item["asset"]
+        market = item["market"]
+
+        message = "\n".join([
+            "🆕 NIEUWE BITVAVO LISTING",
+            "",
+            f"{asset} ({market}) is nieuw actief op Bitvavo.",
+            "",
+            "Ik volg vanaf nu de eerste 15m / 1u / 2u beweging.",
+            "⚠️ Nieuwe listings kunnen extreem volatiel zijn.",
+        ])
+
+        send_telegram(message)
+
+
+def scan_fast_movers(state, now):
+    """
+    Lichte scanner voor GitHub Actions.
+    Haalt voor iedere actieve EUR-market alleen een klein blok 15m candles op.
+    Hiermee kunnen we echte korte-termijn bewegingen detecteren zonder de
+    volledige EMA/RSI/MACD scan te draaien.
+    """
+    markets = get_markets()
+    ticker_data = get_ticker_24h()
+
+    new_markets = detect_new_markets(markets, state)
+    if new_markets:
+        send_new_listing_alerts(
+            new_markets,
+            state,
+            now,
+        )
+
+    alerts = []
+
+    for item in markets:
+        market = item["market"]
+        asset = item["asset"]
+
+        try:
+            ticker = ticker_data.get(market, {})
+            volume_eur = float(
+                ticker.get("volumeQuote", 0) or 0
+            )
+
+            # Hele dunne markten negeren voor momentum-alerts.
+            if volume_eur < FAST_MIN_LIQUIDITY_EUR:
+                continue
+
+            candles = get_candles(
+                market,
+                "15m",
+                16,
+            )
+
+            if len(candles) < 10:
+                continue
+
+            c15 = candle_change(candles, 1)
+            c1 = candle_change(candles, 4)
+            c2 = candle_change(candles, 8)
+            vr = fast_volume_ratio(candles)
+
+            event = classify_fast_momentum(
+                c15,
+                c1,
+                c2,
+                vr,
+            )
+
+            if event is None:
+                continue
+
+            latest_price = float(
+                ticker.get(
+                    "last",
+                    candles.iloc[-1]["close"],
+                )
+            )
+
+            alerts.append({
+                "asset": asset,
+                "market": market,
+                "price": latest_price,
+                "volume_eur": volume_eur,
+                "change_15m": round(c15, 2) if c15 is not None else None,
+                "change_1h": round(c1, 2) if c1 is not None else None,
+                "change_2h": round(c2, 2) if c2 is not None else None,
+                "fast_volume_ratio": round(vr, 2),
+                "event_type": event["type"],
+                "event_label": event["label"],
+                "priority": event["priority"],
+            })
+
+        except Exception:
+            continue
+
+    # Eerst late/extreme movers, daarna fast, daarna early;
+    # binnen elk type grootste 1u-beweging eerst.
+    alerts.sort(
+        key=lambda x: (
+            x["priority"],
+            x["change_1h"] or 0,
+            x["change_15m"] or 0,
+        ),
+        reverse=True,
+    )
+
+    sent = 0
+
+    for coin in alerts:
+        if sent >= 5:
+            break
+
+        if not can_send_fast_alert(
+            coin["asset"],
+            coin["event_type"],
+            state,
+            now,
+        ):
+            continue
+
+        if coin["event_type"] == "early":
+            explanation = (
+                "🟢 De beweging lijkt recent te starten en volume bevestigt."
+            )
+        elif coin["event_type"] == "fast":
+            explanation = (
+                "🟠 Sterke versnelling. Instaprisico loopt snel op."
+            )
+        else:
+            explanation = (
+                "🔴 De beweging is al extreem groot. Hoog late-entry/FOMO-risico."
+            )
+
+        lines = [
+            coin["event_label"],
+            "",
+            f"{coin['asset']} ({coin['market']})",
+            f"15m {fmt_pct(coin['change_15m'])}",
+            f"1u  {fmt_pct(coin['change_1h'])}",
+            f"2u  {fmt_pct(coin['change_2h'])}",
+            f"Volume laatste 15m: {coin['fast_volume_ratio']:.1f}× normaal",
+            f"24u volume: €{coin['volume_eur']:,.0f}",
+            "",
+            explanation,
+        ]
+
+        send_telegram(
+            "\n".join(lines)
+        )
+
+        state.setdefault(
+            "last_fast_alerts",
+            {},
+        )[fast_alert_key(
+            coin["asset"],
+            coin["event_type"],
+        )] = now.isoformat()
+
+        sent += 1
+
+    return alerts
 
 
 # =========================================================
@@ -2030,12 +2362,43 @@ def main():
 
     state = load_state()
 
+    # ---------------------------------------------------------
+    # FAST MODE
+    # ---------------------------------------------------------
+    # Wordt later door GitHub Actions iedere 15 minuten gestart.
+    # Deze route doet alleen listing + 15m/1u/2u momentum checks.
+    if FAST_MODE:
+        scan_fast_movers(
+            state,
+            now,
+        )
+
+        save_state(
+            state
+        )
+
+        return
+
+    # ---------------------------------------------------------
+    # VOLLEDIGE SCAN
+    # ---------------------------------------------------------
     previous_assets = (
         state.get(
             "assets",
             {},
         )
     )
+
+    # Houd ook bij welke Bitvavo-markten bestaan.
+    # Dit zorgt dat de fast scanner later nieuwe listings kan herkennen.
+    try:
+        markets = get_markets()
+        detect_new_markets(
+            markets,
+            state,
+        )
+    except Exception:
+        pass
 
     rows = scan_market()
 
@@ -2068,7 +2431,8 @@ def main():
             now,
         )
 
-    # Tussentijdse vroege signalen
+    # Bestaande technische vroege signalen blijven actief.
+    # Deze zijn trager dan de fast scanner en dienen als extra bevestiging.
     early_alerts = (
         detect_early_opportunities(
             rows,
