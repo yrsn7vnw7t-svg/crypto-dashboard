@@ -1,14 +1,27 @@
-name: Crypto Alerts V2
+name: Crypto Alerts V3
 
 on:
   schedule:
+    # Volledige Top 5 scan:
+    # 08:15 / 12:15 / 16:15 / 20:15 Nederlandse tijd
     - cron: "15 8,12,16,20 * * *"
       timezone: "Europe/Amsterdam"
 
-    - cron: "45 8,9,10,11,12,13,14,15,16,17,18,19 * * *"
+    # Lichte Fast Mover scan:
+    # iedere 15 minuten, 24/7
+    - cron: "*/15 * * * *"
       timezone: "Europe/Amsterdam"
 
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Welke scanner wil je handmatig testen?"
+        required: true
+        default: "fast"
+        type: choice
+        options:
+          - fast
+          - full
 
 permissions:
   contents: write
@@ -39,6 +52,11 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+          FAST_MODE: ${{ (github.event_name == 'workflow_dispatch' && inputs.mode == 'fast') || (github.event_name == 'schedule' && github.event.schedule == '*/15 * * * *') }}
+
+          FORCE_DIGEST: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'full' }}
+
         run: python alert_scanner.py
 
       - name: Save scanner state
