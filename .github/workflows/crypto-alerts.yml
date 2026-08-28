@@ -1,16 +1,17 @@
-name: Crypto Alerts V4
+name: Crypto Alerts V5
 
 on:
   schedule:
-    # Nieuwsmonitor - iedere 15 minuten
-    - cron: "0,15,30,45 * * * *"
+    # Nieuws + nieuwe Bitvavo listings: elke 15 minuten
+    - cron: "*/15 * * * *"
       timezone: "Europe/Amsterdam"
 
-    # Momentum scanner - iedere 30 minuten
-    - cron: "5,35 * * * *"
+    # Momentum: elke 30 minuten, bewust op :07 en :37
+    # zodat deze niet tegelijk met nieuws of de vaste digest start.
+    - cron: "7,37 * * * *"
       timezone: "Europe/Amsterdam"
 
-    # Volledige Top 5 scan
+    # Volledige Top 5: 08:15 / 12:15 / 16:15 / 20:15 NL tijd
     - cron: "15 8,12,16,20 * * *"
       timezone: "Europe/Amsterdam"
 
@@ -23,7 +24,7 @@ on:
         type: choice
         options:
           - news
-          - fast
+          - momentum
           - full
 
 permissions:
@@ -55,31 +56,24 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
+        shell: bash
         run: |
+          SCHEDULE="${{ github.event.schedule }}"
+          MODE="${{ inputs.mode }}"
+
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-
-            if [[ "${{ inputs.mode }}" == "news" ]]; then
+            if [[ "$MODE" == "news" ]]; then
               NEWS_MODE=true FAST_MODE=false FORCE_DIGEST=false python alert_scanner.py
-
-            elif [[ "${{ inputs.mode }}" == "fast" ]]; then
+            elif [[ "$MODE" == "momentum" ]]; then
               NEWS_MODE=false FAST_MODE=true FORCE_DIGEST=false python alert_scanner.py
-
-            elif [[ "${{ inputs.mode }}" == "full" ]]; then
+            else
               NEWS_MODE=false FAST_MODE=false FORCE_DIGEST=true python alert_scanner.py
             fi
-
-          elif [[ "${{ github.event.schedule }}" == "0,15,30,45 * * * *" ]]; then
+          elif [[ "$SCHEDULE" == "*/15 * * * *" ]]; then
             NEWS_MODE=true FAST_MODE=false FORCE_DIGEST=false python alert_scanner.py
-
-          elif [[ "${{ github.event.schedule }}" == "5,35 * * * *" ]]; then
+          elif [[ "$SCHEDULE" == "7,37 * * * *" ]]; then
             NEWS_MODE=false FAST_MODE=true FORCE_DIGEST=false python alert_scanner.py
-
-          elif [[ "${{ github.event.schedule }}" == "15 8,12,16,20 * * *" ]]; then
-            # Eerst eventuele nieuwe listing / momentum oppikken
-            NEWS_MODE=false FAST_MODE=true FORCE_DIGEST=false python alert_scanner.py
-
-            # Daarna volledige Top 5 digest
+          else
             NEWS_MODE=false FAST_MODE=false FORCE_DIGEST=true python alert_scanner.py
           fi
 
