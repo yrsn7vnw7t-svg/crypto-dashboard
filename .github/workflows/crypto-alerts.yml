@@ -1,26 +1,17 @@
-name: Crypto Alerts V5
+name: Crypto Alerts V6
 
 on:
   schedule:
-    # Nieuws + nieuwe Bitvavo listings: elke 15 minuten
-    - cron: "*/15 * * * *"
-      timezone: "Europe/Amsterdam"
-
-    # Momentum: elke 30 minuten, bewust op :07 en :37
-    # zodat deze niet tegelijk met nieuws of de vaste digest start.
-    - cron: "7,37 * * * *"
-      timezone: "Europe/Amsterdam"
-
-    # Volledige Top 5: 08:15 / 12:15 / 16:15 / 20:15 NL tijd
-    - cron: "15 8,12,16,20 * * *"
+    # Elke 15 minuten
+    - cron: "7,22,37,52 * * * *"
       timezone: "Europe/Amsterdam"
 
   workflow_dispatch:
     inputs:
       mode:
-        description: "Welke scanner wil je handmatig testen?"
+        description: "Welke scanner wil je handmatig draaien?"
         required: true
-        default: "news"
+        default: "full"
         type: choice
         options:
           - news
@@ -52,29 +43,45 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests pandas numpy
 
-      - name: Run crypto scanner
+      - name: Run scheduled scanner
+        if: github.event_name == 'schedule'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        shell: bash
         run: |
-          SCHEDULE="${{ github.event.schedule }}"
-          MODE="${{ inputs.mode }}"
+          HOUR=$(TZ=Europe/Amsterdam date +%H)
+          MINUTE=$(TZ=Europe/Amsterdam date +%M)
 
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            if [[ "$MODE" == "news" ]]; then
-              NEWS_MODE=true FAST_MODE=false FORCE_DIGEST=false python alert_scanner.py
-            elif [[ "$MODE" == "momentum" ]]; then
-              NEWS_MODE=false FAST_MODE=true FORCE_DIGEST=false python alert_scanner.py
-            else
-              NEWS_MODE=false FAST_MODE=false FORCE_DIGEST=true python alert_scanner.py
+          echo "Amsterdam tijd: $HOUR:$MINUTE"
+
+          # Nieuws iedere 15 minuten
+          NEWS_MODE=true python alert_scanner.py
+
+          # Momentum iedere 30 minuten
+          if [ "$MINUTE" = "07" ] || [ "$MINUTE" = "37" ]; then
+            FAST_MODE=true python alert_scanner.py
+          fi
+
+          # Volledige Top 5 rond 08:15 / 12:15 / 16:15 / 20:15
+          # De workflow draait om :22 zodat GitHub wat speling heeft.
+          if [ "$MINUTE" = "22" ]; then
+            if [ "$HOUR" = "08" ] || [ "$HOUR" = "12" ] || [ "$HOUR" = "16" ] || [ "$HOUR" = "20" ]; then
+              FORCE_DIGEST=true python alert_scanner.py
             fi
-          elif [[ "$SCHEDULE" == "*/15 * * * *" ]]; then
-            NEWS_MODE=true FAST_MODE=false FORCE_DIGEST=false python alert_scanner.py
-          elif [[ "$SCHEDULE" == "7,37 * * * *" ]]; then
-            NEWS_MODE=false FAST_MODE=true FORCE_DIGEST=false python alert_scanner.py
+          fi
+
+      - name: Run manual scanner
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ "${{ inputs.mode }}" = "news" ]; then
+            NEWS_MODE=true python alert_scanner.py
+          elif [ "${{ inputs.mode }}" = "momentum" ]; then
+            FAST_MODE=true python alert_scanner.py
           else
-            NEWS_MODE=false FAST_MODE=false FORCE_DIGEST=true python alert_scanner.py
+            FORCE_DIGEST=true python alert_scanner.py
           fi
 
       - name: Save scanner state
