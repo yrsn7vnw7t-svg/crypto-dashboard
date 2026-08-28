@@ -1,15 +1,17 @@
-name: Crypto Alerts V3
+name: Crypto Alerts V4
 
 on:
   schedule:
-    # Volledige Top 5 scan:
-    # 08:15 / 12:15 / 16:15 / 20:15 Nederlandse tijd
-    - cron: "15 8,12,16,20 * * *"
+    # Nieuwsmonitor - iedere 15 minuten
+    - cron: "0,15,30,45 * * * *"
       timezone: "Europe/Amsterdam"
 
-    # Lichte Fast Mover scan:
-    # iedere 15 minuten, 24/7
-    - cron: "*/15 * * * *"
+    # Momentum scanner - iedere 30 minuten
+    - cron: "5,35 * * * *"
+      timezone: "Europe/Amsterdam"
+
+    # Volledige Top 5 scan
+    - cron: "15 8,12,16,20 * * *"
       timezone: "Europe/Amsterdam"
 
   workflow_dispatch:
@@ -17,9 +19,10 @@ on:
       mode:
         description: "Welke scanner wil je handmatig testen?"
         required: true
-        default: "fast"
+        default: "news"
         type: choice
         options:
+          - news
           - fast
           - full
 
@@ -53,11 +56,32 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-          FAST_MODE: ${{ (github.event_name == 'workflow_dispatch' && inputs.mode == 'fast') || (github.event_name == 'schedule' && github.event.schedule == '*/15 * * * *') }}
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
 
-          FORCE_DIGEST: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'full' }}
+            if [[ "${{ inputs.mode }}" == "news" ]]; then
+              NEWS_MODE=true FAST_MODE=false FORCE_DIGEST=false python alert_scanner.py
 
-        run: python alert_scanner.py
+            elif [[ "${{ inputs.mode }}" == "fast" ]]; then
+              NEWS_MODE=false FAST_MODE=true FORCE_DIGEST=false python alert_scanner.py
+
+            elif [[ "${{ inputs.mode }}" == "full" ]]; then
+              NEWS_MODE=false FAST_MODE=false FORCE_DIGEST=true python alert_scanner.py
+            fi
+
+          elif [[ "${{ github.event.schedule }}" == "0,15,30,45 * * * *" ]]; then
+            NEWS_MODE=true FAST_MODE=false FORCE_DIGEST=false python alert_scanner.py
+
+          elif [[ "${{ github.event.schedule }}" == "5,35 * * * *" ]]; then
+            NEWS_MODE=false FAST_MODE=true FORCE_DIGEST=false python alert_scanner.py
+
+          elif [[ "${{ github.event.schedule }}" == "15 8,12,16,20 * * *" ]]; then
+            # Eerst eventuele nieuwe listing / momentum oppikken
+            NEWS_MODE=false FAST_MODE=true FORCE_DIGEST=false python alert_scanner.py
+
+            # Daarna volledige Top 5 digest
+            NEWS_MODE=false FAST_MODE=false FORCE_DIGEST=true python alert_scanner.py
+          fi
 
       - name: Save scanner state
         run: |
