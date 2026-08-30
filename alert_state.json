@@ -1,112 +1,31 @@
 {
   "assets": {
-    "GRASS": {
-      "score": 85,
-      "technical_score": 92,
-      "change_1d": 3.24,
-      "change_3d": 3.47,
-      "change_7d": 3.63,
+    "1INCH": {
+      "score": 80,
+      "technical_score": 91,
+      "change_1d": 0.74,
+      "change_3d": -1.38,
+      "change_7d": -2.78,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.32125
+      "price": 0.07685
     },
-    "EDU": {
-      "score": 81,
-      "technical_score": 92,
-      "change_1d": 2.44,
-      "change_3d": 8.05,
-      "change_7d": 18.66,
+    "BOB": {
+      "score": 79,
+      "technical_score": 85,
+      "change_1d": 9.33,
+      "change_3d": 4.7,
+      "change_7d": 25.73,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.04241
-    },
-    "ANIME": {
-      "score": 81,
-      "technical_score": 87,
-      "change_1d": 5.07,
-      "change_3d": 2.61,
-      "change_7d": -3.85,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.0023765
-    },
-    "XVG": {
-      "score": 81,
-      "technical_score": 87,
-      "change_1d": 5.02,
-      "change_3d": -0.11,
-      "change_7d": -2.64,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.0022038
-    },
-    "FORM": {
-      "score": 81,
-      "technical_score": 83,
-      "change_1d": 4.03,
-      "change_3d": 8.76,
-      "change_7d": -2.24,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.22466
+      "price": 0.0043171
     },
     "FLOCK": {
       "score": 79,
       "technical_score": 80,
-      "change_1d": 7.46,
-      "change_3d": 5.05,
-      "change_7d": 3.27,
+      "change_1d": 7.4,
+      "change_3d": 4.96,
+      "change_7d": 3.04,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.0294
-    },
-    "ENS": {
-      "score": 77,
-      "technical_score": 87,
-      "change_1d": 2.88,
-      "change_3d": -3.43,
-      "change_7d": -1.6,
-      "phase": "🟢 Vroeg momentum",
-      "price": 4.9717
-    },
-    "1INCH": {
-      "score": 76,
-      "technical_score": 91,
-      "change_1d": 1.14,
-      "change_3d": -1.1,
-      "change_7d": -2.83,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.077069
-    },
-    "MTL": {
-      "score": 76,
-      "technical_score": 91,
-      "change_1d": 1.73,
-      "change_3d": 2.17,
-      "change_7d": 1.89,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.20558
-    },
-    "EGLD": {
-      "score": 76,
-      "technical_score": 81,
-      "change_1d": 7.02,
-      "change_3d": 9.55,
-      "change_7d": 9.17,
-      "phase": "🟢 Vroeg momentum",
-      "price": 3.3107
-    },
-    "BTT": {
-      "score": 75,
-      "technical_score": 90,
-      "change_1d": 3.21,
-      "change_3d": -4.35,
-      "change_7d": -4.29,
-      "phase": "🟢 Vroeg momentum",
-      "price": 2.4807e-07
-    },
-    "PLUME": {
-      "score": 75,
-      "technical_score": 80,
-      "change_1d": 4.5,
-      "change_3d": 1.58,
-      "change_7d": 7.46,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.0128412
+      "price": 0.029716
     },
     "0G": {
       "score": 74,
@@ -117,33 +36,6 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.14463
     },
-    "FLUX": {
-      "score": 74,
-      "technical_score": 89,
-      "change_1d": 3.49,
-      "change_3d": -0.1,
-      "change_7d": 6.99,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.042047
-    },
-    "MLN": {
-      "score": 73,
-      "technical_score": 87,
-      "change_1d": 1.2,
-      "change_3d": 1.27,
-      "change_7d": 2.73,
-      "phase": "🟢 Vroeg momentum",
-      "price": 1.12
-    },
-    "SQD": {
-      "score": 73,
-      "technical_score": 83,
-      "change_1d": 3.21,
-      "change_3d": -1.45,
-      "change_7d": 11.53,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.029757
-    },
     "DATAIP": {
       "score": 73,
       "technical_score": 83,
@@ -153,14 +45,32 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.1599
     },
-    "CAKE": {
+    "ANIME": {
       "score": 73,
       "technical_score": 78,
-      "change_1d": 7.35,
-      "change_3d": 5.13,
-      "change_7d": 6.1,
+      "change_1d": 6.09,
+      "change_3d": 3.16,
+      "change_7d": -2.37,
       "phase": "🟢 Vroeg momentum",
-      "price": 1.5956
+      "price": 0.0023951
+    },
+    "XVG": {
+      "score": 73,
+      "technical_score": 78,
+      "change_1d": 6.48,
+      "change_3d": 1.12,
+      "change_7d": -0.84,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.0022344
+    },
+    "GRASS": {
+      "score": 73,
+      "technical_score": 78,
+      "change_1d": 2.77,
+      "change_3d": 2.56,
+      "change_7d": 0.86,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.31979
     },
     "VVV": {
       "score": 72,
@@ -171,50 +81,50 @@
       "phase": "🟢 Vroeg momentum",
       "price": 14.9071
     },
-    "LIGHTER": {
-      "score": 72,
-      "technical_score": 76,
-      "change_1d": 1.66,
-      "change_3d": -3.49,
-      "change_7d": 5.51,
+    "FLUX": {
+      "score": 71,
+      "technical_score": 85,
+      "change_1d": 4.25,
+      "change_3d": 0.76,
+      "change_7d": 7.78,
       "phase": "🟢 Vroeg momentum",
-      "price": 3.08
+      "price": 0.042828
     },
-    "HYPE": {
-      "score": 72,
-      "technical_score": 68,
-      "change_1d": -3.07,
-      "change_3d": -4.26,
-      "change_7d": -1.16,
-      "phase": "🟡 Neutraal",
-      "price": 69.704
+    "ENS": {
+      "score": 71,
+      "technical_score": 80,
+      "change_1d": 2.17,
+      "change_3d": -3.75,
+      "change_7d": -1.36,
+      "phase": "🟢 Vroeg momentum",
+      "price": 4.9626
+    },
+    "SQD": {
+      "score": 71,
+      "technical_score": 80,
+      "change_1d": 2.92,
+      "change_3d": -3.69,
+      "change_7d": 12.54,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.029703
     },
     "ZEUS": {
       "score": 71,
       "technical_score": 80,
-      "change_1d": 2.43,
-      "change_3d": 0.05,
-      "change_7d": 1.87,
+      "change_1d": 3.31,
+      "change_3d": 0.9,
+      "change_7d": 2.74,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.002171
+      "price": 0.0021895
     },
     "AIOZ": {
       "score": 71,
       "technical_score": 80,
-      "change_1d": 0.85,
-      "change_3d": -3.99,
-      "change_7d": 6.01,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.050897
-    },
-    "MIRA": {
-      "score": 71,
-      "technical_score": 75,
-      "change_1d": 5.87,
-      "change_3d": 2.85,
-      "change_7d": 3.77,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.038192
+      "change_1d": -0.31,
+      "change_3d": -5.43,
+      "change_7d": 6.67,
+      "phase": "🟡 Neutraal",
+      "price": 0.051038
     },
     "VSN": {
       "score": 69,
@@ -225,24 +135,6 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.035211
     },
-    "BIRB": {
-      "score": 69,
-      "technical_score": 83,
-      "change_1d": 3.55,
-      "change_3d": -4.14,
-      "change_7d": 1.43,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.04957
-    },
-    "SAFE": {
-      "score": 69,
-      "technical_score": 83,
-      "change_1d": 2.91,
-      "change_3d": -1.93,
-      "change_7d": -4.49,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.077953
-    },
     "SIGN": {
       "score": 69,
       "technical_score": 78,
@@ -252,77 +144,41 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.007615
     },
-    "PORTAL": {
-      "score": 69,
-      "technical_score": 73,
-      "change_1d": 1.98,
-      "change_3d": -1.18,
-      "change_7d": 13.86,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.013346
-    },
-    "XAN": {
-      "score": 69,
-      "technical_score": 73,
-      "change_1d": -1.46,
-      "change_3d": 9.33,
-      "change_7d": 6.23,
-      "phase": "🟡 Neutraal",
-      "price": 0.0113989
-    },
-    "LDO": {
+    "MIRA": {
       "score": 69,
       "technical_score": 72,
-      "change_1d": 1.56,
-      "change_3d": -1.54,
-      "change_7d": -8.91,
+      "change_1d": 6.8,
+      "change_3d": 2.96,
+      "change_7d": 4.68,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.3133
+      "price": 0.038586
     },
-    "USELESS": {
-      "score": 68,
-      "technical_score": 78,
-      "change_1d": 8.32,
-      "change_3d": 3.26,
-      "change_7d": 3.91,
+    "UNI": {
+      "score": 69,
+      "technical_score": 68,
+      "change_1d": 11.63,
+      "change_3d": 12.6,
+      "change_7d": 16.82,
       "phase": "🟡 Neutraal",
-      "price": 0.060573
+      "price": 4.5242
     },
-    "CAP": {
-      "score": 68,
-      "technical_score": 76,
-      "change_1d": -0.37,
-      "change_3d": 4.41,
-      "change_7d": -0.47,
-      "phase": "🟡 Neutraal",
-      "price": 0.0595152
-    },
-    "SOL": {
-      "score": 68,
-      "technical_score": 60,
-      "change_1d": -1.58,
-      "change_3d": -4.27,
-      "change_7d": 9.7,
-      "phase": "🟡 Neutraal",
-      "price": 89.716
-    },
-    "NEWT": {
+    "BTT": {
       "score": 67,
       "technical_score": 80,
-      "change_1d": 2.65,
-      "change_3d": 0.54,
-      "change_7d": -5.07,
+      "change_1d": 0.75,
+      "change_3d": -1.23,
+      "change_7d": -6.1,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.036165
+      "price": 2.4808e-07
     },
     "IRYS": {
       "score": 67,
       "technical_score": 80,
-      "change_1d": 1.9,
-      "change_3d": 1.59,
-      "change_7d": -1.76,
+      "change_1d": 3.12,
+      "change_3d": 1.1,
+      "change_7d": -1.24,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.011912
+      "price": 0.011992
     },
     "BEL": {
       "score": 67,
@@ -333,6 +189,15 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.103069
     },
+    "SAFE": {
+      "score": 67,
+      "technical_score": 80,
+      "change_1d": 2.4,
+      "change_3d": -2.3,
+      "change_7d": -4.66,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.077632
+    },
     "WAL": {
       "score": 67,
       "technical_score": 80,
@@ -342,32 +207,41 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.020774
     },
-    "ANKR": {
-      "score": 67,
-      "technical_score": 80,
-      "change_1d": 0.31,
-      "change_3d": -0.76,
-      "change_7d": -0.79,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.0034671
-    },
-    "BOB": {
+    "ORCA": {
       "score": 67,
       "technical_score": 70,
-      "change_1d": 3.49,
-      "change_3d": -1.32,
-      "change_7d": 18.67,
+      "change_1d": 2.33,
+      "change_3d": 2.22,
+      "change_7d": 3.15,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.0040615
+      "price": 1.13463
+    },
+    "XAN": {
+      "score": 67,
+      "technical_score": 70,
+      "change_1d": -2.1,
+      "change_3d": 10.25,
+      "change_7d": 5.88,
+      "phase": "🟡 Neutraal",
+      "price": 0.0113846
     },
     "ZBT": {
       "score": 67,
       "technical_score": 70,
-      "change_1d": 4.13,
-      "change_3d": 4.93,
-      "change_7d": 4.64,
+      "change_1d": 4.39,
+      "change_3d": 5.47,
+      "change_7d": 4.19,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.071562
+      "price": 0.07147
+    },
+    "MLN": {
+      "score": 66,
+      "technical_score": 79,
+      "change_1d": 1.2,
+      "change_3d": 1.27,
+      "change_7d": 2.73,
+      "phase": "🟢 Vroeg momentum",
+      "price": 1.12
     },
     "ELSA": {
       "score": 66,
@@ -378,14 +252,32 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.04
     },
-    "BTC": {
+    "SOL": {
       "score": 66,
-      "technical_score": 58,
-      "change_1d": 0.28,
-      "change_3d": -1.7,
-      "change_7d": 1.99,
+      "technical_score": 57,
+      "change_1d": -2.01,
+      "change_3d": -4.56,
+      "change_7d": 9.51,
+      "phase": "🟡 Neutraal",
+      "price": 89.492
+    },
+    "MTL": {
+      "score": 65,
+      "technical_score": 78,
+      "change_1d": 1.74,
+      "change_3d": 2.38,
+      "change_7d": 2.36,
       "phase": "🟢 Vroeg momentum",
-      "price": 67775.0
+      "price": 0.206
+    },
+    "BIRB": {
+      "score": 65,
+      "technical_score": 78,
+      "change_1d": 5.24,
+      "change_3d": -2.55,
+      "change_7d": 3.64,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.05039
     },
     "LSK": {
       "score": 65,
@@ -396,15 +288,6 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.09033
     },
-    "TREE": {
-      "score": 65,
-      "technical_score": 73,
-      "change_1d": 4.75,
-      "change_3d": 0.81,
-      "change_7d": 0.85,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.03384
-    },
     "GOAT": {
       "score": 65,
       "technical_score": 73,
@@ -413,15 +296,6 @@
       "change_7d": 1.61,
       "phase": "🟢 Vroeg momentum",
       "price": 0.013726
-    },
-    "CC": {
-      "score": 65,
-      "technical_score": 73,
-      "change_1d": 0.15,
-      "change_3d": 6.85,
-      "change_7d": -0.67,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.10237
     },
     "PROVE": {
       "score": 65,
@@ -432,32 +306,14 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.15098
     },
-    "SHELL": {
+    "FORM": {
       "score": 65,
-      "technical_score": 68,
-      "change_1d": -0.86,
-      "change_3d": 0.17,
-      "change_7d": -2.89,
-      "phase": "🟡 Neutraal",
-      "price": 0.019212
-    },
-    "ENA": {
-      "score": 65,
-      "technical_score": 62,
-      "change_1d": -2.51,
-      "change_3d": -7.8,
-      "change_7d": -4.11,
-      "phase": "🟡 Neutraal",
-      "price": 0.13428
-    },
-    "IMU": {
-      "score": 64,
-      "technical_score": 76,
-      "change_1d": 0.64,
-      "change_3d": 2.95,
-      "change_7d": -0.75,
+      "technical_score": 63,
+      "change_1d": 4.69,
+      "change_3d": 9.24,
+      "change_7d": -2.25,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.0020179
+      "price": 0.22522
     },
     "RLC": {
       "score": 64,
@@ -468,41 +324,95 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.27142
     },
+    "BIGTIME": {
+      "score": 64,
+      "technical_score": 71,
+      "change_1d": 6.76,
+      "change_3d": 6.49,
+      "change_7d": 5.1,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.005901
+    },
+    "HYPE": {
+      "score": 64,
+      "technical_score": 57,
+      "change_1d": -3.42,
+      "change_3d": -4.24,
+      "change_7d": -1.21,
+      "phase": "🟡 Neutraal",
+      "price": 69.602
+    },
+    "BTC": {
+      "score": 64,
+      "technical_score": 55,
+      "change_1d": 0.16,
+      "change_3d": -1.72,
+      "change_7d": 1.78,
+      "phase": "🟢 Vroeg momentum",
+      "price": 67701.0
+    },
+    "ETH": {
+      "score": 64,
+      "technical_score": 55,
+      "change_1d": 0.29,
+      "change_3d": -1.22,
+      "change_7d": 1.02,
+      "phase": "🟢 Vroeg momentum",
+      "price": 2130.59
+    },
+    "TREE": {
+      "score": 63,
+      "technical_score": 70,
+      "change_1d": 4.14,
+      "change_3d": 0.04,
+      "change_7d": 1.03,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.033796
+    },
     "CPOOL": {
       "score": 63,
       "technical_score": 70,
-      "change_1d": 8.52,
-      "change_3d": 3.06,
-      "change_7d": 2.47,
+      "change_1d": 10.49,
+      "change_3d": 4.38,
+      "change_7d": 3.91,
+      "phase": "🟡 Neutraal",
+      "price": 0.017953
+    },
+    "SLX": {
+      "score": 63,
+      "technical_score": 70,
+      "change_1d": 1.98,
+      "change_3d": 8.06,
+      "change_7d": 5.9,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.017726
+      "price": 0.06191
+    },
+    "CC": {
+      "score": 63,
+      "technical_score": 70,
+      "change_1d": 0.73,
+      "change_3d": 6.84,
+      "change_7d": -2.36,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.10267
     },
     "ID": {
       "score": 63,
       "technical_score": 70,
-      "change_1d": 3.21,
-      "change_3d": -0.86,
-      "change_7d": 2.46,
+      "change_1d": 2.88,
+      "change_3d": -1.19,
+      "change_7d": 2.13,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.027902
+      "price": 0.027812
     },
-    "BIGTIME": {
-      "score": 63,
-      "technical_score": 70,
-      "change_1d": 6.39,
-      "change_3d": 6.13,
-      "change_7d": 4.75,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.00589
-    },
-    "PENDLE": {
+    "PORTAL": {
       "score": 63,
       "technical_score": 65,
-      "change_1d": 2.84,
-      "change_3d": -2.15,
-      "change_7d": -5.65,
+      "change_1d": 1.16,
+      "change_3d": -1.74,
+      "change_7d": 15.07,
       "phase": "🟢 Vroeg momentum",
-      "price": 1.5089
+      "price": 0.013363
     },
     "BLEND": {
       "score": 61,
@@ -549,14 +459,23 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.060318
     },
-    "DRIFT": {
+    "TNSR": {
+      "score": 61,
+      "technical_score": 70,
+      "change_1d": 16.0,
+      "change_3d": 14.13,
+      "change_7d": 12.53,
+      "phase": "🟡 Lopend momentum",
+      "price": 0.033868
+    },
+    "SOMI": {
       "score": 61,
       "technical_score": 68,
-      "change_1d": -2.71,
-      "change_3d": 1.78,
-      "change_7d": 2.46,
+      "change_1d": -2.11,
+      "change_3d": 1.33,
+      "change_7d": 2.43,
       "phase": "🟡 Neutraal",
-      "price": 0.010679
+      "price": 0.09701
     },
     "METIS": {
       "score": 61,
@@ -566,6 +485,15 @@
       "change_7d": -0.88,
       "phase": "🟢 Vroeg momentum",
       "price": 2.4022
+    },
+    "PLUME": {
+      "score": 61,
+      "technical_score": 63,
+      "change_1d": 4.19,
+      "change_3d": 1.54,
+      "change_7d": 6.31,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.0127902
     },
     "SKY": {
       "score": 61,
@@ -585,59 +513,32 @@
       "phase": "🟢 Vroeg momentum",
       "price": 2.1412
     },
-    "USDC": {
-      "score": 61,
-      "technical_score": 58,
-      "change_1d": -0.07,
-      "change_3d": 0.61,
-      "change_7d": 0.83,
-      "phase": "🟡 Neutraal",
-      "price": 0.8634
-    },
     "VET": {
       "score": 61,
       "technical_score": 57,
-      "change_1d": -0.09,
-      "change_3d": -3.22,
-      "change_7d": 19.29,
+      "change_1d": -3.69,
+      "change_3d": -3.73,
+      "change_7d": 19.24,
       "phase": "🟡 Neutraal",
-      "price": 0.0058906
+      "price": 0.0058931
     },
-    "ETH": {
-      "score": 61,
-      "technical_score": 51,
-      "change_1d": 0.67,
-      "change_3d": -1.18,
-      "change_7d": 1.51,
+    "USELESS": {
+      "score": 60,
+      "technical_score": 67,
+      "change_1d": 9.95,
+      "change_3d": 4.32,
+      "change_7d": 4.25,
+      "phase": "🟡 Neutraal",
+      "price": 0.061919
+    },
+    "CAKE": {
+      "score": 60,
+      "technical_score": 61,
+      "change_1d": 7.25,
+      "change_3d": 5.47,
+      "change_7d": 6.47,
       "phase": "🟢 Vroeg momentum",
-      "price": 2134.09
-    },
-    "ZEN": {
-      "score": 60,
-      "technical_score": 74,
-      "change_1d": 9.48,
-      "change_3d": 5.97,
-      "change_7d": -2.16,
-      "phase": "🟡 Lopend momentum",
-      "price": 4.8295
-    },
-    "PEAQ": {
-      "score": 60,
-      "technical_score": 66,
-      "change_1d": -2.63,
-      "change_3d": 3.52,
-      "change_7d": 19.49,
-      "phase": "🟡 Neutraal",
-      "price": 0.020319
-    },
-    "AUCTION": {
-      "score": 59,
-      "technical_score": 78,
-      "change_1d": 22.53,
-      "change_3d": 18.95,
-      "change_7d": 16.6,
-      "phase": "🟡 Lopend momentum",
-      "price": 3.3304
+      "price": 1.5958
     },
     "XYO": {
       "score": 59,
@@ -675,41 +576,77 @@
       "phase": "🟡 Neutraal",
       "price": 6.7649
     },
-    "ROSE": {
+    "ZK": {
+      "score": 59,
+      "technical_score": 68,
+      "change_1d": 15.7,
+      "change_3d": 9.8,
+      "change_7d": 3.83,
+      "phase": "🟡 Lopend momentum",
+      "price": 0.008189
+    },
+    "CAP": {
       "score": 59,
       "technical_score": 65,
-      "change_1d": 0.77,
-      "change_3d": -1.77,
-      "change_7d": -3.95,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.005207
-    },
-    "TRX": {
-      "score": 59,
-      "technical_score": 60,
-      "change_1d": -0.84,
-      "change_3d": 0.83,
-      "change_7d": -0.89,
+      "change_1d": -1.09,
+      "change_3d": 4.06,
+      "change_7d": -0.07,
       "phase": "🟡 Neutraal",
-      "price": 0.29214
+      "price": 0.0593144
+    },
+    "LINK": {
+      "score": 59,
+      "technical_score": 55,
+      "change_1d": -0.45,
+      "change_3d": -3.57,
+      "change_7d": -0.22,
+      "phase": "🟡 Neutraal",
+      "price": 9.8628
+    },
+    "USDC": {
+      "score": 59,
+      "technical_score": 55,
+      "change_1d": -0.08,
+      "change_3d": 0.59,
+      "change_7d": 0.89,
+      "phase": "🟡 Neutraal",
+      "price": 0.8633
+    },
+    "ENA": {
+      "score": 59,
+      "technical_score": 55,
+      "change_1d": -2.8,
+      "change_3d": -8.05,
+      "change_7d": -2.94,
+      "phase": "🟡 Neutraal",
+      "price": 0.13422
     },
     "AAVE": {
       "score": 59,
       "technical_score": 55,
-      "change_1d": -0.63,
-      "change_3d": -2.34,
-      "change_7d": -11.11,
+      "change_1d": -1.67,
+      "change_3d": -2.0,
+      "change_7d": -11.14,
       "phase": "🟡 Neutraal",
-      "price": 107.82
+      "price": 107.61
     },
     "MAGIC": {
       "score": 59,
       "technical_score": 55,
-      "change_1d": 1.83,
-      "change_3d": 1.7,
-      "change_7d": 3.03,
+      "change_1d": 2.04,
+      "change_3d": 1.91,
+      "change_7d": 3.58,
       "phase": "🟢 Vroeg momentum",
       "price": 0.040357
+    },
+    "NEAR": {
+      "score": 59,
+      "technical_score": 55,
+      "change_1d": -0.23,
+      "change_3d": -2.63,
+      "change_7d": -6.47,
+      "phase": "🟡 Neutraal",
+      "price": 1.6138
     },
     "DBR": {
       "score": 58,
@@ -720,24 +657,6 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.012622
     },
-    "SSV": {
-      "score": 58,
-      "technical_score": 59,
-      "change_1d": 0.43,
-      "change_3d": -0.13,
-      "change_7d": 1.67,
-      "phase": "🟢 Vroeg momentum",
-      "price": 2.3194
-    },
-    "NMR": {
-      "score": 57,
-      "technical_score": 68,
-      "change_1d": -2.43,
-      "change_3d": -0.45,
-      "change_7d": -3.05,
-      "phase": "🟡 Neutraal",
-      "price": 7.7211
-    },
     "CHR": {
       "score": 57,
       "technical_score": 68,
@@ -747,14 +666,14 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.012912
     },
-    "ESP": {
+    "ANKR": {
       "score": 57,
-      "technical_score": 67,
-      "change_1d": -2.28,
-      "change_3d": -6.82,
-      "change_7d": -9.59,
-      "phase": "🟡 Neutraal",
-      "price": 0.069246
+      "technical_score": 68,
+      "change_1d": 0.17,
+      "change_3d": -1.48,
+      "change_7d": -0.08,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.0034621
     },
     "RECALL": {
       "score": 57,
@@ -765,50 +684,41 @@
       "phase": "🟡 Neutraal",
       "price": 0.041499
     },
-    "COTI": {
+    "SAGA": {
+      "score": 57,
+      "technical_score": 62,
+      "change_1d": -0.93,
+      "change_3d": -0.66,
+      "change_7d": 0.58,
+      "phase": "🟡 Neutraal",
+      "price": 0.013037
+    },
+    "RAY": {
       "score": 57,
       "technical_score": 58,
-      "change_1d": -5.37,
-      "change_3d": 3.8,
-      "change_7d": 8.32,
+      "change_1d": -0.11,
+      "change_3d": -3.77,
+      "change_7d": 4.38,
       "phase": "🟡 Neutraal",
-      "price": 0.011195
-    },
-    "GWEI": {
-      "score": 57,
-      "technical_score": 57,
-      "change_1d": 0.38,
-      "change_3d": -3.63,
-      "change_7d": 4.72,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.021275
+      "price": 0.68747
     },
     "SOLV": {
       "score": 57,
       "technical_score": 57,
-      "change_1d": -3.09,
-      "change_3d": 1.74,
-      "change_7d": 10.69,
+      "change_1d": -4.24,
+      "change_3d": 1.03,
+      "change_7d": 11.12,
       "phase": "🟡 Neutraal",
-      "price": 0.0024684
+      "price": 0.0024655
     },
     "ENSO": {
       "score": 57,
       "technical_score": 57,
-      "change_1d": -1.44,
-      "change_3d": 4.55,
-      "change_7d": -1.1,
+      "change_1d": -2.25,
+      "change_3d": 4.29,
+      "change_7d": -0.86,
       "phase": "🟡 Neutraal",
-      "price": 0.7369
-    },
-    "XAI": {
-      "score": 56,
-      "technical_score": 66,
-      "change_1d": -1.3,
-      "change_3d": 0.68,
-      "change_7d": -2.52,
-      "phase": "🟡 Neutraal",
-      "price": 0.0064534
+      "price": 0.7344
     },
     "CARV": {
       "score": 56,
@@ -831,11 +741,11 @@
     "NPC": {
       "score": 56,
       "technical_score": 65,
-      "change_1d": -2.54,
-      "change_3d": 2.48,
-      "change_7d": 43.19,
+      "change_1d": -2.03,
+      "change_3d": 1.18,
+      "change_7d": 40.54,
       "phase": "🟡 Neutraal",
-      "price": 0.0147788
+      "price": 0.014731
     },
     "YFI": {
       "score": 56,
@@ -846,14 +756,14 @@
       "phase": "🟡 Neutraal",
       "price": 1950.3
     },
-    "TAO": {
-      "score": 56,
-      "technical_score": 47,
-      "change_1d": -0.75,
-      "change_3d": -7.12,
-      "change_7d": -2.3,
-      "phase": "🟡 Neutraal",
-      "price": 202.08
+    "ZEN": {
+      "score": 55,
+      "technical_score": 67,
+      "change_1d": 8.9,
+      "change_3d": 6.11,
+      "change_7d": -1.77,
+      "phase": "🟡 Lopend momentum",
+      "price": 4.8212
     },
     "BANANA": {
       "score": 55,
@@ -873,23 +783,32 @@
       "phase": "🟢 Vroeg momentum",
       "price": 1.1556
     },
-    "TNSR": {
+    "PEAQ": {
       "score": 55,
-      "technical_score": 63,
-      "change_1d": 14.74,
-      "change_3d": 13.0,
-      "change_7d": 11.33,
-      "phase": "🟡 Lopend momentum",
-      "price": 0.033571
+      "technical_score": 60,
+      "change_1d": -5.54,
+      "change_3d": -0.14,
+      "change_7d": 17.88,
+      "phase": "🟡 Neutraal",
+      "price": 0.020048
     },
-    "ZK": {
+    "EGLD": {
       "score": 55,
-      "technical_score": 63,
-      "change_1d": 13.6,
-      "change_3d": 7.86,
-      "change_7d": 2.62,
-      "phase": "🟡 Lopend momentum",
-      "price": 0.008081
+      "technical_score": 55,
+      "change_1d": 5.21,
+      "change_3d": 9.33,
+      "change_7d": 8.08,
+      "phase": "🟢 Vroeg momentum",
+      "price": 3.2843
+    },
+    "SAPIEN": {
+      "score": 55,
+      "technical_score": 55,
+      "change_1d": -0.31,
+      "change_3d": 1.9,
+      "change_7d": -2.09,
+      "phase": "🟡 Neutraal",
+      "price": 0.069431
     },
     "SPX": {
       "score": 55,
@@ -900,41 +819,23 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.47526
     },
-    "SAPIEN": {
-      "score": 55,
-      "technical_score": 55,
-      "change_1d": 0.38,
-      "change_3d": 2.9,
-      "change_7d": -2.48,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.070122
-    },
-    "NIL": {
-      "score": 55,
-      "technical_score": 55,
-      "change_1d": -6.49,
-      "change_3d": 21.03,
-      "change_7d": 16.25,
-      "phase": "🟡 Neutraal",
-      "price": 0.044354
-    },
     "SXT": {
       "score": 55,
       "technical_score": 55,
-      "change_1d": 2.52,
-      "change_3d": 2.53,
-      "change_7d": 8.95,
+      "change_1d": 2.34,
+      "change_3d": 2.35,
+      "change_7d": 8.72,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.007449
+      "price": 0.007437
     },
-    "ORCA": {
+    "COTI": {
       "score": 55,
       "technical_score": 55,
-      "change_1d": 1.71,
-      "change_3d": 0.03,
-      "change_7d": 1.84,
-      "phase": "🟢 Vroeg momentum",
-      "price": 1.12731
+      "change_1d": -5.91,
+      "change_3d": 3.05,
+      "change_7d": 8.01,
+      "phase": "🟡 Neutraal",
+      "price": 0.011215
     },
     "PHA": {
       "score": 55,
@@ -943,88 +844,88 @@
       "change_3d": -2.05,
       "change_7d": -0.03,
       "phase": "🟡 Neutraal",
-      "price": 0.02155
-    },
-    "STRK": {
-      "score": 55,
-      "technical_score": 55,
-      "change_1d": 1.11,
-      "change_3d": -3.52,
-      "change_7d": -9.04,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.022252
+      "price": 0.02157
     },
     "LISTA": {
       "score": 55,
       "technical_score": 55,
-      "change_1d": 3.61,
-      "change_3d": 4.4,
-      "change_7d": 2.96,
+      "change_1d": 1.88,
+      "change_3d": 2.07,
+      "change_7d": 1.57,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.062792
+      "price": 0.061743
     },
     "SUSHI": {
       "score": 55,
       "technical_score": 55,
-      "change_1d": 2.72,
-      "change_3d": -1.01,
-      "change_7d": -5.18,
+      "change_1d": 2.66,
+      "change_3d": -1.06,
+      "change_7d": -4.85,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.16851
+      "price": 0.1684
+    },
+    "BNB": {
+      "score": 55,
+      "technical_score": 55,
+      "change_1d": 0.07,
+      "change_3d": -2.08,
+      "change_7d": -0.38,
+      "phase": "🟢 Vroeg momentum",
+      "price": 598.64
+    },
+    "SSV": {
+      "score": 55,
+      "technical_score": 55,
+      "change_1d": 0.22,
+      "change_3d": -0.12,
+      "change_7d": 1.34,
+      "phase": "🟢 Vroeg momentum",
+      "price": 2.3119
     },
     "WCT": {
       "score": 55,
       "technical_score": 55,
-      "change_1d": 2.5,
-      "change_3d": -1.26,
-      "change_7d": -3.46,
+      "change_1d": 2.16,
+      "change_3d": -2.33,
+      "change_7d": -3.91,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.032791
+      "price": 0.032683
+    },
+    "SPK": {
+      "score": 55,
+      "technical_score": 55,
+      "change_1d": 0.89,
+      "change_3d": -2.49,
+      "change_7d": -17.18,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.016434
     },
     "MANA": {
       "score": 55,
       "technical_score": 55,
-      "change_1d": 0.8,
-      "change_3d": -1.94,
-      "change_7d": -3.01,
+      "change_1d": 0.41,
+      "change_3d": -1.33,
+      "change_7d": -3.02,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.063974
+      "price": 0.06397
     },
-    "MAV": {
-      "score": 54,
-      "technical_score": 64,
-      "change_1d": -1.15,
-      "change_3d": -1.62,
-      "change_7d": 1.38,
-      "phase": "🟡 Neutraal",
-      "price": 0.009276
+    "AXL": {
+      "score": 55,
+      "technical_score": 55,
+      "change_1d": 2.64,
+      "change_3d": 0.09,
+      "change_7d": -2.46,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.035631
     },
-    "UNI": {
-      "score": 54,
-      "technical_score": 61,
-      "change_1d": 12.08,
-      "change_3d": 12.92,
-      "change_7d": 16.38,
-      "phase": "🟡 Lopend momentum",
-      "price": 4.5362
-    },
-    "TAI": {
+    "EDU": {
       "score": 54,
       "technical_score": 59,
-      "change_1d": 0.94,
-      "change_3d": -3.16,
-      "change_7d": -11.79,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.004459
-    },
-    "XRP": {
-      "score": 54,
-      "technical_score": 42,
-      "change_1d": -0.46,
-      "change_3d": -3.98,
-      "change_7d": -7.75,
+      "change_1d": -2.0,
+      "change_3d": 4.52,
+      "change_7d": 15.87,
       "phase": "🟡 Neutraal",
-      "price": 1.19705
+      "price": 0.04118
     },
     "O": {
       "score": 53,
@@ -1062,14 +963,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.15169
     },
-    "SOMI": {
+    "DRIFT": {
       "score": 53,
       "technical_score": 57,
-      "change_1d": -2.2,
-      "change_3d": 1.91,
-      "change_7d": 2.37,
+      "change_1d": -2.87,
+      "change_3d": 1.15,
+      "change_7d": 2.72,
       "phase": "🟡 Neutraal",
-      "price": 0.09699
+      "price": 0.010667
     },
     "MERL": {
       "score": 53,
@@ -1080,41 +981,23 @@
       "phase": "🟡 Neutraal",
       "price": 0.017891
     },
-    "ARB": {
-      "score": 53,
-      "technical_score": 52,
-      "change_1d": 0.73,
-      "change_3d": -3.85,
-      "change_7d": -12.36,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.0764
-    },
-    "MON": {
-      "score": 53,
-      "technical_score": 52,
-      "change_1d": 2.14,
-      "change_3d": -2.5,
-      "change_7d": -7.52,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.023607
-    },
-    "LINK": {
-      "score": 53,
-      "technical_score": 48,
-      "change_1d": -0.23,
-      "change_3d": -3.98,
-      "change_7d": -0.32,
-      "phase": "🟡 Neutraal",
-      "price": 9.867
-    },
-    "SPK": {
+    "XMN": {
       "score": 52,
-      "technical_score": 51,
-      "change_1d": 1.42,
-      "change_3d": -2.77,
-      "change_7d": -16.38,
+      "technical_score": 56,
+      "change_1d": -8.68,
+      "change_3d": -3.82,
+      "change_7d": -13.58,
+      "phase": "🟡 Neutraal",
+      "price": 0.000579
+    },
+    "IKA": {
+      "score": 52,
+      "technical_score": 56,
+      "change_1d": 1.21,
+      "change_3d": -9.76,
+      "change_7d": -22.59,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.016373
+      "price": 0.0016959
     },
     "ACX": {
       "score": 51,
@@ -1128,11 +1011,11 @@
     "W": {
       "score": 51,
       "technical_score": 55,
-      "change_1d": 2.06,
-      "change_3d": -3.15,
-      "change_7d": -4.39,
+      "change_1d": 1.81,
+      "change_3d": -3.29,
+      "change_7d": -3.43,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.008044
+      "price": 0.008025
     },
     "DYM": {
       "score": 51,
@@ -1164,20 +1047,11 @@
     "ATH": {
       "score": 51,
       "technical_score": 55,
-      "change_1d": 1.78,
-      "change_3d": -1.38,
-      "change_7d": 2.22,
+      "change_1d": 1.82,
+      "change_3d": -1.39,
+      "change_7d": 2.42,
       "phase": "🟢 Vroeg momentum",
       "price": 0.0042561
-    },
-    "SAGA": {
-      "score": 51,
-      "technical_score": 55,
-      "change_1d": -0.19,
-      "change_3d": 0.29,
-      "change_7d": 1.03,
-      "phase": "🟡 Neutraal",
-      "price": 0.013134
     },
     "CRO": {
       "score": 51,
@@ -1200,29 +1074,29 @@
     "KERNEL": {
       "score": 51,
       "technical_score": 55,
-      "change_1d": 0.39,
-      "change_3d": -3.65,
-      "change_7d": -0.77,
+      "change_1d": 0.32,
+      "change_3d": -3.96,
+      "change_7d": -0.69,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.033146
+      "price": 0.033125
     },
     "VTHO": {
       "score": 51,
       "technical_score": 55,
-      "change_1d": 0.06,
-      "change_3d": -1.98,
-      "change_7d": 8.48,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.00034801
+      "change_1d": -2.02,
+      "change_3d": -2.22,
+      "change_7d": 8.02,
+      "phase": "🟡 Neutraal",
+      "price": 0.00034675
     },
     "ASTER": {
       "score": 51,
       "technical_score": 55,
-      "change_1d": -0.52,
-      "change_3d": -1.16,
-      "change_7d": 2.68,
+      "change_1d": -0.18,
+      "change_3d": -0.02,
+      "change_7d": 4.15,
       "phase": "🟡 Neutraal",
-      "price": 0.60098
+      "price": 0.60301
     },
     "API3": {
       "score": 51,
@@ -1232,6 +1106,15 @@
       "change_7d": -2.36,
       "phase": "🟢 Vroeg momentum",
       "price": 0.19585
+    },
+    "BABY": {
+      "score": 51,
+      "technical_score": 55,
+      "change_1d": 0.21,
+      "change_3d": -2.63,
+      "change_7d": -1.89,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.010718
     },
     "UMA": {
       "score": 51,
@@ -1254,11 +1137,11 @@
     "COW": {
       "score": 51,
       "technical_score": 55,
-      "change_1d": -0.14,
-      "change_3d": 3.2,
-      "change_7d": 2.96,
+      "change_1d": -0.12,
+      "change_3d": 3.43,
+      "change_7d": 3.33,
       "phase": "🟡 Neutraal",
-      "price": 0.10578
+      "price": 0.10587
     },
     "PROMPT": {
       "score": 51,
@@ -1269,14 +1152,14 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.021345
     },
-    "XPL": {
+    "XRP": {
       "score": 51,
-      "technical_score": 50,
-      "change_1d": -0.66,
-      "change_3d": -3.46,
-      "change_7d": -15.92,
+      "technical_score": 39,
+      "change_1d": -1.0,
+      "change_3d": -4.23,
+      "change_7d": -8.18,
       "phase": "🟡 Neutraal",
-      "price": 0.074304
+      "price": 1.1957
     },
     "ARK": {
       "score": 50,
@@ -1287,23 +1170,32 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.0974
     },
-    "CHIP": {
+    "AEVO": {
       "score": 50,
       "technical_score": 49,
-      "change_1d": -5.98,
-      "change_3d": -1.97,
-      "change_7d": 17.94,
-      "phase": "🟡 Neutraal",
-      "price": 0.03272
-    },
-    "LPT": {
-      "score": 50,
-      "technical_score": 49,
-      "change_1d": 1.0,
-      "change_3d": -4.12,
-      "change_7d": -4.92,
+      "change_1d": 0.98,
+      "change_3d": -1.27,
+      "change_7d": -4.82,
       "phase": "🟢 Vroeg momentum",
-      "price": 1.1722
+      "price": 0.019461
+    },
+    "MON": {
+      "score": 50,
+      "technical_score": 49,
+      "change_1d": 2.36,
+      "change_3d": -3.73,
+      "change_7d": -9.02,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.023636
+    },
+    "TAO": {
+      "score": 50,
+      "technical_score": 40,
+      "change_1d": -0.81,
+      "change_3d": -7.38,
+      "change_7d": -0.83,
+      "phase": "🟡 Neutraal",
+      "price": 202.13
     },
     "SOON": {
       "score": 49,
@@ -1317,20 +1209,11 @@
     "OGN": {
       "score": 49,
       "technical_score": 58,
-      "change_1d": -0.76,
-      "change_3d": -1.78,
-      "change_7d": -1.51,
+      "change_1d": -1.05,
+      "change_3d": -2.07,
+      "change_7d": -1.93,
       "phase": "🟡 Neutraal",
-      "price": 0.015767
-    },
-    "BAT": {
-      "score": 49,
-      "technical_score": 57,
-      "change_1d": -0.51,
-      "change_3d": -1.89,
-      "change_7d": -4.54,
-      "phase": "🟡 Neutraal",
-      "price": 0.05862
+      "price": 0.01572
     },
     "LINEA": {
       "score": 49,
@@ -1340,6 +1223,15 @@
       "change_7d": -1.86,
       "phase": "🟡 Neutraal",
       "price": 0.0021349
+    },
+    "MAV": {
+      "score": 49,
+      "technical_score": 57,
+      "change_1d": -1.05,
+      "change_3d": -1.53,
+      "change_7d": 1.5,
+      "phase": "🟡 Neutraal",
+      "price": 0.009285
     },
     "BREV": {
       "score": 49,
@@ -1449,113 +1341,50 @@
       "phase": "🟡 Neutraal",
       "price": 0.25474
     },
-    "AGI": {
-      "score": 49,
-      "technical_score": 53,
-      "change_1d": -6.68,
-      "change_3d": -11.34,
-      "change_7d": 37.8,
-      "phase": "🟡 Neutraal",
-      "price": 0.005166
-    },
-    "AI": {
-      "score": 49,
-      "technical_score": 52,
-      "change_1d": -0.48,
-      "change_3d": -2.82,
-      "change_7d": -2.77,
-      "phase": "🟡 Neutraal",
-      "price": 0.01692
-    },
-    "NEAR": {
+    "LDO": {
       "score": 49,
       "technical_score": 48,
-      "change_1d": 0.01,
-      "change_3d": -3.29,
-      "change_7d": -6.38,
+      "change_1d": 0.86,
+      "change_3d": -0.95,
+      "change_7d": -9.45,
       "phase": "🟢 Vroeg momentum",
-      "price": 1.6156
+      "price": 0.31176
     },
-    "LTC": {
+    "LIGHTER": {
       "score": 49,
       "technical_score": 48,
-      "change_1d": -0.44,
-      "change_3d": -2.01,
-      "change_7d": -6.06,
-      "phase": "🟡 Neutraal",
-      "price": 42.117
-    },
-    "BNB": {
-      "score": 49,
-      "technical_score": 48,
-      "change_1d": 0.1,
-      "change_3d": -1.96,
-      "change_7d": -0.49,
+      "change_1d": 0.36,
+      "change_3d": -2.67,
+      "change_7d": 2.5,
       "phase": "🟢 Vroeg momentum",
-      "price": 599.36
+      "price": 3.0992
     },
-    "RAY": {
+    "PENDLE": {
       "score": 49,
       "technical_score": 48,
-      "change_1d": 0.61,
-      "change_3d": -4.19,
-      "change_7d": 4.42,
+      "change_1d": 3.26,
+      "change_3d": -0.98,
+      "change_7d": -4.7,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.69025
+      "price": 1.5163
     },
-    "PYTH": {
+    "FOLD": {
       "score": 49,
-      "technical_score": 48,
-      "change_1d": 0.19,
-      "change_3d": -0.37,
-      "change_7d": -6.85,
+      "technical_score": 47,
+      "change_1d": 2.62,
+      "change_3d": null,
+      "change_7d": null,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.041746
-    },
-    "AXL": {
-      "score": 49,
-      "technical_score": 48,
-      "change_1d": 2.76,
-      "change_3d": 0.14,
-      "change_7d": -2.95,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.035631
+      "price": 0.08028
     },
     "FET": {
       "score": 49,
       "technical_score": 42,
-      "change_1d": 1.49,
-      "change_3d": -5.97,
-      "change_7d": -7.23,
+      "change_1d": 0.92,
+      "change_3d": -7.17,
+      "change_7d": -7.98,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.13185
-    },
-    "BABY": {
-      "score": 48,
-      "technical_score": 51,
-      "change_1d": -0.28,
-      "change_3d": -3.01,
-      "change_7d": -1.33,
-      "phase": "🟡 Neutraal",
-      "price": 0.010732
-    },
-    "ETHFI": {
-      "score": 48,
-      "technical_score": 46,
-      "change_1d": -0.46,
-      "change_3d": -5.99,
-      "change_7d": -10.64,
-      "phase": "🟡 Neutraal",
-      "price": 0.47153
-    },
-    "ADA": {
-      "score": 48,
-      "technical_score": 37,
-      "change_1d": -1.4,
-      "change_3d": -6.8,
-      "change_7d": -11.73,
-      "phase": "🟡 Neutraal",
-      "price": 0.17138
+      "price": 0.13114
     },
     "YB": {
       "score": 47,
@@ -1566,14 +1395,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.08103
     },
-    "ZRX": {
+    "BLUR": {
       "score": 47,
       "technical_score": 55,
-      "change_1d": 0.17,
-      "change_3d": -1.97,
-      "change_7d": -4.45,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.083044
+      "change_1d": -0.49,
+      "change_3d": -2.59,
+      "change_7d": -4.41,
+      "phase": "🟡 Neutraal",
+      "price": 0.013788
     },
     "TRUST": {
       "score": 47,
@@ -1587,11 +1416,20 @@
     "GIGA": {
       "score": 47,
       "technical_score": 55,
-      "change_1d": 1.0,
-      "change_3d": -7.27,
-      "change_7d": 13.93,
-      "phase": "🟢 Vroeg momentum",
+      "change_1d": -0.62,
+      "change_3d": -7.71,
+      "change_7d": 15.08,
+      "phase": "🟡 Neutraal",
       "price": 0.002405
+    },
+    "NMR": {
+      "score": 47,
+      "technical_score": 55,
+      "change_1d": -1.64,
+      "change_3d": -0.35,
+      "change_7d": -2.17,
+      "phase": "🟡 Neutraal",
+      "price": 7.7246
     },
     "F": {
       "score": 47,
@@ -1647,24 +1485,6 @@
       "phase": "🟡 Neutraal",
       "price": 0.00036283
     },
-    "ALIGN": {
-      "score": 47,
-      "technical_score": 50,
-      "change_1d": -1.15,
-      "change_3d": -14.31,
-      "change_7d": -27.22,
-      "phase": "🟡 Neutraal",
-      "price": 0.009319
-    },
-    "DOT": {
-      "score": 47,
-      "technical_score": 50,
-      "change_1d": -0.44,
-      "change_3d": -3.67,
-      "change_7d": -8.25,
-      "phase": "🟡 Neutraal",
-      "price": 0.7298
-    },
     "CVX": {
       "score": 47,
       "technical_score": 50,
@@ -1674,32 +1494,23 @@
       "phase": "🟡 Neutraal",
       "price": 1.9374
     },
-    "AEVO": {
-      "score": 47,
-      "technical_score": 45,
-      "change_1d": -0.69,
-      "change_3d": -2.84,
-      "change_7d": -7.29,
-      "phase": "🟡 Neutraal",
-      "price": 0.019146
-    },
     "MOVR": {
       "score": 47,
       "technical_score": 40,
-      "change_1d": 0.15,
-      "change_3d": -14.92,
-      "change_7d": 15.82,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.7139
+      "change_1d": -0.97,
+      "change_3d": -16.25,
+      "change_7d": 15.84,
+      "phase": "🟡 Neutraal",
+      "price": 0.7072
     },
-    "AERO": {
+    "AUCTION": {
       "score": 46,
-      "technical_score": 49,
-      "change_1d": 1.2,
-      "change_3d": -6.0,
-      "change_7d": 4.71,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.42727
+      "technical_score": 61,
+      "change_1d": 22.07,
+      "change_3d": 18.49,
+      "change_7d": 17.84,
+      "phase": "🟡 Lopend momentum",
+      "price": 3.3159
     },
     "ZAMA": {
       "score": 46,
@@ -1728,15 +1539,6 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.012014
     },
-    "POND": {
-      "score": 45,
-      "technical_score": 74,
-      "change_1d": 47.23,
-      "change_3d": 19.46,
-      "change_7d": 58.18,
-      "phase": "🟠 Mogelijk laat",
-      "price": 0.0009663
-    },
     "ZKP": {
       "score": 45,
       "technical_score": 55,
@@ -1755,113 +1557,122 @@
       "phase": "🟡 Lopend momentum",
       "price": 0.26556
     },
-    "A": {
+    "NIL": {
       "score": 45,
-      "technical_score": 53,
-      "change_1d": -1.29,
-      "change_3d": -2.2,
-      "change_7d": -0.26,
-      "phase": "🟡 Neutraal",
-      "price": 0.065092
+      "technical_score": 55,
+      "change_1d": -6.29,
+      "change_3d": 23.37,
+      "change_7d": 18.7,
+      "phase": "🟡 Lopend momentum",
+      "price": 0.04496
     },
-    "GLM": {
-      "score": 45,
-      "technical_score": 53,
-      "change_1d": -3.0,
-      "change_3d": -3.29,
-      "change_7d": 0.1,
-      "phase": "🟡 Neutraal",
-      "price": 0.09432
-    },
-    "MEGA": {
-      "score": 45,
-      "technical_score": 52,
-      "change_1d": -1.58,
-      "change_3d": -3.65,
-      "change_7d": -11.7,
-      "phase": "🟡 Neutraal",
-      "price": 0.03246
-    },
-    "SLX": {
+    "ROSE": {
       "score": 45,
       "technical_score": 48,
-      "change_1d": 1.27,
-      "change_3d": 6.71,
-      "change_7d": 5.59,
+      "change_1d": 0.78,
+      "change_3d": -1.83,
+      "change_7d": -3.69,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.0614
+      "price": 0.005201
+    },
+    "BAT": {
+      "score": 45,
+      "technical_score": 48,
+      "change_1d": -0.24,
+      "change_3d": -1.97,
+      "change_7d": -4.3,
+      "phase": "🟡 Neutraal",
+      "price": 0.05859
     },
     "CELO": {
       "score": 45,
       "technical_score": 47,
-      "change_1d": 1.17,
-      "change_3d": -2.52,
-      "change_7d": -3.2,
+      "change_1d": 1.78,
+      "change_3d": -2.28,
+      "change_7d": -2.19,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.064218
-    },
-    "HEI": {
-      "score": 45,
-      "technical_score": 43,
-      "change_1d": -4.08,
-      "change_3d": -6.52,
-      "change_7d": 11.14,
-      "phase": "🟡 Neutraal",
-      "price": 0.122632
-    },
-    "AVAX": {
-      "score": 45,
-      "technical_score": 42,
-      "change_1d": -0.15,
-      "change_3d": -2.05,
-      "change_7d": -3.15,
-      "phase": "🟡 Neutraal",
-      "price": 6.3209
+      "price": 0.064604
     },
     "EDEN": {
       "score": 45,
       "technical_score": 42,
-      "change_1d": -7.44,
-      "change_3d": 0.84,
-      "change_7d": 25.96,
+      "change_1d": -8.18,
+      "change_3d": -0.21,
+      "change_7d": 24.65,
       "phase": "🟡 Neutraal",
-      "price": 0.052424
+      "price": 0.05188
     },
-    "SUI": {
+    "CHIP": {
       "score": 45,
-      "technical_score": 37,
-      "change_1d": -0.94,
-      "change_3d": -4.88,
-      "change_7d": -12.46,
+      "technical_score": 42,
+      "change_1d": -4.59,
+      "change_3d": -0.93,
+      "change_7d": 18.37,
       "phase": "🟡 Neutraal",
-      "price": 0.63624
+      "price": 0.032989
     },
-    "TRUMP": {
-      "score": 45,
-      "technical_score": 37,
-      "change_1d": -9.12,
-      "change_3d": -3.88,
-      "change_7d": -8.81,
+    "XPL": {
+      "score": 44,
+      "technical_score": 41,
+      "change_1d": -1.76,
+      "change_3d": -4.66,
+      "change_7d": -15.15,
       "phase": "🟡 Neutraal",
-      "price": 2.0992
+      "price": 0.073813
     },
-    "DOGE": {
-      "score": 45,
-      "technical_score": 37,
-      "change_1d": -1.74,
-      "change_3d": -5.45,
-      "change_7d": -9.3,
+    "AVAX": {
+      "score": 44,
+      "technical_score": 41,
+      "change_1d": -0.57,
+      "change_3d": -2.58,
+      "change_7d": -3.37,
       "phase": "🟡 Neutraal",
-      "price": 0.072302
+      "price": 6.2969
     },
     "INJ": {
       "score": 44,
       "technical_score": 41,
-      "change_1d": -0.81,
-      "change_3d": -6.41,
-      "change_7d": -4.18,
+      "change_1d": -1.41,
+      "change_3d": -7.07,
+      "change_7d": -4.0,
       "phase": "🟡 Neutraal",
-      "price": 4.4072
+      "price": 4.3919
+    },
+    "LTC": {
+      "score": 44,
+      "technical_score": 41,
+      "change_1d": -0.84,
+      "change_3d": -2.06,
+      "change_7d": -6.13,
+      "phase": "🟡 Neutraal",
+      "price": 42.0
+    },
+    "SHELL": {
+      "score": 44,
+      "technical_score": 41,
+      "change_1d": -0.58,
+      "change_3d": -0.61,
+      "change_7d": -2.19,
+      "phase": "🟡 Neutraal",
+      "price": 0.019176
+    },
+    "TRX": {
+      "score": 44,
+      "technical_score": 41,
+      "change_1d": -1.05,
+      "change_3d": 0.56,
+      "change_7d": -0.98,
+      "phase": "🟡 Neutraal",
+      "price": 0.2915
+    },
+    "XAI": {
+      "score": 43,
+      "technical_score": 50,
+      "change_1d": -1.3,
+      "change_3d": 0.68,
+      "change_7d": -2.52,
+      "phase": "🟡 Neutraal",
+      "price": 0.0064534
     },
     "NOS": {
       "score": 43,
@@ -1871,15 +1682,6 @@
       "change_7d": 12.58,
       "phase": "🟡 Neutraal",
       "price": 0.25917
-    },
-    "YGG": {
-      "score": 43,
-      "technical_score": 50,
-      "change_1d": 1.44,
-      "change_3d": -1.94,
-      "change_7d": -3.41,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.019337
     },
     "STRAX": {
       "score": 43,
@@ -1908,6 +1710,15 @@
       "phase": "🟡 Neutraal",
       "price": 0.12143
     },
+    "HEI": {
+      "score": 43,
+      "technical_score": 40,
+      "change_1d": -5.37,
+      "change_3d": -6.21,
+      "change_7d": 10.7,
+      "phase": "🟡 Neutraal",
+      "price": 0.121952
+    },
     "STX": {
       "score": 43,
       "technical_score": 40,
@@ -1925,6 +1736,15 @@
       "change_7d": -10.5,
       "phase": "🟢 Vroeg momentum",
       "price": 0.0055302
+    },
+    "IMU": {
+      "score": 42,
+      "technical_score": 49,
+      "change_1d": 1.33,
+      "change_3d": 1.58,
+      "change_7d": -0.51,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.0020182
     },
     "AZTEC": {
       "score": 42,
@@ -1944,14 +1764,32 @@
       "phase": "🟡 Neutraal",
       "price": 0.016907
     },
-    "VELO": {
-      "score": 41,
-      "technical_score": 78,
-      "change_1d": 14.38,
-      "change_3d": 31.58,
-      "change_7d": 40.83,
-      "phase": "🟠 Mogelijk laat",
-      "price": 0.0045131
+    "ETHFI": {
+      "score": 42,
+      "technical_score": 39,
+      "change_1d": -0.91,
+      "change_3d": -5.46,
+      "change_7d": -11.23,
+      "phase": "🟡 Neutraal",
+      "price": 0.46927
+    },
+    "STRK": {
+      "score": 42,
+      "technical_score": 39,
+      "change_1d": 0.9,
+      "change_3d": -4.35,
+      "change_7d": -9.99,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.022252
+    },
+    "PYTH": {
+      "score": 42,
+      "technical_score": 39,
+      "change_1d": -0.77,
+      "change_3d": -1.79,
+      "change_7d": -6.9,
+      "phase": "🟡 Neutraal",
+      "price": 0.041355
     },
     "LUMIA": {
       "score": 41,
@@ -1962,14 +1800,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.074267
     },
-    "BLUR": {
+    "NEWT": {
       "score": 41,
       "technical_score": 48,
-      "change_1d": -0.48,
-      "change_3d": -2.44,
-      "change_7d": -4.4,
-      "phase": "🟡 Neutraal",
-      "price": 0.01379
+      "change_1d": 1.26,
+      "change_3d": -1.19,
+      "change_7d": -5.63,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.035818
     },
     "SCR": {
       "score": 41,
@@ -2016,32 +1854,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.028637
     },
-    "SWELL": {
+    "T": {
       "score": 41,
-      "technical_score": 43,
-      "change_1d": -7.2,
-      "change_3d": -9.45,
-      "change_7d": 21.7,
+      "technical_score": 47,
+      "change_1d": -0.61,
+      "change_3d": -2.16,
+      "change_7d": -3.79,
       "phase": "🟡 Neutraal",
-      "price": 0.0006589
-    },
-    "TAIKO": {
-      "score": 41,
-      "technical_score": 42,
-      "change_1d": 0.91,
-      "change_3d": -0.71,
-      "change_7d": -6.1,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.06297
-    },
-    "AKT": {
-      "score": 41,
-      "technical_score": 42,
-      "change_1d": 1.34,
-      "change_3d": -5.56,
-      "change_7d": -8.1,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.4474
+      "price": 0.0031474
     },
     "ONT": {
       "score": 41,
@@ -2055,20 +1875,38 @@
     "PENGU": {
       "score": 41,
       "technical_score": 37,
-      "change_1d": -2.67,
-      "change_3d": -8.08,
-      "change_7d": -9.88,
+      "change_1d": -2.78,
+      "change_3d": -8.18,
+      "change_7d": -9.98,
       "phase": "🟡 Neutraal",
-      "price": 0.0076699
+      "price": 0.0076613
     },
-    "KAIA": {
+    "PEPE": {
       "score": 41,
-      "technical_score": 37,
-      "change_1d": -1.35,
-      "change_3d": -10.83,
-      "change_7d": -9.7,
+      "technical_score": 33,
+      "change_1d": -2.73,
+      "change_3d": -7.93,
+      "change_7d": -12.47,
       "phase": "🟡 Neutraal",
-      "price": 0.02513
+      "price": 3.0824e-06
+    },
+    "VELO": {
+      "score": 40,
+      "technical_score": 67,
+      "change_1d": 14.42,
+      "change_3d": 30.41,
+      "change_7d": 38.89,
+      "phase": "🟠 Mogelijk laat",
+      "price": 0.0044905
+    },
+    "TAI": {
+      "score": 40,
+      "technical_score": 41,
+      "change_1d": -1.13,
+      "change_3d": -6.71,
+      "change_7d": -14.36,
+      "phase": "🟡 Neutraal",
+      "price": 0.004466
     },
     "ZIL": {
       "score": 40,
@@ -2079,14 +1917,32 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.0022324
     },
-    "ONDO": {
+    "AI": {
+      "score": 40,
+      "technical_score": 41,
+      "change_1d": -0.78,
+      "change_3d": -3.08,
+      "change_7d": -2.77,
+      "phase": "🟡 Neutraal",
+      "price": 0.016908
+    },
+    "WLD": {
       "score": 40,
       "technical_score": 31,
-      "change_1d": -0.18,
-      "change_3d": -6.56,
-      "change_7d": -7.76,
+      "change_1d": -2.53,
+      "change_3d": -9.25,
+      "change_7d": -8.05,
       "phase": "🟡 Neutraal",
-      "price": 0.30437
+      "price": 0.32117
+    },
+    "HNT": {
+      "score": 39,
+      "technical_score": 70,
+      "change_1d": 76.04,
+      "change_3d": 234.83,
+      "change_7d": 295.75,
+      "phase": "🟠 Mogelijk laat",
+      "price": 0.6397
     },
     "HOT": {
       "score": 39,
@@ -2142,32 +1998,32 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.22287
     },
-    "GNS": {
+    "SWELL": {
       "score": 39,
-      "technical_score": 45,
-      "change_1d": 0.31,
-      "change_3d": -2.99,
-      "change_7d": -0.81,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.45375
+      "technical_score": 40,
+      "change_1d": -9.69,
+      "change_3d": -7.3,
+      "change_7d": 22.14,
+      "phase": "🟡 Neutraal",
+      "price": 0.0006637
     },
     "IMX": {
       "score": 39,
       "technical_score": 40,
-      "change_1d": -2.33,
-      "change_3d": -2.37,
-      "change_7d": -4.73,
+      "change_1d": -2.41,
+      "change_3d": -3.11,
+      "change_7d": -5.73,
       "phase": "🟡 Neutraal",
-      "price": 0.10948
+      "price": 0.10859
     },
-    "KAS": {
+    "ARB": {
       "score": 39,
       "technical_score": 35,
-      "change_1d": -0.07,
-      "change_3d": -4.47,
-      "change_7d": -4.43,
-      "phase": "🟡 Neutraal",
-      "price": 0.023902
+      "change_1d": 0.44,
+      "change_3d": -3.6,
+      "change_7d": -12.39,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.07624
     },
     "OP": {
       "score": 39,
@@ -2178,6 +2034,24 @@
       "phase": "🟡 Neutraal",
       "price": 0.07605
     },
+    "ADA": {
+      "score": 39,
+      "technical_score": 26,
+      "change_1d": -1.93,
+      "change_3d": -6.81,
+      "change_7d": -12.05,
+      "phase": "🟡 Neutraal",
+      "price": 0.17095
+    },
+    "POND": {
+      "score": 38,
+      "technical_score": 78,
+      "change_1d": 45.0,
+      "change_3d": 34.05,
+      "change_7d": 57.44,
+      "phase": "🟠 Mogelijk laat",
+      "price": 0.000967
+    },
     "FUEL": {
       "score": 38,
       "technical_score": 44,
@@ -2186,15 +2060,6 @@
       "change_7d": -5.37,
       "phase": "🟡 Neutraal",
       "price": 0.0006991
-    },
-    "SENT": {
-      "score": 38,
-      "technical_score": 44,
-      "change_1d": -0.73,
-      "change_3d": -0.94,
-      "change_7d": -6.0,
-      "phase": "🟡 Neutraal",
-      "price": 0.010892
     },
     "ME": {
       "score": 38,
@@ -2205,32 +2070,50 @@
       "phase": "🟡 Neutraal",
       "price": 0.05202
     },
-    "XMN": {
+    "DOT": {
       "score": 38,
       "technical_score": 39,
-      "change_1d": -5.56,
-      "change_3d": -4.62,
-      "change_7d": -14.62,
+      "change_1d": -0.33,
+      "change_3d": -3.8,
+      "change_7d": -8.38,
       "phase": "🟡 Neutraal",
-      "price": 0.000578
+      "price": 0.7293
+    },
+    "TAIKO": {
+      "score": 38,
+      "technical_score": 39,
+      "change_1d": 1.09,
+      "change_3d": -0.44,
+      "change_7d": -6.25,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.06302
+    },
+    "AKT": {
+      "score": 38,
+      "technical_score": 39,
+      "change_1d": 1.01,
+      "change_3d": -6.31,
+      "change_7d": -8.51,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.44663
     },
     "WOO": {
       "score": 38,
       "technical_score": 39,
-      "change_1d": 0.49,
-      "change_3d": -1.68,
-      "change_7d": -5.82,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.009816
+      "change_1d": -0.09,
+      "change_3d": -2.9,
+      "change_7d": -5.55,
+      "phase": "🟡 Neutraal",
+      "price": 0.00975
     },
     "PIXEL": {
       "score": 38,
       "technical_score": 39,
-      "change_1d": 0.75,
-      "change_3d": -2.44,
-      "change_7d": -2.55,
+      "change_1d": 0.64,
+      "change_3d": -2.13,
+      "change_7d": -2.87,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.0043038
+      "price": 0.0042991
     },
     "HOME": {
       "score": 38,
@@ -2241,15 +2124,6 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.005336
     },
-    "APT": {
-      "score": 38,
-      "technical_score": 39,
-      "change_1d": 0.17,
-      "change_3d": -5.07,
-      "change_7d": -14.52,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.4696
-    },
     "MASK": {
       "score": 38,
       "technical_score": 34,
@@ -2258,15 +2132,6 @@
       "change_7d": -2.9,
       "phase": "🟡 Neutraal",
       "price": 0.365
-    },
-    "PUMP": {
-      "score": 38,
-      "technical_score": 29,
-      "change_1d": -7.62,
-      "change_3d": -5.45,
-      "change_7d": -12.38,
-      "phase": "🟡 Neutraal",
-      "price": 0.0039829
     },
     "PUFFER": {
       "score": 37,
@@ -2313,6 +2178,24 @@
       "phase": "🟡 Neutraal",
       "price": 2.6422
     },
+    "GAS": {
+      "score": 37,
+      "technical_score": 42,
+      "change_1d": -2.94,
+      "change_3d": -4.55,
+      "change_7d": 4.13,
+      "phase": "🟡 Neutraal",
+      "price": 1.0888
+    },
+    "ZRX": {
+      "score": 37,
+      "technical_score": 42,
+      "change_1d": -0.19,
+      "change_3d": -2.72,
+      "change_7d": -4.79,
+      "phase": "🟡 Neutraal",
+      "price": 0.082748
+    },
     "KNC": {
       "score": 37,
       "technical_score": 42,
@@ -2322,14 +2205,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.09931
     },
-    "NOT": {
+    "A": {
       "score": 37,
       "technical_score": 42,
-      "change_1d": 1.35,
-      "change_3d": -2.9,
-      "change_7d": -5.58,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.0003541
+      "change_1d": -1.76,
+      "change_3d": -2.75,
+      "change_7d": -0.73,
+      "phase": "🟡 Neutraal",
+      "price": 0.064785
     },
     "GMT": {
       "score": 37,
@@ -2339,6 +2222,15 @@
       "change_7d": -7.13,
       "phase": "🟢 Vroeg momentum",
       "price": 0.00602
+    },
+    "GLM": {
+      "score": 37,
+      "technical_score": 42,
+      "change_1d": -2.81,
+      "change_3d": -3.4,
+      "change_7d": 0.82,
+      "phase": "🟡 Neutraal",
+      "price": 0.09444
     },
     "PONKE": {
       "score": 37,
@@ -2367,41 +2259,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.7761
     },
-    "SUPER": {
-      "score": 37,
-      "technical_score": 37,
-      "change_1d": -1.97,
-      "change_3d": -7.66,
-      "change_7d": -1.91,
-      "phase": "🟡 Neutraal",
-      "price": 0.09355
-    },
-    "CFG": {
-      "score": 37,
-      "technical_score": 37,
-      "change_1d": -4.92,
-      "change_3d": -12.02,
-      "change_7d": -18.49,
-      "phase": "🟡 Neutraal",
-      "price": 0.102403
-    },
     "DUSK": {
       "score": 37,
       "technical_score": 37,
-      "change_1d": 0.53,
-      "change_3d": -8.83,
-      "change_7d": -12.91,
+      "change_1d": 0.78,
+      "change_3d": -8.59,
+      "change_7d": -13.13,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.057793
-    },
-    "BRETT": {
-      "score": 37,
-      "technical_score": 37,
-      "change_1d": -2.25,
-      "change_3d": -7.89,
-      "change_7d": -13.65,
-      "phase": "🟡 Neutraal",
-      "price": 0.0042398
+      "price": 0.057936
     },
     "SYN": {
       "score": 37,
@@ -2412,32 +2277,41 @@
       "phase": "🟡 Neutraal",
       "price": 0.085621
     },
-    "RENDER": {
+    "GALA": {
+      "score": 37,
+      "technical_score": 37,
+      "change_1d": -3.12,
+      "change_3d": -6.12,
+      "change_7d": -10.88,
+      "phase": "🟡 Neutraal",
+      "price": 0.001486
+    },
+    "GWEI": {
       "score": 37,
       "technical_score": 33,
-      "change_1d": -2.17,
-      "change_3d": -6.85,
-      "change_7d": -6.33,
+      "change_1d": -0.16,
+      "change_3d": -3.55,
+      "change_7d": 5.81,
       "phase": "🟡 Neutraal",
-      "price": 1.2328
+      "price": 0.021268
     },
-    "FOLD": {
+    "LPT": {
       "score": 37,
       "technical_score": 32,
-      "change_1d": 3.8,
-      "change_3d": null,
-      "change_7d": null,
+      "change_1d": 0.82,
+      "change_3d": -4.51,
+      "change_7d": -4.65,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.079699
+      "price": 1.1701
     },
-    "WLD": {
-      "score": 37,
-      "technical_score": 28,
-      "change_1d": -1.25,
-      "change_3d": -9.32,
-      "change_7d": -7.24,
-      "phase": "🟡 Neutraal",
-      "price": 0.32153
+    "ZKC": {
+      "score": 36,
+      "technical_score": 70,
+      "change_1d": 52.22,
+      "change_3d": 49.78,
+      "change_7d": 44.45,
+      "phase": "🟠 Mogelijk laat",
+      "price": 0.052295
     },
     "STO": {
       "score": 36,
@@ -2457,41 +2331,77 @@
       "phase": "🟡 Neutraal",
       "price": 0.004683
     },
-    "ROBO": {
+    "MEGA": {
       "score": 36,
-      "technical_score": 36,
-      "change_1d": -0.67,
-      "change_3d": -3.12,
-      "change_7d": -4.78,
+      "technical_score": 41,
+      "change_1d": -1.88,
+      "change_3d": -3.75,
+      "change_7d": -11.85,
       "phase": "🟡 Neutraal",
-      "price": 0.011163
+      "price": 0.03239
     },
-    "XLM": {
+    "SENT": {
       "score": 36,
-      "technical_score": 31,
-      "change_1d": -0.37,
-      "change_3d": -4.49,
-      "change_7d": -9.34,
+      "technical_score": 41,
+      "change_1d": -1.15,
+      "change_3d": -1.35,
+      "change_7d": -6.24,
       "phase": "🟡 Neutraal",
-      "price": 0.15396
+      "price": 0.010874
+    },
+    "SUI": {
+      "score": 36,
+      "technical_score": 26,
+      "change_1d": -1.47,
+      "change_3d": -5.42,
+      "change_7d": -13.1,
+      "phase": "🟡 Neutraal",
+      "price": 0.63412
+    },
+    "PUMP": {
+      "score": 36,
+      "technical_score": 26,
+      "change_1d": -9.29,
+      "change_3d": -5.43,
+      "change_7d": -11.27,
+      "phase": "🟡 Neutraal",
+      "price": 0.0039651
+    },
+    "HBAR": {
+      "score": 36,
+      "technical_score": 26,
+      "change_1d": -1.49,
+      "change_3d": -4.85,
+      "change_7d": -6.1,
+      "phase": "🟡 Neutraal",
+      "price": 0.064287
+    },
+    "TRUMP": {
+      "score": 36,
+      "technical_score": 26,
+      "change_1d": -9.91,
+      "change_3d": -4.68,
+      "change_7d": -6.27,
+      "phase": "🟡 Neutraal",
+      "price": 2.079
     },
     "BICO": {
       "score": 36,
       "technical_score": 26,
-      "change_1d": -1.87,
-      "change_3d": -15.76,
-      "change_7d": 13.68,
+      "change_1d": -3.35,
+      "change_3d": -14.94,
+      "change_7d": 15.04,
       "phase": "🟡 Neutraal",
-      "price": 0.018902
+      "price": 0.018971
     },
-    "PEPE": {
+    "DOGE": {
       "score": 36,
       "technical_score": 26,
-      "change_1d": -1.14,
-      "change_3d": -6.73,
-      "change_7d": -11.99,
+      "change_1d": -2.16,
+      "change_3d": -5.78,
+      "change_7d": -9.81,
       "phase": "🟡 Neutraal",
-      "price": 3.1146e-06
+      "price": 0.072092
     },
     "MOCA": {
       "score": 35,
@@ -2501,15 +2411,6 @@
       "change_7d": 3.14,
       "phase": "🟢 Vroeg momentum",
       "price": 0.00759
-    },
-    "THE": {
-      "score": 35,
-      "technical_score": 40,
-      "change_1d": 0.57,
-      "change_3d": -3.92,
-      "change_7d": -0.83,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.05986
     },
     "AGLD": {
       "score": 35,
@@ -2529,77 +2430,32 @@
       "phase": "🟡 Neutraal",
       "price": 0.0041736
     },
-    "T": {
-      "score": 35,
-      "technical_score": 40,
-      "change_1d": -0.48,
-      "change_3d": -2.02,
-      "change_7d": -3.95,
+    "AGI": {
+      "score": 34,
+      "technical_score": 42,
+      "change_1d": -8.8,
+      "change_3d": -10.14,
+      "change_7d": 41.71,
       "phase": "🟡 Neutraal",
-      "price": 0.0031517
-    },
-    "SNX": {
-      "score": 35,
-      "technical_score": 35,
-      "change_1d": -0.81,
-      "change_3d": -8.31,
-      "change_7d": -9.54,
-      "phase": "🟡 Neutraal",
-      "price": 0.1792
-    },
-    "GLMR": {
-      "score": 35,
-      "technical_score": 35,
-      "change_1d": -1.69,
-      "change_3d": -1.04,
-      "change_7d": -2.28,
-      "phase": "🟡 Neutraal",
-      "price": 0.006176
-    },
-    "GALA": {
-      "score": 35,
-      "technical_score": 35,
-      "change_1d": -2.45,
-      "change_3d": -6.44,
-      "change_7d": -10.32,
-      "phase": "🟡 Neutraal",
-      "price": 0.001493
-    },
-    "ZRO": {
-      "score": 35,
-      "technical_score": 30,
-      "change_1d": -3.4,
-      "change_3d": -10.66,
-      "change_7d": -9.39,
-      "phase": "🟡 Neutraal",
-      "price": 0.9143
-    },
-    "TIA": {
-      "score": 35,
-      "technical_score": 30,
-      "change_1d": -1.75,
-      "change_3d": -6.46,
-      "change_7d": -12.01,
-      "phase": "🟡 Neutraal",
-      "price": 0.28789
+      "price": 0.005137
     },
     "MANTRA": {
       "score": 34,
       "technical_score": 39,
-      "change_1d": -0.3,
-      "change_3d": 2.07,
-      "change_7d": -2.73,
+      "change_1d": -0.35,
+      "change_3d": 2.8,
+      "change_7d": -2.67,
       "phase": "🟡 Neutraal",
-      "price": 0.003703
+      "price": 0.003712
     },
     "KAT": {
       "score": 34,
       "technical_score": 39,
-      "change_1d": 0.59,
-      "change_3d": -1.81,
-      "change_7d": -3.88,
+      "change_1d": 0.82,
+      "change_3d": -2.0,
+      "change_7d": -2.97,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.003909
+      "price": 0.003918
     },
     "RED": {
       "score": 34,
@@ -2610,23 +2466,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.09367
     },
-    "ALLO": {
-      "score": 34,
-      "technical_score": 39,
-      "change_1d": 0.37,
-      "change_3d": -3.5,
-      "change_7d": -8.61,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.213311
-    },
     "CROSS": {
       "score": 34,
       "technical_score": 39,
-      "change_1d": -1.43,
-      "change_3d": -6.45,
-      "change_7d": -2.51,
+      "change_1d": -1.93,
+      "change_3d": -6.92,
+      "change_7d": -2.22,
       "phase": "🟡 Neutraal",
-      "price": 0.09395
+      "price": 0.09347
     },
     "ZIG": {
       "score": 34,
@@ -2637,95 +2484,59 @@
       "phase": "🟡 Neutraal",
       "price": 0.035918
     },
+    "SUPER": {
+      "score": 34,
+      "technical_score": 34,
+      "change_1d": -1.88,
+      "change_3d": -7.34,
+      "change_7d": -0.93,
+      "phase": "🟡 Neutraal",
+      "price": 0.09364
+    },
     "XDC": {
       "score": 34,
       "technical_score": 34,
-      "change_1d": 0.08,
-      "change_3d": -0.06,
-      "change_7d": -4.89,
+      "change_1d": 0.21,
+      "change_3d": -0.23,
+      "change_7d": -4.5,
       "phase": "🟢 Vroeg momentum",
-      "price": 0.023765
+      "price": 0.023785
     },
-    "RUNE": {
-      "score": 34,
-      "technical_score": 34,
-      "change_1d": 0.51,
-      "change_3d": -7.92,
-      "change_7d": -0.42,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.40461
-    },
-    "FARTCOIN": {
+    "RENDER": {
       "score": 34,
       "technical_score": 29,
-      "change_1d": -9.61,
-      "change_3d": -17.22,
-      "change_7d": -1.2,
+      "change_1d": -2.23,
+      "change_3d": -6.47,
+      "change_7d": -5.1,
       "phase": "🟡 Neutraal",
-      "price": 0.15255
+      "price": 1.2313
     },
-    "ICP": {
+    "TIA": {
       "score": 34,
       "technical_score": 29,
-      "change_1d": -4.23,
-      "change_3d": -2.55,
-      "change_7d": -0.98,
+      "change_1d": -1.48,
+      "change_3d": -6.23,
+      "change_7d": -12.05,
       "phase": "🟡 Neutraal",
-      "price": 2.065
-    },
-    "SHIB": {
-      "score": 34,
-      "technical_score": 29,
-      "change_1d": -1.77,
-      "change_3d": -6.24,
-      "change_7d": -7.73,
-      "phase": "🟡 Neutraal",
-      "price": 4.3676e-06
-    },
-    "VIRTUAL": {
-      "score": 34,
-      "technical_score": 29,
-      "change_1d": -1.11,
-      "change_3d": -6.21,
-      "change_7d": -6.01,
-      "phase": "🟡 Neutraal",
-      "price": 0.5919
-    },
-    "QNT": {
-      "score": 34,
-      "technical_score": 29,
-      "change_1d": -1.07,
-      "change_3d": -3.85,
-      "change_7d": -5.42,
-      "phase": "🟡 Neutraal",
-      "price": 52.444
-    },
-    "MOODENG": {
-      "score": 34,
-      "technical_score": 29,
-      "change_1d": -3.59,
-      "change_3d": -9.46,
-      "change_7d": -12.53,
-      "phase": "🟡 Neutraal",
-      "price": 0.034568
+      "price": 0.28798
     },
     "HUMA": {
       "score": 34,
       "technical_score": 29,
-      "change_1d": -11.14,
-      "change_3d": -25.98,
-      "change_7d": -10.28,
+      "change_1d": -10.96,
+      "change_3d": -25.83,
+      "change_7d": -10.11,
       "phase": "🟡 Neutraal",
-      "price": 0.016853
+      "price": 0.016886
     },
-    "HNT": {
-      "score": 33,
-      "technical_score": 63,
-      "change_1d": 77.04,
-      "change_3d": 242.62,
-      "change_7d": 298.05,
-      "phase": "🟠 Mogelijk laat",
-      "price": 0.652
+    "ONDO": {
+      "score": 34,
+      "technical_score": 24,
+      "change_1d": -0.77,
+      "change_3d": -6.39,
+      "change_7d": -7.47,
+      "phase": "🟡 Neutraal",
+      "price": 0.30306
     },
     "APE": {
       "score": 33,
@@ -2736,6 +2547,24 @@
       "phase": "🟡 Neutraal",
       "price": 0.11739
     },
+    "TLM": {
+      "score": 33,
+      "technical_score": 37,
+      "change_1d": -3.25,
+      "change_3d": -4.01,
+      "change_7d": -1.59,
+      "phase": "🟡 Neutraal",
+      "price": 0.00121
+    },
+    "STORJ": {
+      "score": 33,
+      "technical_score": 37,
+      "change_1d": -4.35,
+      "change_3d": -9.69,
+      "change_7d": -20.75,
+      "phase": "🟡 Neutraal",
+      "price": 0.030636
+    },
     "ACT": {
       "score": 33,
       "technical_score": 37,
@@ -2744,15 +2573,6 @@
       "change_7d": -7.82,
       "phase": "🟡 Neutraal",
       "price": 0.009058
-    },
-    "AVNT": {
-      "score": 33,
-      "technical_score": 37,
-      "change_1d": -1.9,
-      "change_3d": -5.43,
-      "change_7d": -2.28,
-      "phase": "🟡 Neutraal",
-      "price": 0.08515
     },
     "LUNA2": {
       "score": 33,
@@ -2763,14 +2583,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.038449
     },
-    "ACH": {
+    "RVN": {
       "score": 33,
       "technical_score": 37,
-      "change_1d": -2.18,
-      "change_3d": -3.39,
-      "change_7d": -2.71,
+      "change_1d": -1.96,
+      "change_3d": -10.79,
+      "change_7d": -10.58,
       "phase": "🟡 Neutraal",
-      "price": 0.0042183
+      "price": 0.0025558
     },
     "TOSHI": {
       "score": 33,
@@ -2781,24 +2601,6 @@
       "phase": "🟡 Neutraal",
       "price": 0.00010269
     },
-    "XNO": {
-      "score": 33,
-      "technical_score": 37,
-      "change_1d": -4.54,
-      "change_3d": -5.47,
-      "change_7d": -6.3,
-      "phase": "🟡 Neutraal",
-      "price": 0.32477
-    },
-    "NES": {
-      "score": 33,
-      "technical_score": 37,
-      "change_1d": -5.23,
-      "change_3d": -10.77,
-      "change_7d": -39.67,
-      "phase": "🟡 Neutraal",
-      "price": 0.10124
-    },
     "DYDX": {
       "score": 33,
       "technical_score": 37,
@@ -2808,68 +2610,32 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.09476
     },
-    "NEIRO": {
-      "score": 33,
-      "technical_score": 37,
-      "change_1d": -1.67,
-      "change_3d": -3.28,
-      "change_7d": -8.56,
-      "phase": "🟡 Neutraal",
-      "price": 7.3505e-05
-    },
-    "BILL": {
+    "MET": {
       "score": 33,
       "technical_score": 33,
-      "change_1d": -2.82,
-      "change_3d": -5.0,
-      "change_7d": -8.68,
+      "change_1d": -4.44,
+      "change_3d": -13.46,
+      "change_7d": -20.23,
       "phase": "🟡 Neutraal",
-      "price": 0.0166
+      "price": 0.16738
     },
-    "MOVE": {
+    "CSPR": {
       "score": 33,
       "technical_score": 33,
-      "change_1d": -6.88,
-      "change_3d": -10.25,
-      "change_7d": 0.78,
+      "change_1d": -7.8,
+      "change_3d": -7.81,
+      "change_7d": 7.77,
       "phase": "🟡 Neutraal",
-      "price": 0.007191
+      "price": 0.0022968
     },
-    "BONK": {
-      "score": 33,
-      "technical_score": 33,
-      "change_1d": -2.94,
-      "change_3d": -8.02,
-      "change_7d": -11.45,
-      "phase": "🟡 Neutraal",
-      "price": 2.5023e-06
-    },
-    "CRV": {
-      "score": 33,
-      "technical_score": 28,
-      "change_1d": -2.13,
-      "change_3d": -8.36,
-      "change_7d": -9.72,
-      "phase": "🟡 Neutraal",
-      "price": 0.25813
-    },
-    "HBAR": {
-      "score": 33,
-      "technical_score": 22,
-      "change_1d": -1.5,
-      "change_3d": -4.92,
-      "change_7d": -6.88,
-      "phase": "🟡 Neutraal",
-      "price": 0.06429
-    },
-    "GAS": {
+    "ZORA": {
       "score": 32,
-      "technical_score": 36,
-      "change_1d": -2.17,
-      "change_3d": -3.85,
-      "change_7d": 5.27,
-      "phase": "🟡 Neutraal",
-      "price": 1.0975
+      "technical_score": 67,
+      "change_1d": 29.1,
+      "change_3d": 25.17,
+      "change_7d": 10.66,
+      "phase": "🟠 Mogelijk laat",
+      "price": 0.006788
     },
     "AMP": {
       "score": 32,
@@ -2880,41 +2646,77 @@
       "phase": "🟡 Neutraal",
       "price": 0.0003784
     },
-    "RVN": {
-      "score": 32,
-      "technical_score": 36,
-      "change_1d": -3.09,
-      "change_3d": -11.53,
-      "change_7d": -12.32,
-      "phase": "🟡 Neutraal",
-      "price": 0.0025347
-    },
     "POL": {
       "score": 32,
       "technical_score": 26,
-      "change_1d": -3.04,
-      "change_3d": -7.65,
-      "change_7d": -8.49,
+      "change_1d": -8.13,
+      "change_3d": -8.26,
+      "change_7d": -9.1,
       "phase": "🟡 Neutraal",
-      "price": 0.0852
+      "price": 0.084975
+    },
+    "FARTCOIN": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -9.39,
+      "change_3d": -16.82,
+      "change_7d": -0.93,
+      "phase": "🟡 Neutraal",
+      "price": 0.15291
     },
     "CHILLGUY": {
       "score": 32,
       "technical_score": 26,
-      "change_1d": -16.58,
-      "change_3d": -8.04,
-      "change_7d": 0.06,
+      "change_1d": -16.93,
+      "change_3d": -14.2,
+      "change_7d": 1.27,
       "phase": "🟡 Neutraal",
-      "price": 0.010162
+      "price": 0.0102177
+    },
+    "ZRO": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -4.86,
+      "change_3d": -10.64,
+      "change_7d": -9.93,
+      "phase": "🟡 Neutraal",
+      "price": 0.9101
     },
     "PTB": {
       "score": 32,
       "technical_score": 26,
-      "change_1d": -3.9,
-      "change_3d": -4.25,
-      "change_7d": -6.7,
+      "change_1d": -3.97,
+      "change_3d": -3.17,
+      "change_7d": -6.75,
       "phase": "🟡 Neutraal",
-      "price": 0.000662
+      "price": 0.0006603
+    },
+    "ICP": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -3.94,
+      "change_3d": -2.29,
+      "change_7d": -1.11,
+      "phase": "🟡 Neutraal",
+      "price": 2.063
+    },
+    "WIF": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -2.73,
+      "change_3d": -9.35,
+      "change_7d": -2.36,
+      "phase": "🟡 Neutraal",
+      "price": 0.16907
+    },
+    "SHIB": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -1.71,
+      "change_3d": -6.42,
+      "change_7d": -8.05,
+      "phase": "🟡 Neutraal",
+      "price": 4.3601e-06
     },
     "SEI": {
       "score": 32,
@@ -2925,50 +2727,95 @@
       "phase": "🟡 Neutraal",
       "price": 0.038861
     },
+    "VIRTUAL": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -1.36,
+      "change_3d": -6.32,
+      "change_7d": -5.5,
+      "phase": "🟡 Neutraal",
+      "price": 0.59138
+    },
+    "QNT": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -1.38,
+      "change_3d": -3.43,
+      "change_7d": -5.62,
+      "phase": "🟡 Neutraal",
+      "price": 52.426
+    },
+    "MOODENG": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -3.95,
+      "change_3d": -8.26,
+      "change_7d": -12.43,
+      "phase": "🟡 Neutraal",
+      "price": 0.03446
+    },
+    "JUP": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -3.43,
+      "change_3d": -10.99,
+      "change_7d": -1.68,
+      "phase": "🟡 Neutraal",
+      "price": 0.1826
+    },
+    "KAIA": {
+      "score": 32,
+      "technical_score": 26,
+      "change_1d": -2.13,
+      "change_3d": -10.56,
+      "change_7d": -10.25,
+      "phase": "🟡 Neutraal",
+      "price": 0.025041
+    },
     "ACU": {
       "score": 32,
       "technical_score": 26,
-      "change_1d": -2.8,
-      "change_3d": -8.98,
-      "change_7d": 12.08,
+      "change_1d": -3.61,
+      "change_3d": -10.42,
+      "change_7d": 13.54,
       "phase": "🟡 Neutraal",
-      "price": 0.10565
+      "price": 0.10534
     },
-    "TRAC": {
+    "AXS": {
       "score": 31,
       "technical_score": 35,
-      "change_1d": -6.3,
-      "change_3d": -3.53,
-      "change_7d": -11.2,
+      "change_1d": -0.15,
+      "change_3d": -4.14,
+      "change_7d": -10.47,
       "phase": "🟡 Neutraal",
-      "price": 0.28752
+      "price": 0.7752
     },
-    "IQ": {
+    "GROVE": {
       "score": 31,
       "technical_score": 35,
-      "change_1d": 0.21,
-      "change_3d": -2.64,
-      "change_7d": -2.95,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.0005781
+      "change_1d": -1.94,
+      "change_3d": -1.31,
+      "change_7d": -0.71,
+      "phase": "🟡 Neutraal",
+      "price": 0.006749
     },
-    "ZORA": {
-      "score": 30,
-      "technical_score": 67,
-      "change_1d": 30.16,
-      "change_3d": 27.0,
-      "change_7d": 13.2,
-      "phase": "🟠 Mogelijk laat",
-      "price": 0.006887
+    "XNO": {
+      "score": 31,
+      "technical_score": 35,
+      "change_1d": -4.24,
+      "change_3d": -5.18,
+      "change_7d": -6.01,
+      "phase": "🟡 Neutraal",
+      "price": 0.32509
     },
-    "STORJ": {
+    "ESP": {
       "score": 30,
       "technical_score": 34,
-      "change_1d": -4.35,
-      "change_3d": -10.1,
-      "change_7d": -13.84,
+      "change_1d": -2.04,
+      "change_3d": -7.77,
+      "change_7d": -11.28,
       "phase": "🟡 Neutraal",
-      "price": 0.030636
+      "price": 0.069122
     },
     "CETUS": {
       "score": 30,
@@ -2979,6 +2826,15 @@
       "phase": "🟡 Neutraal",
       "price": 0.02015
     },
+    "GTC": {
+      "score": 30,
+      "technical_score": 34,
+      "change_1d": -0.66,
+      "change_3d": -6.44,
+      "change_7d": -5.42,
+      "phase": "🟡 Neutraal",
+      "price": 0.071295
+    },
     "2Z": {
       "score": 30,
       "technical_score": 34,
@@ -2987,15 +2843,6 @@
       "change_7d": -6.58,
       "phase": "🟡 Neutraal",
       "price": 0.045941
-    },
-    "HAEDAL": {
-      "score": 30,
-      "technical_score": 34,
-      "change_1d": -1.09,
-      "change_3d": -4.53,
-      "change_7d": -3.94,
-      "phase": "🟡 Neutraal",
-      "price": 0.015842
     },
     "JASMY": {
       "score": 30,
@@ -3006,23 +2853,32 @@
       "phase": "🟡 Neutraal",
       "price": 0.0038168
     },
-    "RARE": {
+    "DODO": {
       "score": 30,
       "technical_score": 29,
-      "change_1d": -1.8,
-      "change_3d": -4.33,
-      "change_7d": 2.14,
+      "change_1d": -0.78,
+      "change_3d": -2.96,
+      "change_7d": -3.68,
       "phase": "🟡 Neutraal",
-      "price": 0.010853
+      "price": 0.0166
+    },
+    "RSR": {
+      "score": 30,
+      "technical_score": 29,
+      "change_1d": -3.73,
+      "change_3d": -8.46,
+      "change_7d": -10.23,
+      "phase": "🟡 Neutraal",
+      "price": 0.0011666
     },
     "TURBO": {
       "score": 30,
       "technical_score": 29,
-      "change_1d": -5.26,
-      "change_3d": -2.49,
-      "change_7d": -6.04,
+      "change_1d": -6.26,
+      "change_3d": -2.38,
+      "change_7d": -5.96,
       "phase": "🟡 Neutraal",
-      "price": 0.0008394
+      "price": 0.0008406
     },
     "GRT": {
       "score": 30,
@@ -3033,32 +2889,68 @@
       "phase": "🟡 Neutraal",
       "price": 0.01415
     },
-    "CSPR": {
+    "TRAC": {
       "score": 30,
       "technical_score": 29,
-      "change_1d": -9.06,
-      "change_3d": -10.98,
-      "change_7d": 4.94,
+      "change_1d": -7.25,
+      "change_3d": -5.12,
+      "change_7d": -12.01,
       "phase": "🟡 Neutraal",
-      "price": 0.0022589
+      "price": 0.28634
     },
-    "ICX": {
+    "BCH": {
       "score": 30,
-      "technical_score": 29,
-      "change_1d": -11.82,
-      "change_3d": -20.52,
-      "change_7d": -35.01,
+      "technical_score": 24,
+      "change_1d": 0.11,
+      "change_3d": -7.83,
+      "change_7d": -9.06,
+      "phase": "🟢 Vroeg momentum",
+      "price": 213.75
+    },
+    "XLM": {
+      "score": 30,
+      "technical_score": 24,
+      "change_1d": -1.12,
+      "change_3d": -4.59,
+      "change_7d": -10.08,
       "phase": "🟡 Neutraal",
-      "price": 0.009681
+      "price": 0.15361
+    },
+    "KAS": {
+      "score": 30,
+      "technical_score": 24,
+      "change_1d": -0.44,
+      "change_3d": -6.03,
+      "change_7d": -4.49,
+      "phase": "🟡 Neutraal",
+      "price": 0.023826
+    },
+    "CRV": {
+      "score": 30,
+      "technical_score": 24,
+      "change_1d": -1.93,
+      "change_3d": -7.54,
+      "change_7d": -8.94,
+      "phase": "🟡 Neutraal",
+      "price": 0.25867
+    },
+    "ALIGN": {
+      "score": 30,
+      "technical_score": 24,
+      "change_1d": -5.75,
+      "change_3d": -19.64,
+      "change_7d": -30.36,
+      "phase": "🟡 Neutraal",
+      "price": 0.009017
     },
     "PROM": {
       "score": 29,
       "technical_score": 55,
-      "change_1d": -4.21,
-      "change_3d": 36.24,
-      "change_7d": 132.28,
+      "change_1d": -5.45,
+      "change_3d": 35.56,
+      "change_7d": 128.96,
       "phase": "🟠 Mogelijk laat",
-      "price": 5.6671
+      "price": 5.6339
     },
     "EUL": {
       "score": 29,
@@ -3069,6 +2961,15 @@
       "phase": "🟡 Neutraal",
       "price": 1.12831
     },
+    "BIO": {
+      "score": 29,
+      "technical_score": 33,
+      "change_1d": -1.44,
+      "change_3d": -8.37,
+      "change_7d": -9.24,
+      "phase": "🟡 Neutraal",
+      "price": 0.023268
+    },
     "QUID": {
       "score": 29,
       "technical_score": 32,
@@ -3076,7 +2977,7 @@
       "change_3d": 1.4,
       "change_7d": -0.04,
       "phase": "🟡 Neutraal",
-      "price": 0.058386
+      "price": 0.057998
     },
     "SOSO": {
       "score": 29,
@@ -3087,6 +2988,15 @@
       "phase": "🟡 Neutraal",
       "price": 0.26573
     },
+    "WMTX": {
+      "score": 29,
+      "technical_score": 32,
+      "change_1d": -1.22,
+      "change_3d": -2.25,
+      "change_7d": -2.41,
+      "phase": "🟡 Neutraal",
+      "price": 0.02913
+    },
     "BNT": {
       "score": 29,
       "technical_score": 32,
@@ -3095,6 +3005,24 @@
       "change_7d": -3.43,
       "phase": "🟡 Neutraal",
       "price": 0.27288
+    },
+    "IQ": {
+      "score": 29,
+      "technical_score": 32,
+      "change_1d": -0.87,
+      "change_3d": -3.69,
+      "change_7d": -3.99,
+      "phase": "🟡 Neutraal",
+      "price": 0.000572
+    },
+    "WLFI": {
+      "score": 29,
+      "technical_score": 27,
+      "change_1d": 0.08,
+      "change_3d": -2.43,
+      "change_7d": -1.68,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.04971
     },
     "BEAM": {
       "score": 29,
@@ -3105,95 +3033,113 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.0013368
     },
-    "IKA": {
+    "TRB": {
       "score": 29,
       "technical_score": 27,
-      "change_1d": -1.67,
-      "change_3d": -12.33,
-      "change_7d": -24.79,
+      "change_1d": -0.42,
+      "change_3d": -3.44,
+      "change_7d": -11.06,
       "phase": "🟡 Neutraal",
-      "price": 0.0016618
-    },
-    "WIF": {
-      "score": 29,
-      "technical_score": 22,
-      "change_1d": -2.92,
-      "change_3d": -9.73,
-      "change_7d": -1.1,
-      "phase": "🟡 Neutraal",
-      "price": 0.16901
-    },
-    "JUP": {
-      "score": 29,
-      "technical_score": 22,
-      "change_1d": -3.36,
-      "change_3d": -11.87,
-      "change_7d": -1.15,
-      "phase": "🟡 Neutraal",
-      "price": 0.18296
+      "price": 14.667
     },
     "BOME": {
-      "score": 28,
-      "technical_score": 26,
-      "change_1d": -7.04,
-      "change_3d": -8.2,
-      "change_7d": -20.94,
+      "score": 29,
+      "technical_score": 22,
+      "change_1d": -6.43,
+      "change_3d": -8.73,
+      "change_7d": -21.29,
       "phase": "🟡 Neutraal",
-      "price": 0.00080812
+      "price": 0.0008025
     },
     "EIGEN": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -1.07,
-      "change_3d": -6.08,
-      "change_7d": -15.81,
+      "change_1d": -0.99,
+      "change_3d": -5.57,
+      "change_7d": -16.1,
       "phase": "🟡 Neutraal",
-      "price": 0.16617
+      "price": 0.16581
+    },
+    "KMNO": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -2.9,
+      "change_3d": -14.28,
+      "change_7d": 2.16,
+      "phase": "🟡 Neutraal",
+      "price": 0.021617
     },
     "EPIC": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -4.7,
-      "change_3d": -2.17,
-      "change_7d": -0.93,
+      "change_1d": -6.58,
+      "change_3d": -2.47,
+      "change_7d": -2.0,
       "phase": "🟡 Neutraal",
-      "price": 0.29053
+      "price": 0.2862
+    },
+    "BILL": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -2.76,
+      "change_3d": -4.67,
+      "change_7d": -8.37,
+      "phase": "🟡 Neutraal",
+      "price": 0.016616
     },
     "KAITO": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -4.22,
-      "change_3d": -3.42,
-      "change_7d": -11.9,
+      "change_1d": -4.16,
+      "change_3d": -3.14,
+      "change_7d": -11.44,
       "phase": "🟡 Neutraal",
-      "price": 0.26278
+      "price": 0.26292
     },
     "RE": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -3.13,
-      "change_3d": -10.29,
-      "change_7d": -10.62,
+      "change_1d": -2.8,
+      "change_3d": -9.99,
+      "change_7d": -10.32,
       "phase": "🟡 Neutraal",
-      "price": 0.41029
+      "price": 0.41168
     },
     "ICNT": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -3.45,
-      "change_3d": -3.65,
-      "change_7d": -8.65,
+      "change_1d": -3.25,
+      "change_3d": -4.13,
+      "change_7d": -6.78,
       "phase": "🟡 Neutraal",
-      "price": 0.09145
+      "price": 0.09164
+    },
+    "ACE": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -9.78,
+      "change_3d": -13.53,
+      "change_7d": -23.27,
+      "phase": "🟡 Neutraal",
+      "price": 0.15269
     },
     "IO": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -0.46,
-      "change_3d": -7.28,
-      "change_7d": -10.87,
+      "change_1d": -0.41,
+      "change_3d": -7.17,
+      "change_7d": -10.38,
       "phase": "🟡 Neutraal",
-      "price": 0.11146
+      "price": 0.11151
+    },
+    "RARE": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -2.19,
+      "change_3d": -4.7,
+      "change_7d": 1.78,
+      "phase": "🟡 Neutraal",
+      "price": 0.01084
     },
     "SAND": {
       "score": 28,
@@ -3204,41 +3150,41 @@
       "phase": "🟡 Neutraal",
       "price": 0.032971
     },
-    "S": {
+    "CFG": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -5.16,
-      "change_3d": -6.1,
-      "change_7d": 2.23,
+      "change_1d": -4.09,
+      "change_3d": -12.08,
+      "change_7d": -19.57,
       "phase": "🟡 Neutraal",
-      "price": 0.024645
+      "price": 0.102463
     },
     "INX": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -5.96,
-      "change_3d": -3.85,
-      "change_7d": -2.85,
+      "change_1d": -5.65,
+      "change_3d": -3.43,
+      "change_7d": -1.87,
       "phase": "🟡 Neutraal",
       "price": 0.005824
     },
-    "DODO": {
+    "S": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -0.29,
-      "change_3d": -2.29,
-      "change_7d": -3.58,
+      "change_1d": -6.43,
+      "change_3d": -6.86,
+      "change_7d": 1.32,
       "phase": "🟡 Neutraal",
-      "price": 0.016681
+      "price": 0.024513
     },
-    "RSR": {
+    "FIL": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -3.89,
-      "change_3d": -8.51,
-      "change_7d": -10.15,
+      "change_1d": -1.2,
+      "change_3d": -3.7,
+      "change_7d": -12.51,
       "phase": "🟡 Neutraal",
-      "price": 0.0011647
+      "price": 0.58173
     },
     "FLOKI": {
       "score": 28,
@@ -3267,50 +3213,95 @@
       "phase": "🟡 Neutraal",
       "price": 0.09473
     },
-    "ETC": {
+    "BRETT": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -2.38,
-      "change_3d": -6.05,
-      "change_7d": -7.27,
+      "change_1d": -2.22,
+      "change_3d": -7.54,
+      "change_7d": -12.03,
       "phase": "🟡 Neutraal",
-      "price": 6.3521
+      "price": 0.0042425
+    },
+    "MOG": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -3.37,
+      "change_3d": -7.42,
+      "change_7d": -6.68,
+      "phase": "🟡 Neutraal",
+      "price": 9.439e-08
+    },
+    "GLMR": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -2.63,
+      "change_3d": -2.23,
+      "change_7d": -3.5,
+      "phase": "🟡 Neutraal",
+      "price": 0.006101
+    },
+    "MOVE": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -6.99,
+      "change_3d": -11.4,
+      "change_7d": 0.73,
+      "phase": "🟡 Neutraal",
+      "price": 0.007199
+    },
+    "BONK": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -3.12,
+      "change_3d": -8.33,
+      "change_7d": -11.06,
+      "phase": "🟡 Neutraal",
+      "price": 2.494e-06
     },
     "GRAM": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -0.88,
-      "change_3d": -5.04,
-      "change_7d": -9.17,
+      "change_1d": -0.93,
+      "change_3d": -4.34,
+      "change_7d": -8.75,
       "phase": "🟡 Neutraal",
-      "price": 1.1653
+      "price": 1.165
+    },
+    "ETC": {
+      "score": 28,
+      "technical_score": 26,
+      "change_1d": -3.05,
+      "change_3d": -6.23,
+      "change_7d": -7.12,
+      "phase": "🟡 Neutraal",
+      "price": 6.3292
     },
     "MMT": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -3.59,
-      "change_3d": -2.07,
-      "change_7d": -6.31,
+      "change_1d": -3.23,
+      "change_3d": -1.24,
+      "change_7d": -5.44,
       "phase": "🟡 Neutraal",
-      "price": 0.13678
+      "price": 0.13738
     },
     "OPEN": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -3.38,
-      "change_3d": -8.7,
-      "change_7d": -11.83,
+      "change_1d": -3.29,
+      "change_3d": -8.61,
+      "change_7d": -12.08,
       "phase": "🟡 Neutraal",
-      "price": 0.12603
+      "price": 0.12615
     },
     "NOM": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -1.84,
-      "change_3d": -2.56,
-      "change_7d": -6.0,
+      "change_1d": -2.67,
+      "change_3d": -3.43,
+      "change_7d": -6.9,
       "phase": "🟡 Neutraal",
-      "price": 0.0013434
+      "price": 0.0013323
     },
     "LUNA": {
       "score": 28,
@@ -3324,38 +3315,11 @@
     "MAVIA": {
       "score": 28,
       "technical_score": 26,
-      "change_1d": -3.5,
-      "change_3d": -2.43,
-      "change_7d": -4.14,
+      "change_1d": -4.13,
+      "change_3d": -3.28,
+      "change_7d": -4.76,
       "phase": "🟡 Neutraal",
-      "price": 0.024943
-    },
-    "ONG": {
-      "score": 27,
-      "technical_score": 29,
-      "change_1d": -13.93,
-      "change_3d": -17.77,
-      "change_7d": 51.58,
-      "phase": "🟡 Neutraal",
-      "price": 0.093195
-    },
-    "ACE": {
-      "score": 27,
-      "technical_score": 25,
-      "change_1d": -11.19,
-      "change_3d": -14.73,
-      "change_7d": -24.52,
-      "phase": "🟡 Neutraal",
-      "price": 0.15074
-    },
-    "BCH": {
-      "score": 27,
-      "technical_score": 20,
-      "change_1d": 1.27,
-      "change_3d": -7.1,
-      "change_7d": -8.29,
-      "phase": "🟢 Vroeg momentum",
-      "price": 215.31
+      "price": 0.024781
     },
     "WELL": {
       "score": 26,
@@ -3402,15 +3366,6 @@
       "phase": "🟡 Neutraal",
       "price": 0.011695
     },
-    "ALICE": {
-      "score": 26,
-      "technical_score": 29,
-      "change_1d": -2.04,
-      "change_3d": -5.6,
-      "change_7d": -2.19,
-      "phase": "🟡 Neutraal",
-      "price": 0.11795
-    },
     "C": {
       "score": 26,
       "technical_score": 29,
@@ -3419,6 +3374,24 @@
       "change_7d": -7.83,
       "phase": "🟡 Neutraal",
       "price": 0.053075
+    },
+    "NES": {
+      "score": 26,
+      "technical_score": 29,
+      "change_1d": -5.73,
+      "change_3d": -10.42,
+      "change_7d": -40.04,
+      "phase": "🟡 Neutraal",
+      "price": 0.10071
+    },
+    "NEIRO": {
+      "score": 26,
+      "technical_score": 29,
+      "change_1d": -3.32,
+      "change_3d": -4.52,
+      "change_7d": -8.26,
+      "phase": "🟡 Neutraal",
+      "price": 7.2544e-05
     },
     "TRIA": {
       "score": 26,
@@ -3438,23 +3411,32 @@
       "phase": "🟡 Neutraal",
       "price": 0.4161
     },
-    "MET": {
+    "SNX": {
       "score": 26,
       "technical_score": 24,
-      "change_1d": -3.69,
-      "change_3d": -12.59,
-      "change_7d": -18.44,
+      "change_1d": -0.35,
+      "change_3d": -7.77,
+      "change_7d": -9.12,
       "phase": "🟡 Neutraal",
-      "price": 0.16949
+      "price": 0.18003
     },
-    "TRB": {
+    "ALGO": {
       "score": 26,
       "technical_score": 24,
-      "change_1d": -0.34,
-      "change_3d": -3.6,
-      "change_7d": -11.33,
+      "change_1d": -1.22,
+      "change_3d": -4.46,
+      "change_7d": -7.31,
       "phase": "🟡 Neutraal",
-      "price": 14.687
+      "price": 0.074942
+    },
+    "SYRUP": {
+      "score": 26,
+      "technical_score": 24,
+      "change_1d": -0.12,
+      "change_3d": -6.36,
+      "change_7d": -11.71,
+      "phase": "🟡 Neutraal",
+      "price": 0.15203
     },
     "SWEAT": {
       "score": 26,
@@ -3483,41 +3465,41 @@
       "phase": "🟡 Neutraal",
       "price": 1.2769
     },
-    "GTC": {
-      "score": 25,
-      "technical_score": 27,
-      "change_1d": -1.63,
-      "change_3d": -5.14,
-      "change_7d": -4.4,
+    "APT": {
+      "score": 26,
+      "technical_score": 24,
+      "change_1d": -1.32,
+      "change_3d": -6.02,
+      "change_7d": -15.46,
       "phase": "🟡 Neutraal",
-      "price": 0.071553
+      "price": 0.4633
     },
-    "KMNO": {
+    "ONG": {
+      "score": 25,
+      "technical_score": 26,
+      "change_1d": -14.23,
+      "change_3d": -17.61,
+      "change_7d": 50.17,
+      "phase": "🟡 Neutraal",
+      "price": 0.092601
+    },
+    "ICX": {
       "score": 25,
       "technical_score": 22,
-      "change_1d": -0.39,
-      "change_3d": -15.37,
-      "change_7d": 1.87,
+      "change_1d": -12.34,
+      "change_3d": -20.3,
+      "change_7d": -34.76,
       "phase": "🟡 Neutraal",
-      "price": 0.021713
+      "price": 0.009698
     },
-    "MOG": {
-      "score": 25,
-      "technical_score": 22,
-      "change_1d": -3.65,
-      "change_3d": -7.88,
-      "change_7d": -7.18,
-      "phase": "🟡 Neutraal",
-      "price": 9.418e-08
-    },
-    "ZKC": {
+    "HMSTR": {
       "score": 24,
-      "technical_score": 55,
-      "change_1d": 49.64,
-      "change_3d": 47.31,
-      "change_7d": 41.78,
-      "phase": "🟠 Mogelijk laat",
-      "price": 0.051448
+      "technical_score": 26,
+      "change_1d": -2.58,
+      "change_3d": -3.6,
+      "change_7d": -7.74,
+      "phase": "🟡 Neutraal",
+      "price": 0.0001495
     },
     "MANTA": {
       "score": 24,
@@ -3528,14 +3510,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.050179
     },
-    "TLM": {
+    "AVNT": {
       "score": 24,
       "technical_score": 26,
-      "change_1d": -2.89,
-      "change_3d": -3.66,
-      "change_7d": -1.23,
+      "change_1d": -2.22,
+      "change_3d": -5.83,
+      "change_7d": -3.34,
       "phase": "🟡 Neutraal",
-      "price": 0.0012144
+      "price": 0.08485
     },
     "ZBCN": {
       "score": 24,
@@ -3555,14 +3537,23 @@
       "phase": "🟡 Neutraal",
       "price": 0.021195
     },
-    "AXS": {
+    "LRC": {
       "score": 24,
       "technical_score": 26,
-      "change_1d": -0.33,
-      "change_3d": -4.32,
-      "change_7d": -10.64,
+      "change_1d": -1.43,
+      "change_3d": -5.12,
+      "change_7d": -5.9,
       "phase": "🟡 Neutraal",
-      "price": 0.7738
+      "price": 0.00695
+    },
+    "ACH": {
+      "score": 24,
+      "technical_score": 26,
+      "change_1d": -2.53,
+      "change_3d": -3.46,
+      "change_7d": -2.86,
+      "phase": "🟡 Neutraal",
+      "price": 0.0042009
     },
     "DOGS": {
       "score": 24,
@@ -3573,14 +3564,41 @@
       "phase": "🟡 Neutraal",
       "price": 3.3699e-05
     },
+    "ALICE": {
+      "score": 24,
+      "technical_score": 26,
+      "change_1d": -2.82,
+      "change_3d": -6.14,
+      "change_7d": -2.87,
+      "phase": "🟡 Neutraal",
+      "price": 0.11701
+    },
+    "THE": {
+      "score": 24,
+      "technical_score": 26,
+      "change_1d": -0.27,
+      "change_3d": -4.54,
+      "change_7d": -2.27,
+      "phase": "🟡 Neutraal",
+      "price": 0.05907
+    },
     "CAT": {
       "score": 24,
       "technical_score": 26,
-      "change_1d": -2.58,
-      "change_3d": -2.62,
-      "change_7d": -3.44,
+      "change_1d": -3.14,
+      "change_3d": -3.42,
+      "change_7d": -3.98,
       "phase": "🟡 Neutraal",
-      "price": 1.6313e-06
+      "price": 1.6177e-06
+    },
+    "LAYER": {
+      "score": 24,
+      "technical_score": 26,
+      "change_1d": -1.37,
+      "change_3d": -4.68,
+      "change_7d": -4.13,
+      "phase": "🟡 Neutraal",
+      "price": 0.057406
     },
     "FUN": {
       "score": 24,
@@ -3609,6 +3627,15 @@
       "phase": "🟡 Neutraal",
       "price": 0.00045035
     },
+    "NOT": {
+      "score": 23,
+      "technical_score": 25,
+      "change_1d": 1.08,
+      "change_3d": -3.94,
+      "change_7d": -5.82,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.00035318
+    },
     "OSMO": {
       "score": 23,
       "technical_score": 25,
@@ -3627,15 +3654,6 @@
       "phase": "🟡 Neutraal",
       "price": 0.021573
     },
-    "WMTX": {
-      "score": 23,
-      "technical_score": 25,
-      "change_1d": -1.12,
-      "change_3d": -2.15,
-      "change_7d": -2.21,
-      "phase": "🟡 Neutraal",
-      "price": 0.02916
-    },
     "EURC": {
       "score": 23,
       "technical_score": 25,
@@ -3645,14 +3663,23 @@
       "phase": "🟡 Neutraal",
       "price": 0.99521
     },
-    "FIL": {
+    "GNS": {
       "score": 23,
-      "technical_score": 20,
-      "change_1d": -0.36,
-      "change_3d": -3.18,
-      "change_7d": -11.7,
+      "technical_score": 25,
+      "change_1d": -1.49,
+      "change_3d": -2.17,
+      "change_7d": -6.16,
       "phase": "🟡 Neutraal",
-      "price": 0.58671
+      "price": 0.44627
+    },
+    "ALT": {
+      "score": 22,
+      "technical_score": 24,
+      "change_1d": 0.08,
+      "change_3d": -4.45,
+      "change_7d": -4.64,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.0053586
     },
     "REZ": {
       "score": 22,
@@ -3663,15 +3690,6 @@
       "phase": "🟢 Vroeg momentum",
       "price": 0.0025023
     },
-    "LRC": {
-      "score": 22,
-      "technical_score": 24,
-      "change_1d": -0.92,
-      "change_3d": -4.99,
-      "change_7d": -5.42,
-      "phase": "🟡 Neutraal",
-      "price": 0.006962
-    },
     "LMWR": {
       "score": 22,
       "technical_score": 24,
@@ -3680,6 +3698,15 @@
       "change_7d": -4.27,
       "phase": "🟡 Neutraal",
       "price": 0.011753
+    },
+    "ALLO": {
+      "score": 22,
+      "technical_score": 24,
+      "change_1d": -1.32,
+      "change_3d": -4.37,
+      "change_7d": -10.68,
+      "phase": "🟡 Neutraal",
+      "price": 0.211526
     },
     "NEX": {
       "score": 22,
@@ -3697,16 +3724,16 @@
       "change_3d": -4.17,
       "change_7d": -6.34,
       "phase": "🟡 Neutraal",
-      "price": 0.0032007
+      "price": 0.0031834
     },
-    "GROVE": {
+    "ARX": {
       "score": 22,
       "technical_score": 24,
-      "change_1d": -1.42,
-      "change_3d": -1.31,
-      "change_7d": -0.18,
+      "change_1d": -0.85,
+      "change_3d": -8.31,
+      "change_7d": -15.51,
       "phase": "🟡 Neutraal",
-      "price": 0.006795
+      "price": 0.10464
     },
     "CYBER": {
       "score": 22,
@@ -3717,6 +3744,15 @@
       "phase": "🟡 Neutraal",
       "price": 0.26681
     },
+    "ROBO": {
+      "score": 22,
+      "technical_score": 19,
+      "change_1d": -0.92,
+      "change_3d": -3.45,
+      "change_7d": -3.93,
+      "phase": "🟡 Neutraal",
+      "price": 0.011133
+    },
     "RPL": {
       "score": 22,
       "technical_score": 19,
@@ -3725,15 +3761,6 @@
       "change_7d": -6.46,
       "phase": "🟡 Neutraal",
       "price": 1.3701
-    },
-    "BIO": {
-      "score": 21,
-      "technical_score": 22,
-      "change_1d": -1.81,
-      "change_3d": -8.51,
-      "change_7d": -9.88,
-      "phase": "🟡 Neutraal",
-      "price": 0.02329
     },
     "AVA": {
       "score": 21,
@@ -3744,14 +3771,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.17065
     },
-    "WLFI": {
+    "AERO": {
       "score": 21,
       "technical_score": 17,
-      "change_1d": -0.46,
-      "change_3d": -3.76,
-      "change_7d": -2.47,
-      "phase": "🟡 Neutraal",
-      "price": 0.04967
+      "change_1d": 0.54,
+      "change_3d": -5.87,
+      "change_7d": 3.42,
+      "phase": "🟢 Vroeg momentum",
+      "price": 0.42482
     },
     "HFT": {
       "score": 21,
@@ -3762,32 +3789,14 @@
       "phase": "🟡 Neutraal",
       "price": 0.005669
     },
-    "ALGO": {
+    "RUNE": {
       "score": 21,
       "technical_score": 17,
-      "change_1d": -0.6,
-      "change_3d": -4.31,
-      "change_7d": -6.62,
+      "change_1d": -0.65,
+      "change_3d": -7.97,
+      "change_7d": -1.44,
       "phase": "🟡 Neutraal",
-      "price": 0.075098
-    },
-    "SYRUP": {
-      "score": 21,
-      "technical_score": 17,
-      "change_1d": 0.02,
-      "change_3d": -5.5,
-      "change_7d": -12.24,
-      "phase": "🟢 Vroeg momentum",
-      "price": 0.15219
-    },
-    "ALT": {
-      "score": 19,
-      "technical_score": 20,
-      "change_1d": -0.8,
-      "change_3d": -4.78,
-      "change_7d": -5.65,
-      "phase": "🟡 Neutraal",
-      "price": 0.0053468
+      "price": 0.40017
     },
     "COMP": {
       "score": 19,
@@ -3798,23 +3807,23 @@
       "phase": "🟡 Neutraal",
       "price": 15.706
     },
-    "HMSTR": {
+    "HAEDAL": {
       "score": 18,
       "technical_score": 19,
-      "change_1d": -2.38,
-      "change_3d": -3.4,
-      "change_7d": -8.26,
+      "change_1d": -1.55,
+      "change_3d": -5.92,
+      "change_7d": -3.68,
       "phase": "🟡 Neutraal",
-      "price": 0.00014981
+      "price": 0.015768
     },
-    "LAYER": {
-      "score": 18,
-      "technical_score": 19,
-      "change_1d": -1.72,
-      "change_3d": -4.89,
-      "change_7d": -3.8,
+    "YGG": {
+      "score": 17,
+      "technical_score": 17,
+      "change_1d": -0.33,
+      "change_3d": -3.65,
+      "change_7d": -5.09,
       "phase": "🟡 Neutraal",
-      "price": 0.057407
+      "price": 0.019
     },
     "SLP": {
       "score": 17,
@@ -3824,15 +3833,6 @@
       "change_7d": -5.0,
       "phase": "🟡 Neutraal",
       "price": 0.00052854
-    },
-    "ARX": {
-      "score": 17,
-      "technical_score": 17,
-      "change_1d": -0.64,
-      "change_3d": -8.11,
-      "change_7d": -14.11,
-      "phase": "🟡 Neutraal",
-      "price": 0.10486
     }
   },
   "last_digest": "2026-08-30-20",
