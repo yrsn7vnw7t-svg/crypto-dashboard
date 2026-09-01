@@ -13,6 +13,8 @@ import requests
 # CONFIG
 # =========================================================
 
+SCANNER_VERSION = "v2.2-strict-fast-2026-09-01"
+
 BASE_URL = "https://api.bitvavo.com/v2"
 GDELT_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
 
@@ -29,6 +31,12 @@ FAST_MODE = (
     os.getenv("FAST_MODE", "false").lower() == "true"
 )
 
+# NEWS_MODE is bewust een aparte route. Hierdoor veroorzaakt een GitHub-run
+# met NEWS_MODE=true NOOIT meer per ongeluk een volledige scan.
+NEWS_MODE = (
+    os.getenv("NEWS_MODE", "false").lower() == "true"
+)
+
 STATE_FILE = "alert_state.json"
 
 AMSTERDAM = ZoneInfo("Europe/Amsterdam")
@@ -36,12 +44,14 @@ AMSTERDAM = ZoneInfo("Europe/Amsterdam")
 TOP_N = 5
 
 INTERESTING_THRESHOLD = 65
-EARLY_ALERT_THRESHOLD = 70
-EARLY_ALERT_COOLDOWN_HOURS = 12
+EARLY_ALERT_THRESHOLD = 80
+EARLY_ALERT_COOLDOWN_HOURS = 24
 
-# Fast-mover instellingen
-FAST_ALERT_COOLDOWN_MINUTES = 60
-FAST_MIN_LIQUIDITY_EUR = 25_000
+# Strenge momentum-instellingen. Telegram is een alarmkanaal, geen feed.
+FAST_ALERT_COOLDOWN_MINUTES = 360       # dezelfde coin/event: 6 uur stil
+FAST_GLOBAL_COOLDOWN_MINUTES = 90       # na ieder momentumbericht 90 min stil
+FAST_MIN_LIQUIDITY_EUR = 100_000        # negeer dunne markten
+FAST_MAX_ALERTS_PER_RUN = 1              # maximaal 1 momentumbericht per run
 
 DIGEST_HOURS = {8, 12, 16, 20}
 
@@ -451,58 +461,58 @@ def fast_volume_ratio(df):
 
 def classify_fast_momentum(change_15m, change_1h, change_2h, volume_ratio):
     """
-    Geeft een event-type terug voor plotselinge korte-termijn bewegingen.
+    Zeer strenge Telegram-filter.
 
-    EARLY:
-      beweging begint nu en wordt door volume bevestigd.
-
-    FAST:
-      duidelijke sterke versnelling, maar nog niet per se extreem laat.
-
-    LATE:
-      beweging is al zo groot dat FOMO/terugvalrisico duidelijk hoger is.
+    Een alert mag alleen als de beweging NU nog positief is en door duidelijk
+    bovengemiddeld volume wordt bevestigd. Oude pumps, terugvallen en dunne
+    markten worden bewust genegeerd.
     """
     c15 = change_15m or 0
     c1 = change_1h or 0
     c2 = change_2h or 0
     vr = volume_ratio or 1.0
 
-    # Eerst de late/pump-regels, zodat +30% in 1u nooit "vroeg" kan heten.
-    if c1 >= 15 or c2 >= 25 or c15 >= 10:
-        return {
-            "type": "late",
-            "label": "⚠️ EXTREME MOVER / LATE ENTRY",
-            "priority": 3,
-        }
+    # Geen alert als het actuele 15m-momentum niet positief is.
+    if c15 <= 0:
+        return None
 
-    if c1 >= 7 or c2 >= 10 or c15 >= 4:
+    # Geen alert zonder duidelijke volumebevestiging.
+    if vr < 2.0:
+        return None
+
+    # Extreme / late moves zijn juist géén instapsignaal en blijven stil.
+    if c15 >= 8 or c1 >= 15 or c2 >= 25:
+        return None
+
+    # FAST: sterke, nog actuele versnelling met extra sterke volumebevestiging.
+    if (
+        c15 >= 2.0
+        and c1 >= 5.0
+        and c2 >= 5.0
+        and c2 <= 15.0
+        and vr >= 2.5
+    ):
         return {
             "type": "fast",
-            "label": "🔥 FAST MOVER",
+            "label": "🔥 FAST MOVER v2",
             "priority": 2,
         }
 
-    early = (
-        (
-            c15 >= 1.5
-            and c1 >= 2.0
-        )
-        or c15 >= 2.5
-        or (
-            c1 >= 3.5
-            and c2 < 8
-        )
-    )
-
-    if early and vr >= 1.35 and c2 < 12:
+    # EARLY: net begonnen, meerdere tijdvensters positief en >= 2x volume.
+    if (
+        c15 >= 1.5
+        and c1 >= 3.0
+        and c2 >= 2.0
+        and c2 < 10.0
+        and vr >= 2.0
+    ):
         return {
             "type": "early",
-            "label": "🚀 EARLY MOMENTUM",
+            "label": "🚀 EARLY ALERT v2",
             "priority": 1,
         }
 
     return None
-
 
 def fast_alert_key(asset, event_type):
     return f"{asset}:{event_type}"
@@ -525,6 +535,22 @@ def can_send_fast_alert(asset, event_type, state, now):
         now - previous_time
         >= timedelta(minutes=FAST_ALERT_COOLDOWN_MINUTES)
     )
+
+
+def can_send_global_fast_alert(state, now):
+    previous_time = parse_iso(state.get("last_any_fast_alert"))
+    if previous_time is None:
+        return True
+    if previous_time.tzinfo is None:
+        previous_time = previous_time.replace(tzinfo=AMSTERDAM)
+    return (
+        now - previous_time
+        >= timedelta(minutes=FAST_GLOBAL_COOLDOWN_MINUTES)
+    )
+
+
+def mark_global_fast_alert(state, now):
+    state["last_any_fast_alert"] = now.isoformat()
 
 
 def detect_new_markets(markets, state):
@@ -666,10 +692,14 @@ def scan_fast_movers(state, now):
         reverse=True,
     )
 
+    # Telegram blijft stil als er recent al een momentumalert is verzonden.
+    if not can_send_global_fast_alert(state, now):
+        return alerts
+
     sent = 0
 
     for coin in alerts:
-        if sent >= 5:
+        if sent >= FAST_MAX_ALERTS_PER_RUN:
             break
 
         if not can_send_fast_alert(
@@ -682,15 +712,11 @@ def scan_fast_movers(state, now):
 
         if coin["event_type"] == "early":
             explanation = (
-                "🟢 De beweging lijkt recent te starten en volume bevestigt."
-            )
-        elif coin["event_type"] == "fast":
-            explanation = (
-                "🟠 Sterke versnelling. Instaprisico loopt snel op."
+                "Waarom nu: positieve 15m/1u/2u versnelling én minimaal 2× normaal volume."
             )
         else:
             explanation = (
-                "🔴 De beweging is al extreem groot. Hoog late-entry/FOMO-risico."
+                "Waarom nu: sterke actuele versnelling én minimaal 2.5× normaal volume."
             )
 
         lines = [
@@ -704,6 +730,7 @@ def scan_fast_movers(state, now):
             f"24u volume: €{coin['volume_eur']:,.0f}",
             "",
             explanation,
+            "⚠️ Signaal, geen koopadvies.",
         ]
 
         send_telegram(
@@ -718,6 +745,7 @@ def scan_fast_movers(state, now):
             coin["event_type"],
         )] = now.isoformat()
 
+        mark_global_fast_alert(state, now)
         sent += 1
 
     return alerts
@@ -2356,106 +2384,51 @@ def build_asset_state(rows):
 # =========================================================
 
 def main():
-    now = datetime.now(
-        AMSTERDAM
-    )
+    print(f"Crypto scanner version: {SCANNER_VERSION}")
 
+    now = datetime.now(AMSTERDAM)
     state = load_state()
 
-    # ---------------------------------------------------------
-    # FAST MODE
-    # ---------------------------------------------------------
-    # Wordt later door GitHub Actions iedere 15 minuten gestart.
-    # Deze route doet alleen listing + 15m/1u/2u momentum checks.
-    if FAST_MODE:
-        scan_fast_movers(
-            state,
-            now,
-        )
-
-        save_state(
-            state
-        )
-
+    # NEWS MODE
+    # Belangrijk: deze route keert ALTIJD terug en kan dus nooit meer per ongeluk
+    # de full scan / oude early-alertlogica starten. Voor rust op Telegram houden
+    # we deze modus voorlopig stil, behalve echte nieuwe Bitvavo-listings.
+    if NEWS_MODE:
+        try:
+            markets = get_markets()
+            new_markets = detect_new_markets(markets, state)
+            if new_markets:
+                send_new_listing_alerts(new_markets, state, now)
+        finally:
+            save_state(state)
         return
 
-    # ---------------------------------------------------------
-    # VOLLEDIGE SCAN
-    # ---------------------------------------------------------
-    previous_assets = (
-        state.get(
-            "assets",
-            {},
-        )
-    )
+    # FAST MODE: alleen de strenge 15m/1u/2u momentumscanner.
+    if FAST_MODE:
+        scan_fast_movers(state, now)
+        save_state(state)
+        return
 
-    # Houd ook bij welke Bitvavo-markten bestaan.
-    # Dit zorgt dat de fast scanner later nieuwe listings kan herkennen.
+    # VOLLEDIGE SCAN: dashboard / vaste Top-5 digest.
+    # De oude spontane "VROEG SIGNAAL"-functie wordt bewust NIET meer aangeroepen.
     try:
         markets = get_markets()
-        detect_new_markets(
-            markets,
-            state,
-        )
+        detect_new_markets(markets, state)
     except Exception:
         pass
 
     rows = scan_market()
-
     if not rows:
-        raise RuntimeError(
-            "Geen assets konden worden geanalyseerd."
-        )
+        raise RuntimeError("Geen assets konden worden geanalyseerd.")
 
-    # Eerdere forecasts beoordelen
-    evaluate_old_forecasts(
-        rows,
-        state,
-        now,
-    )
+    evaluate_old_forecasts(rows, state, now)
 
-    # Vaste update
-    if should_send_digest(
-        now,
-        state,
-    ):
-        send_top_digest(
-            rows,
-            state,
-            now,
-        )
+    if should_send_digest(now, state):
+        send_top_digest(rows, state, now)
+        record_forecasts(rows, state, now)
 
-        record_forecasts(
-            rows,
-            state,
-            now,
-        )
-
-    # Bestaande technische vroege signalen blijven actief.
-    # Deze zijn trager dan de fast scanner en dienen als extra bevestiging.
-    early_alerts = (
-        detect_early_opportunities(
-            rows,
-            previous_assets,
-        )
-    )
-
-    send_early_alerts(
-        early_alerts,
-        state,
-        now,
-    )
-
-    # Nieuwe marktstatus
-    state["assets"] = (
-        build_asset_state(
-            rows
-        )
-    )
-
-    save_state(
-        state
-    )
+    state["assets"] = build_asset_state(rows)
+    save_state(state)
 
 
 if __name__ == "__main__":
