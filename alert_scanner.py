@@ -1,5 +1,7 @@
 import os
 import json
+import re
+from difflib import SequenceMatcher
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from urllib.parse import urlparse
@@ -13,7 +15,7 @@ import requests
 # CONFIG
 # =========================================================
 
-SCANNER_VERSION = "v2.3-news-listing-watch-2026-09-09"
+SCANNER_VERSION = "v2.4-news-dedupe-fast-listing-2026-09-10"
 
 BASE_URL = "https://api.bitvavo.com/v2"
 GDELT_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
@@ -57,6 +59,9 @@ FAST_MAX_ALERTS_PER_RUN = 1              # maximaal 1 momentumbericht per run
 # iedere ~15 minuten. Deze instellingen zijn bewust los van de gewone momentumfilter.
 NEWS_MAX_ALERTS_PER_RUN = 2
 NEWS_SEEN_MAX = 300
+NEWS_TOPIC_SEEN_MAX = 200
+NEWS_TOPIC_COOLDOWN_HOURS = 96
+NEWS_TOPIC_SIMILARITY = 0.72
 NEW_LISTING_WATCH_HOURS = 6
 NEW_LISTING_ALERT_COOLDOWN_MINUTES = 45
 
@@ -142,9 +147,14 @@ def default_state():
         "known_markets": [],
         "forecast_history": [],
         "seen_news_urls": [],
+        "seen_news_topics": [],
         "listing_notified_markets": [],
         "market_first_seen": {},
         "listing_watch_alerts": {},
+        "known_all_eur_markets": [],
+        "preactive_notified_markets": [],
+        "market_status_first_seen": {},
+        "last_market_poll_at": None,
     }
 
 
@@ -177,6 +187,7 @@ def load_state():
         state.setdefault("known_markets", [])
         state.setdefault("forecast_history", [])
         state.setdefault("seen_news_urls", [])
+        state.setdefault("seen_news_topics", [])
         # Bij upgrade: alles wat al bekend was geldt als reeds gemeld. Zo ontstaat
         # geen lawine aan oude listing-alerts op de eerste v2.3-run.
         state.setdefault(
@@ -185,6 +196,10 @@ def load_state():
         )
         state.setdefault("market_first_seen", {})
         state.setdefault("listing_watch_alerts", {})
+        state.setdefault("known_all_eur_markets", [])
+        state.setdefault("preactive_notified_markets", [])
+        state.setdefault("market_status_first_seen", {})
+        state.setdefault("last_market_poll_at", None)
 
         return state
 
@@ -230,6 +245,25 @@ def get_markets():
             market.get("quote") == "EUR"
             and market.get("status") == "trading"
         )
+    ]
+
+
+def get_eur_markets_all_statuses():
+    """Alle EUR-markten uit Bitvavo, ook als status nog niet `trading` is."""
+    response = requests.get(
+        f"{BASE_URL}/markets",
+        timeout=30,
+    )
+    response.raise_for_status()
+    markets = response.json()
+    return [
+        {
+            "market": market.get("market"),
+            "asset": market.get("base"),
+            "status": market.get("status") or "unknown",
+        }
+        for market in markets
+        if market.get("quote") == "EUR" and market.get("market")
     ]
 
 
@@ -574,14 +608,8 @@ def mark_global_fast_alert(state, now):
 
 
 def detect_new_markets(markets, state, now=None):
-    """
-    Detecteert nieuwe Bitvavo EUR-markten en onthoudt wanneer ze voor het eerst
-    zijn gezien. Belangrijk: detecteren en Telegram-melden zijn vanaf v2.3
-    gescheiden. Daardoor kan een full scan een nieuwe market niet meer
-    stilletjes "opeten" voordat NEWS_MODE hem meldt.
-    """
+    """Detecteer nieuwe actieve EUR-markten en leg exact vast wanneer wij ze zagen."""
     now = now or datetime.now(AMSTERDAM)
-
     current = sorted(item["market"] for item in markets)
     previous = state.get("known_markets", [])
 
@@ -591,38 +619,80 @@ def detect_new_markets(markets, state, now=None):
         return []
 
     previous_set = set(previous)
-    new_items = [
-        item for item in markets
-        if item["market"] not in previous_set
-    ]
-
+    new_items = [item for item in markets if item["market"] not in previous_set]
     first_seen = state.setdefault("market_first_seen", {})
     for item in new_items:
         first_seen.setdefault(item["market"], now.isoformat())
+        print(f"NEW ACTIVE MARKET first seen: {item['market']} at {now.isoformat()}")
 
     state["known_markets"] = current
     return new_items
 
 
-def get_pending_listing_alerts(markets, state, now):
-    """Geeft nieuwe markets terug die nog nooit via Telegram zijn gemeld."""
-    detect_new_markets(markets, state, now)
+def detect_new_eur_market_records(all_markets, state, now):
+    """
+    Detecteer een markt al zodra Bitvavo hem in /markets toont, dus eventueel
+    vóór status=trading. De eerste v2.4-run maakt alleen een baseline.
+    """
+    current = sorted(item["market"] for item in all_markets)
+    previous = state.get("known_all_eur_markets", [])
+    status_first_seen = state.setdefault("market_status_first_seen", {})
 
+    for item in all_markets:
+        status_first_seen.setdefault(item["market"], {
+            "first_seen": now.isoformat(),
+            "first_status": item.get("status", "unknown"),
+        })
+
+    if not previous:
+        state["known_all_eur_markets"] = current
+        state.setdefault("preactive_notified_markets", list(current))
+        return []
+
+    previous_set = set(previous)
+    new_items = [item for item in all_markets if item["market"] not in previous_set]
+    state["known_all_eur_markets"] = current
+    for item in new_items:
+        print(
+            f"NEW EUR MARKET RECORD first seen: {item['market']} "
+            f"status={item.get('status')} at {now.isoformat()}"
+        )
+    return new_items
+
+
+def send_preactive_market_alerts(new_records, state, now):
+    """Meld een nieuw Bitvavo EUR-marketrecord als het nog niet actief tradet."""
+    notified = state.setdefault("preactive_notified_markets", [])
+    notified_set = set(notified)
+    for item in new_records[:5]:
+        market = item["market"]
+        status = item.get("status", "unknown")
+        if market in notified_set or status == "trading":
+            continue
+        asset = item.get("asset", market.replace("-EUR", ""))
+        send_telegram("\n".join([
+            "⏳ NIEUWE BITVAVO MARKET GEVONDEN",
+            "",
+            f"{asset} ({market}) staat nieuw in de Bitvavo-marketlijst.",
+            f"Status nu: {status}",
+            f"Scanner zag hem om: {now.strftime('%H:%M')}",
+            "",
+            "Dit kan vóór de daadwerkelijke handel verschijnen. Ik blijf hem volgen tot hij actief is.",
+            "⚠️ Nog geen koop-/verkoopadvies; status eerst verifiëren.",
+        ]))
+        notified.append(market)
+        notified_set.add(market)
+
+
+def get_pending_listing_alerts(markets, state, now):
+    """Nieuwe actieve markets die nog nooit via Telegram zijn gemeld."""
+    detect_new_markets(markets, state, now)
     notified = set(state.get("listing_notified_markets", []))
     first_seen = state.setdefault("market_first_seen", {})
-    pending = []
-
-    for item in markets:
-        market = item["market"]
-        if market in notified:
-            continue
-        # Alleen echt nieuwe markets melden. Een market zonder first_seen is een
-        # bestaande market uit de upgrade-baseline en wordt niet alsnog gespamd.
-        if market not in first_seen:
-            continue
-        pending.append(item)
-
-    return pending
+    return [
+        item for item in markets
+        if item["market"] not in notified and item["market"] in first_seen
+    ]
 
 
 def send_new_listing_alerts(new_markets, state, now):
@@ -633,22 +703,24 @@ def send_new_listing_alerts(new_markets, state, now):
     for item in new_markets[:5]:
         asset = item["asset"]
         market = item["market"]
-
         if market in notified_set:
             continue
 
         first_seen.setdefault(market, now.isoformat())
+        seen_at = parse_iso(first_seen.get(market)) or now
+        if seen_at.tzinfo is None:
+            seen_at = seen_at.replace(tzinfo=AMSTERDAM)
 
         message = "\n".join([
             "🆕 NIEUWE BITVAVO LISTING",
             "",
             f"{asset} ({market}) is nieuw actief op Bitvavo.",
+            f"Scanner zag status=trading voor het eerst om: {seen_at.astimezone(AMSTERDAM).strftime('%H:%M')}",
             "",
             f"Ik zet deze coin {NEW_LISTING_WATCH_HOURS} uur op extra watch.",
             "Ik let extra op 5m / 15m / 30m versnelling + volume.",
             "⚠️ Nieuwe listings kunnen extreem volatiel zijn.",
         ])
-
         send_telegram(message)
         notified.append(market)
         notified_set.add(market)
@@ -803,7 +875,7 @@ def scan_new_listing_watch(state, now, markets=None, ticker_data=None):
     return candidates
 
 
-def _gdelt_search(query, max_records=25, timespan="2d"):
+def _gdelt_search(query, max_records=25, timespan="3d"):
     params = {
         "query": query,
         "mode": "ArtList",
@@ -825,11 +897,7 @@ def _gdelt_search(query, max_records=25, timespan="2d"):
         url = (article.get("url") or "").strip()
         if not title or not url:
             continue
-        domain = (
-            article.get("domain")
-            or urlparse(url).netloc
-            or "Onbekende bron"
-        )
+        domain = article.get("domain") or urlparse(url).netloc or "Onbekende bron"
         cleaned.append({
             "title": title,
             "url": url,
@@ -840,22 +908,18 @@ def _gdelt_search(query, max_records=25, timespan="2d"):
 
 
 def get_prelaunch_listing_news():
-    """
-    Zoekt breed naar coins die nog niet op Bitvavo hoeven te bestaan. Dit lost
-    precies het gat op waarbij een toekomstige token/launch buiten de assetlijst
-    viel. Resultaten worden later streng op titel gefilterd.
-    """
+    """Nieuws-first: nadruk op concrete launch/listing-taal en Bitvavo."""
     queries = [
-        '"Bitvavo" (listing OR listed OR launch OR launches OR token)',
+        '"Bitvavo" ("will list" OR "to list" OR listing OR listed OR launch OR launches)',
+        '"Bitvavo" (token OR memecoin OR "meme coin") (new OR listing OR launch)',
         '("token launch" OR "launches token" OR "token generation event" OR TGE OR "launches tomorrow") (crypto OR blockchain OR memecoin)',
         '("new memecoin" OR "new meme coin") (launch OR launches OR debut OR token)',
     ]
-
     merged = []
     seen = set()
     for query in queries:
-        for item in _gdelt_search(query, max_records=25, timespan="2d"):
-            key = item["url"].split("#", 1)[0]
+        for item in _gdelt_search(query, max_records=25, timespan="3d"):
+            key = canonical_news_url(item["url"])
             if key in seen:
                 continue
             seen.add(key)
@@ -863,30 +927,90 @@ def get_prelaunch_listing_news():
     return merged
 
 
+def canonical_news_url(url):
+    """Verwijder fragment en trackingparameters voor sterkere URL-deduplicatie."""
+    try:
+        parsed = urlparse(url)
+        return f"{parsed.scheme}://{parsed.netloc.lower()}{parsed.path.rstrip('/')}"
+    except Exception:
+        return url.split("#", 1)[0].split("?", 1)[0].rstrip("/")
+
+
+def normalize_news_title(title):
+    text = title.lower()
+    text = re.sub(r"https?://\S+", " ", text)
+    text = re.sub(r"[^a-z0-9$]+", " ", text)
+    filler = {
+        "reportedly", "report", "reports", "says", "said", "new", "the", "a", "an",
+        "of", "to", "on", "in", "for", "and", "with", "its", "is", "will", "set",
+        "crypto", "cryptocurrency", "token", "coin", "news", "latest",
+    }
+    tokens = [t for t in text.split() if t not in filler and len(t) > 1]
+    return " ".join(tokens)
+
+
+def news_topic_signature(title):
+    """Compacte onderwerpvingerafdruk, zodat hetzelfde verhaal via 10 sites 1 alert blijft."""
+    normalized = normalize_news_title(title)
+    tokens = normalized.split()
+    # Sorteer de kernwoorden zodat kleine herschrijvingen minder uitmaken.
+    return " ".join(sorted(dict.fromkeys(tokens))[:18])
+
+
+def topic_similarity(a, b):
+    if not a or not b:
+        return 0.0
+    sa, sb = set(a.split()), set(b.split())
+    jaccard = len(sa & sb) / max(1, len(sa | sb))
+    seq = SequenceMatcher(None, a, b).ratio()
+    return max(jaccard, seq)
+
+
+def seen_similar_news_topic(state, signature, now):
+    kept = []
+    duplicate = False
+    for entry in state.setdefault("seen_news_topics", []):
+        when = parse_iso(entry.get("seen_at"))
+        if when is None:
+            continue
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=AMSTERDAM)
+        if now - when > timedelta(hours=NEWS_TOPIC_COOLDOWN_HOURS):
+            continue
+        kept.append(entry)
+        if topic_similarity(signature, entry.get("signature", "")) >= NEWS_TOPIC_SIMILARITY:
+            duplicate = True
+    state["seen_news_topics"] = kept[-NEWS_TOPIC_SEEN_MAX:]
+    return duplicate
+
+
+def remember_news_topic(state, signature, title, now):
+    topics = state.setdefault("seen_news_topics", [])
+    topics.append({"signature": signature, "title": title, "seen_at": now.isoformat()})
+    state["seen_news_topics"] = topics[-NEWS_TOPIC_SEEN_MAX:]
+
+
 def classify_prelaunch_article(article):
     title = article["title"].lower()
-
-    # Koersartikelen en generieke analyses zijn niet het doel van NEWS_MODE.
     reject = [
-        "price prediction", "price analysis", "technical analysis",
-        "could reach", "may reach", "rally", "surges", "soars",
+        "price prediction", "price analysis", "technical analysis", "could reach",
+        "may reach", "rally", "surges", "soars", "best crypto", "top crypto",
     ]
     if any(word in title for word in reject):
         return None
 
     bitvavo = "bitvavo" in title
     listing = any(word in title for word in [
-        "listing", "listed", "lists", "to list", "coming to",
+        "listing", "listed", "lists", "to list", "will list", "coming to", "available on",
     ])
     launch = any(word in title for word in [
-        "launch", "launches", "launching", "debut",
-        "token generation event", " tge", "memecoin", "meme coin",
+        "launch", "launches", "launching", "debut", "token generation event", " tge",
+        "memecoin", "meme coin",
     ])
     timing = any(word in title for word in [
-        "today", "tomorrow", "this week", "september", "october",
-        "launch", "listing", "listed", "debut",
+        "today", "tomorrow", "this week", "launch", "listing", "listed", "debut",
+        "september", "october", "november", "december",
     ])
-
     if bitvavo and (listing or launch):
         return {"priority": 3, "label": "📰 BITVAVO PRE-LISTING / LAUNCH"}
     if listing and timing:
@@ -896,20 +1020,55 @@ def classify_prelaunch_article(article):
     return None
 
 
-def send_prelaunch_news_alerts(state, now):
+def article_mentions_live_market(article, active_markets):
+    """Blokkeer pre-launchnieuws zodra de genoemde coin al actief op Bitvavo staat."""
+    title = normalize_news_title(article.get("title", ""))
+    words = set(title.split())
+    raw_title = article.get("title", "").lower()
+
+    for item in active_markets:
+        asset = str(item.get("asset", "")).upper()
+        if not asset:
+            continue
+        # Lange tickers zoals LAPTOP/CNPY kunnen veilig als los woord worden gematcht.
+        if len(asset) >= 4 and asset.lower() in words:
+            return True
+        # Expliciete ticker-notatie voor kortere symbolen.
+        if f"${asset.lower()}" in raw_title or f"({asset.lower()})" in raw_title:
+            return True
+        name = NEWS_NAMES.get(asset)
+        if name and len(name) >= 4 and name.lower() in raw_title:
+            return True
+    return False
+
+
+def send_prelaunch_news_alerts(state, now, active_markets=None):
+    active_markets = active_markets or []
     articles = get_prelaunch_listing_news()
     seen_urls = state.setdefault("seen_news_urls", [])
     seen_set = set(seen_urls)
     candidates = []
 
     for article in articles:
-        url_key = article["url"].split("#", 1)[0]
+        url_key = canonical_news_url(article["url"])
         if url_key in seen_set:
             continue
         classification = classify_prelaunch_article(article)
         if classification is None:
             continue
-        candidates.append({**article, **classification, "url_key": url_key})
+        # Cruciaal: geen 'launch alert' meer voor een coin die al live staat.
+        if article_mentions_live_market(article, active_markets):
+            seen_urls.append(url_key)
+            seen_set.add(url_key)
+            print(f"News skipped because coin appears live: {article['title']}")
+            continue
+        signature = news_topic_signature(article["title"])
+        if seen_similar_news_topic(state, signature, now):
+            seen_urls.append(url_key)
+            seen_set.add(url_key)
+            print(f"Duplicate news topic skipped: {article['title']}")
+            continue
+        candidates.append({**article, **classification, "url_key": url_key, "signature": signature})
 
     candidates.sort(key=lambda x: x["priority"], reverse=True)
     sent = 0
@@ -917,49 +1076,66 @@ def send_prelaunch_news_alerts(state, now):
         if sent >= NEWS_MAX_ALERTS_PER_RUN:
             break
         lines = [
-            item["label"],
-            "",
-            item["title"],
-            f"Bron: {item['domain']}",
-            item["url"],
-            "",
-            "Waarom dit telt: mogelijke nieuwe listing/launch vóórdat normale Bitvavo-momentumdata beschikbaar is.",
-            "⚠️ Nieuws kan een launch noemen zonder bevestigde Bitvavo-listing; altijd verifiëren.",
+            item["label"], "", item["title"], f"Bron: {item['domain']}", item["url"], "",
+            "Waarom dit telt: mogelijke nieuwe listing/launch vóór normale Bitvavo-momentumdata beschikbaar is.",
+            "⚠️ Launchnieuws is niet automatisch een bevestigde Bitvavo-listing; altijd verifiëren.",
         ]
         send_telegram("\n".join(lines))
         seen_urls.append(item["url_key"])
         seen_set.add(item["url_key"])
+        remember_news_topic(state, item["signature"], item["title"], now)
         sent += 1
 
-    # Houd state compact.
     state["seen_news_urls"] = seen_urls[-NEWS_SEEN_MAX:]
     return candidates
 
 
 def run_news_mode(state, now):
     """
-    NEWS_MODE v2.3:
-    1) nieuws vóór launch/listing;
-    2) nieuwe Bitvavo-market direct melden;
-    3) nieuwe listing eerste uren extra gevoelig volgen.
-    Geen enkele route start de full scan.
+    NEWS_MODE v2.4:
+    1) poll ALLE Bitvavo EUR-marketrecords (ook pre-active status);
+    2) detecteer nieuwe actieve listings en timestamp onze eerste waarneming;
+    3) news-first met URL + onderwerp-dedupe en blokkade voor coins die al live zijn;
+    4) post-listing watch gedurende de eerste uren.
     """
+    active_markets = []
+    ticker_data = {}
     try:
-        send_prelaunch_news_alerts(state, now)
+        all_eur = get_eur_markets_all_statuses()
+        active_markets = [
+            {"market": x["market"], "asset": x["asset"]}
+            for x in all_eur if x.get("status") == "trading"
+        ]
+        state["last_market_poll_at"] = now.isoformat()
+        print(
+            f"Bitvavo market poll: {len(all_eur)} EUR records, "
+            f"{len(active_markets)} trading at {now.isoformat()}"
+        )
+
+        new_records = detect_new_eur_market_records(all_eur, state, now)
+        if new_records:
+            send_preactive_market_alerts(new_records, state, now)
+
+        pending = get_pending_listing_alerts(active_markets, state, now)
+        if pending:
+            print("Pending active listings: " + ", ".join(x["market"] for x in pending))
+            send_new_listing_alerts(pending, state, now)
+
+        ticker_data = get_ticker_24h()
+    except Exception as exc:
+        print(f"Bitvavo listing poll overgeslagen: {exc}")
+
+    try:
+        send_prelaunch_news_alerts(state, now, active_markets=active_markets)
     except Exception as exc:
         print(f"News-first scanner overgeslagen: {exc}")
 
     try:
-        markets = get_markets()
-        ticker_data = get_ticker_24h()
-        pending = get_pending_listing_alerts(markets, state, now)
-        if pending:
-            send_new_listing_alerts(pending, state, now)
-        scan_new_listing_watch(
-            state, now, markets=markets, ticker_data=ticker_data
-        )
+        if active_markets:
+            scan_new_listing_watch(state, now, markets=active_markets, ticker_data=ticker_data)
     except Exception as exc:
         print(f"Listing-watch overgeslagen: {exc}")
+
 
 def scan_fast_movers(state, now):
     """
