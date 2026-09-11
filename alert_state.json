@@ -6243,5 +6243,2157 @@
   "market_first_seen": {
     "CNPY-EUR": "2026-09-10T15:04:24.917605+02:00"
   },
-  "listing_watch_alerts": {}
+  "listing_watch_alerts": {},
+  "seen_news_topics": [],
+  "known_all_eur_markets": [
+    "0G-EUR",
+    "1INCH-EUR",
+    "2Z-EUR",
+    "A-EUR",
+    "AAVE-EUR",
+    "ACE-EUR",
+    "ACH-EUR",
+    "ACT-EUR",
+    "ACU-EUR",
+    "ACX-EUR",
+    "ADA-EUR",
+    "ADX-EUR",
+    "AERO-EUR",
+    "AEVO-EUR",
+    "AGI-EUR",
+    "AGLD-EUR",
+    "AI-EUR",
+    "AIOZ-EUR",
+    "AIXBT-EUR",
+    "AKT-EUR",
+    "ALGO-EUR",
+    "ALICE-EUR",
+    "ALIGN-EUR",
+    "ALLO-EUR",
+    "ALT-EUR",
+    "AMP-EUR",
+    "ANIME-EUR",
+    "ANKR-EUR",
+    "APE-EUR",
+    "API3-EUR",
+    "APT-EUR",
+    "ARB-EUR",
+    "ARK-EUR",
+    "ARKM-EUR",
+    "ARPA-EUR",
+    "ARX-EUR",
+    "ASTER-EUR",
+    "ASTR-EUR",
+    "ATH-EUR",
+    "ATOM-EUR",
+    "AUCTION-EUR",
+    "AUDIO-EUR",
+    "AVA-EUR",
+    "AVAX-EUR",
+    "AVNT-EUR",
+    "AXL-EUR",
+    "AXS-EUR",
+    "AZTEC-EUR",
+    "BABY-EUR",
+    "BANANA-EUR",
+    "BAND-EUR",
+    "BAT-EUR",
+    "BCH-EUR",
+    "BEAM-EUR",
+    "BEL-EUR",
+    "BICO-EUR",
+    "BIGTIME-EUR",
+    "BILL-EUR",
+    "BIO-EUR",
+    "BIRB-EUR",
+    "BLEND-EUR",
+    "BLUR-EUR",
+    "BNB-EUR",
+    "BNT-EUR",
+    "BOB-EUR",
+    "BOME-EUR",
+    "BONK-EUR",
+    "BRETT-EUR",
+    "BREV-EUR",
+    "BTC-EUR",
+    "BTT-EUR",
+    "C-EUR",
+    "C98-EUR",
+    "CAKE-EUR",
+    "CAP-EUR",
+    "CARV-EUR",
+    "CAT-EUR",
+    "CATI-EUR",
+    "CC-EUR",
+    "CELO-EUR",
+    "CELR-EUR",
+    "CETUS-EUR",
+    "CFG-EUR",
+    "CHILLGUY-EUR",
+    "CHIP-EUR",
+    "CHR-EUR",
+    "CHZ-EUR",
+    "CNPY-EUR",
+    "COMP-EUR",
+    "COTI-EUR",
+    "COW-EUR",
+    "CPOOL-EUR",
+    "CRO-EUR",
+    "CROSS-EUR",
+    "CRV-EUR",
+    "CSPR-EUR",
+    "CTC-EUR",
+    "CTK-EUR",
+    "CTR-EUR",
+    "CTSI-EUR",
+    "CVC-EUR",
+    "CVX-EUR",
+    "CYBER-EUR",
+    "DATAIP-EUR",
+    "DBR-EUR",
+    "DEEP-EUR",
+    "DEGEN-EUR",
+    "DGB-EUR",
+    "DIA-EUR",
+    "DODO-EUR",
+    "DOGE-EUR",
+    "DOGS-EUR",
+    "DOS-EUR",
+    "DOT-EUR",
+    "DRIFT-EUR",
+    "DUSK-EUR",
+    "DYDX-EUR",
+    "DYM-EUR",
+    "EDEN-EUR",
+    "EDGE-EUR",
+    "EDU-EUR",
+    "EGLD-EUR",
+    "EIGEN-EUR",
+    "ELSA-EUR",
+    "ENA-EUR",
+    "ENJ-EUR",
+    "ENS-EUR",
+    "ENSO-EUR",
+    "EPIC-EUR",
+    "ESP-EUR",
+    "ETC-EUR",
+    "ETH-EUR",
+    "ETHFI-EUR",
+    "EUL-EUR",
+    "EURC-EUR",
+    "EURCV-EUR",
+    "EUROP-EUR",
+    "F-EUR",
+    "FARTCOIN-EUR",
+    "FET-EUR",
+    "FIDA-EUR",
+    "FIL-EUR",
+    "FLOCK-EUR",
+    "FLOKI-EUR",
+    "FLR-EUR",
+    "FLUID-EUR",
+    "FLUX-EUR",
+    "FOLD-EUR",
+    "FORM-EUR",
+    "FRAX-EUR",
+    "FTT-EUR",
+    "FUEL-EUR",
+    "FUN-EUR",
+    "G-EUR",
+    "GALA-EUR",
+    "GAS-EUR",
+    "GIGA-EUR",
+    "GLM-EUR",
+    "GLMR-EUR",
+    "GMT-EUR",
+    "GMX-EUR",
+    "GNO-EUR",
+    "GNS-EUR",
+    "GOAT-EUR",
+    "GRAM-EUR",
+    "GRASS-EUR",
+    "GROVE-EUR",
+    "GRT-EUR",
+    "GTC-EUR",
+    "GWEI-EUR",
+    "HAEDAL-EUR",
+    "HBAR-EUR",
+    "HEI-EUR",
+    "HFT-EUR",
+    "HMSTR-EUR",
+    "HNT-EUR",
+    "HOME-EUR",
+    "HOT-EUR",
+    "HUMA-EUR",
+    "HYPE-EUR",
+    "ICNT-EUR",
+    "ICP-EUR",
+    "ICX-EUR",
+    "ID-EUR",
+    "IKA-EUR",
+    "ILV-EUR",
+    "IMU-EUR",
+    "IMX-EUR",
+    "INIT-EUR",
+    "INJ-EUR",
+    "INX-EUR",
+    "IO-EUR",
+    "IOST-EUR",
+    "IQ-EUR",
+    "IRYS-EUR",
+    "JASMY-EUR",
+    "JTO-EUR",
+    "JUP-EUR",
+    "KAIA-EUR",
+    "KAITO-EUR",
+    "KAS-EUR",
+    "KAT-EUR",
+    "KAVA-EUR",
+    "KERNEL-EUR",
+    "KITE-EUR",
+    "KMNO-EUR",
+    "KNC-EUR",
+    "KSM-EUR",
+    "LAPTOP-EUR",
+    "LAYER-EUR",
+    "LDO-EUR",
+    "LIGHTER-EUR",
+    "LINEA-EUR",
+    "LINK-EUR",
+    "LISTA-EUR",
+    "LMWR-EUR",
+    "LPT-EUR",
+    "LQTY-EUR",
+    "LRC-EUR",
+    "LSK-EUR",
+    "LTC-EUR",
+    "LUMIA-EUR",
+    "LUNA-EUR",
+    "LUNA2-EUR",
+    "MAGIC-EUR",
+    "MANA-EUR",
+    "MANTA-EUR",
+    "MANTRA-EUR",
+    "MASK-EUR",
+    "MAV-EUR",
+    "MAVIA-EUR",
+    "ME-EUR",
+    "MEGA-EUR",
+    "MEME-EUR",
+    "MERL-EUR",
+    "MET-EUR",
+    "METIS-EUR",
+    "MEW-EUR",
+    "MIOTA-EUR",
+    "MIRA-EUR",
+    "MLN-EUR",
+    "MMT-EUR",
+    "MOCA-EUR",
+    "MOG-EUR",
+    "MON-EUR",
+    "MOODENG-EUR",
+    "MORPHO-EUR",
+    "MOVE-EUR",
+    "MOVR-EUR",
+    "MTL-EUR",
+    "NEAR-EUR",
+    "NEIRO-EUR",
+    "NEO-EUR",
+    "NES-EUR",
+    "NEWT-EUR",
+    "NEX-EUR",
+    "NIL-EUR",
+    "NMR-EUR",
+    "NOM-EUR",
+    "NOS-EUR",
+    "NOT-EUR",
+    "NPC-EUR",
+    "O-EUR",
+    "OGN-EUR",
+    "ONDO-EUR",
+    "ONG-EUR",
+    "ONT-EUR",
+    "OP-EUR",
+    "OPEN-EUR",
+    "ORCA-EUR",
+    "OSMO-EUR",
+    "PARTI-EUR",
+    "PEAQ-EUR",
+    "PENDLE-EUR",
+    "PENGU-EUR",
+    "PEOPLE-EUR",
+    "PEPE-EUR",
+    "PHA-EUR",
+    "PIXEL-EUR",
+    "PLUME-EUR",
+    "PNUT-EUR",
+    "POL-EUR",
+    "POND-EUR",
+    "PONKE-EUR",
+    "POPCAT-EUR",
+    "PORTAL-EUR",
+    "POWR-EUR",
+    "PROM-EUR",
+    "PROMPT-EUR",
+    "PROVE-EUR",
+    "PTB-EUR",
+    "PUFFER-EUR",
+    "PUMP-EUR",
+    "PUNDIX-EUR",
+    "PYTH-EUR",
+    "QKC-EUR",
+    "QNT-EUR",
+    "QUID-EUR",
+    "RAD-EUR",
+    "RARE-EUR",
+    "RAY-EUR",
+    "RE-EUR",
+    "RECALL-EUR",
+    "RED-EUR",
+    "RENDER-EUR",
+    "REQ-EUR",
+    "REZ-EUR",
+    "RLC-EUR",
+    "ROBO-EUR",
+    "RON-EUR",
+    "ROSE-EUR",
+    "RPL-EUR",
+    "RSR-EUR",
+    "RUNE-EUR",
+    "RVN-EUR",
+    "S-EUR",
+    "SAFE-EUR",
+    "SAGA-EUR",
+    "SAND-EUR",
+    "SAPIEN-EUR",
+    "SCR-EUR",
+    "SEI-EUR",
+    "SENT-EUR",
+    "SFP-EUR",
+    "SHELL-EUR",
+    "SHIB-EUR",
+    "SIGN-EUR",
+    "SKL-EUR",
+    "SKY-EUR",
+    "SLP-EUR",
+    "SLX-EUR",
+    "SNX-EUR",
+    "SOL-EUR",
+    "SOLV-EUR",
+    "SOMI-EUR",
+    "SOON-EUR",
+    "SOSO-EUR",
+    "SPK-EUR",
+    "SPX-EUR",
+    "SQD-EUR",
+    "SSV-EUR",
+    "STO-EUR",
+    "STRAX-EUR",
+    "STRK-EUR",
+    "STX-EUR",
+    "SUI-EUR",
+    "SUPER-EUR",
+    "SUSHI-EUR",
+    "SWEAT-EUR",
+    "SWELL-EUR",
+    "SXT-EUR",
+    "SYN-EUR",
+    "SYRUP-EUR",
+    "T-EUR",
+    "TAI-EUR",
+    "TAIKO-EUR",
+    "TAO-EUR",
+    "THE-EUR",
+    "THQ-EUR",
+    "TIA-EUR",
+    "TLM-EUR",
+    "TNSR-EUR",
+    "TOSHI-EUR",
+    "TOWNS-EUR",
+    "TRAC-EUR",
+    "TRB-EUR",
+    "TREE-EUR",
+    "TRIA-EUR",
+    "TRUMP-EUR",
+    "TRUST-EUR",
+    "TRX-EUR",
+    "TURBO-EUR",
+    "TWT-EUR",
+    "U-EUR",
+    "UMA-EUR",
+    "UNI-EUR",
+    "UP-EUR",
+    "USDC-EUR",
+    "USDCV-EUR",
+    "USELESS-EUR",
+    "VANA-EUR",
+    "VELO-EUR",
+    "VERONA-EUR",
+    "VET-EUR",
+    "VIRTUAL-EUR",
+    "VSN-EUR",
+    "VTHO-EUR",
+    "VVV-EUR",
+    "W-EUR",
+    "WAL-EUR",
+    "WAXP-EUR",
+    "WCT-EUR",
+    "WELL-EUR",
+    "WIF-EUR",
+    "WIN-EUR",
+    "WLD-EUR",
+    "WLFI-EUR",
+    "WMTX-EUR",
+    "WOO-EUR",
+    "XAI-EUR",
+    "XAN-EUR",
+    "XDC-EUR",
+    "XLM-EUR",
+    "XMN-EUR",
+    "XNO-EUR",
+    "XPL-EUR",
+    "XRP-EUR",
+    "XTZ-EUR",
+    "XVG-EUR",
+    "XYO-EUR",
+    "YB-EUR",
+    "YFI-EUR",
+    "YGG-EUR",
+    "ZAMA-EUR",
+    "ZBCN-EUR",
+    "ZBT-EUR",
+    "ZEN-EUR",
+    "ZETA-EUR",
+    "ZEUS-EUR",
+    "ZIG-EUR",
+    "ZIL-EUR",
+    "ZK-EUR",
+    "ZKC-EUR",
+    "ZKJ-EUR",
+    "ZKP-EUR",
+    "ZORA-EUR",
+    "ZRC-EUR",
+    "ZRO-EUR",
+    "ZRX-EUR"
+  ],
+  "preactive_notified_markets": [],
+  "market_status_first_seen": {
+    "FUN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CAP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MON-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LIGHTER-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "APT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CTSI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ARX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MANTRA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SHELL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MAVIA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "W-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "IMU-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CHILLGUY-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EURCV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MOCA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SLX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ONDO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AVAX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "IMX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BABY-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "IOST-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "USELESS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GROVE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ALIGN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NEX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AUCTION-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MASK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RAD-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BANANA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SUI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LPT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ALICE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RVN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TRIA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CAT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PUNDIX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SQD-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CRV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZKC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PNUT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PUMP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SWELL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DBR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TRB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LINK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HOME-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "POND-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SFP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "REQ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TAIKO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EPIC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FARTCOIN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZBT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LAPTOP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XMN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZORA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DIA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "API3-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ADA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TREE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RUNE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CHIP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EURC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ENJ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NEWT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "METIS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RENDER-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ALT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SAND-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DYDX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "IO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DGB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MMT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NEIRO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DOS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RLC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PHA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ICNT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HFT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "USDC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "IQ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "QKC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZIG-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TAI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XVG-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BIO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZKJ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DATAIP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CAKE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BTC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RPL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DOT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BILL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SOLV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ICP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GRT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "REZ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BLUR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RARE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MOVR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CFG-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "JUP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SOL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "VERONA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GRAM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GAS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MEME-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DOGS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "UMA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KAIA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "COTI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ENS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SSV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MANTA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TRAC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KNC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TAO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PLUME-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MIOTA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LSK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SOSO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "INJ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZKP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TRUST-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "0G-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "YFI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZIL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GNO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BEL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BCH-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HUMA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WELL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SUSHI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LDO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ENSO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "VET-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CHR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MTL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FLOCK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ROSE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MORPHO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WLFI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZEUS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MAGIC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PENGU-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GLM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PEOPLE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ICX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BICO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "OGN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BNB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PROM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZRC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FIDA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "VVV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CELR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AGLD-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FLUID-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GNS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EDEN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FIL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RAY-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KAVA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SAFE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GRASS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XAI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BREV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SKL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CELO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZAMA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AUDIO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KMNO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CETUS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SOMI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FLUX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MEGA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SIGN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ROBO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HOT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LISTA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SWEAT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MET-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "POWR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TLM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TURBO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PIXEL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZEN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ASTER-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "THE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TRX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TRUMP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SOON-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HMSTR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZBCN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BTT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KAT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CHZ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PYTH-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XAN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KAS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "COMP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LUMIA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ETHFI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EUL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "VELO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ADX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ARPA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "YB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CNPY-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ALLO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SUPER-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "IRYS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AERO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XPL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MEW-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XRP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "JASMY-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PONKE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DOGE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DUSK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FRAX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LAYER-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BIGTIME-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "INX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BIRB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BEAM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HEI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "VIRTUAL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WOO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "STRK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "2Z-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZRO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CPOOL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HBAR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KAITO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WIF-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BRETT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ILV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LQTY-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NOM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BOME-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AIOZ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AMP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MANA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EDGE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AVA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SEI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EUROP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BAT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MOODENG-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LUNA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ONG-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XNO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MAV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ANIME-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ESP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EGLD-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XTZ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PEPE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ORCA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XLM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "THQ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AEVO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FLOKI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MLN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SXT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZETA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KERNEL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PROMPT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SKY-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "OPEN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FET-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EDU-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ELSA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AGI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CARV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ARKM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "POPCAT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NOS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "VTHO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "POL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BNT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FTT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WIN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AXL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CVC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LMWR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FORM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LTC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AKT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NOT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "STO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ACE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SHIB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "A-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XDC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ARB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PARTI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GLMR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ZRX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NMR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LINEA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RSR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "COW-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TWT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SENT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "C-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FOLD-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SCR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ONT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BAND-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ATOM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CTC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ATH-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PEAQ-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "USDCV-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PORTAL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "JTO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "XYO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LRC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ACH-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "YGG-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WMTX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DODO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SAPIEN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DEEP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GOAT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SPK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NIL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "IKA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PUFFER-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PROVE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NEAR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ALGO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TOWNS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "F-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RON-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AXS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "G-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "STX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WAXP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SAGA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MERL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MIRA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "UP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DYM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "APE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ANKR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KSM-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PTB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SYRUP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "QNT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BOB-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ETC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GWEI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TIA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CSPR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TNSR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FUEL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ARK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "INIT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "VSN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "1INCH-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CTK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ASTR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "PENDLE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "EIGEN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "STRAX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "FLR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "UNI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AAVE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ME-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WAL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NEO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GMT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "VANA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NPC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "LUNA2-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "O-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SPX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SLP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GTC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "TOSHI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WLD-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "OSMO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "C98-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BLEND-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ETH-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ACT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HNT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RED-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "KITE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MOG-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AIXBT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CROSS-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CATI-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "NES-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DRIFT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "DEGEN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ACU-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GMX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "MOVE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "S-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AZTEC-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "WCT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GALA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HYPE-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CRO-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SNX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ENA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "T-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "BONK-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "SYN-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CYBER-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CVX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "QUID-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "CTR-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "OP-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ID-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "HAEDAL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "U-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "GIGA-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "ACX-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "AVNT-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    },
+    "RECALL-EUR": {
+      "first_seen": "2026-09-11T15:36:52.499087+02:00",
+      "first_status": "trading"
+    }
+  },
+  "last_market_poll_at": "2026-09-11T15:36:52.499087+02:00"
 }
