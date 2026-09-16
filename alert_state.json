@@ -6788,6 +6788,7 @@
     "TOWNS-EUR",
     "TRAC-EUR",
     "TRB-EUR",
+    "TREAD-EUR",
     "TREE-EUR",
     "TRIA-EUR",
     "TRUMP-EUR",
@@ -6852,7 +6853,9 @@
     "ZRO-EUR",
     "ZRX-EUR"
   ],
-  "preactive_notified_markets": [],
+  "preactive_notified_markets": [
+    "TREAD-EUR"
+  ],
   "market_status_first_seen": {
     "FUN-EUR": {
       "first_seen": "2026-09-11T15:36:52.499087+02:00",
@@ -8569,7 +8572,11 @@
     "RECALL-EUR": {
       "first_seen": "2026-09-11T15:36:52.499087+02:00",
       "first_status": "trading"
+    },
+    "TREAD-EUR": {
+      "first_seen": "2026-09-16T10:48:44.645653+02:00",
+      "first_status": "auction"
     }
   },
-  "last_market_poll_at": "2026-09-16T10:23:32.756814+02:00"
+  "last_market_poll_at": "2026-09-16T10:48:44.645653+02:00"
 }
