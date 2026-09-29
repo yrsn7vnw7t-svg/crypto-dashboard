@@ -5853,6 +5853,7 @@
     "DOS-EUR",
     "DOT-EUR",
     "DRIFT-EUR",
+    "DRV-EUR",
     "DUSK-EUR",
     "DYDX-EUR",
     "DYM-EUR",
@@ -6618,13 +6619,15 @@
     "ZRX-EUR",
     "CNPY-EUR",
     "TREAD-EUR",
-    "XDP-EUR"
+    "XDP-EUR",
+    "DRV-EUR"
   ],
   "market_first_seen": {
     "CNPY-EUR": "2026-09-10T15:04:24.917605+02:00",
     "TREAD-EUR": "2026-09-16T15:26:04.936798+02:00",
     "WMTX-EUR": "2026-09-24T20:38:18.713424+02:00",
-    "XDP-EUR": "2026-09-28T19:03:32.941789+02:00"
+    "XDP-EUR": "2026-09-28T19:03:32.941789+02:00",
+    "DRV-EUR": "2026-09-29T17:08:39.602610+02:00"
   },
   "listing_watch_alerts": {
     "TREAD-EUR:breakout": "2026-09-16T18:59:15.144960+02:00"
@@ -6752,6 +6755,7 @@
     "DOS-EUR",
     "DOT-EUR",
     "DRIFT-EUR",
+    "DRV-EUR",
     "DUSK-EUR",
     "DYDX-EUR",
     "DYM-EUR",
@@ -8793,7 +8797,11 @@
     "XDP-EUR": {
       "first_seen": "2026-09-28T19:03:32.941789+02:00",
       "first_status": "trading"
+    },
+    "DRV-EUR": {
+      "first_seen": "2026-09-29T17:08:39.602610+02:00",
+      "first_status": "trading"
     }
   },
-  "last_market_poll_at": "2026-09-29T10:42:19.828750+02:00"
+  "last_market_poll_at": "2026-09-29T17:08:39.602610+02:00"
 }
