@@ -6736,6 +6736,7 @@
     "CROSS-EUR",
     "CRV-EUR",
     "CSPR-EUR",
+    "CT-EUR",
     "CTC-EUR",
     "CTK-EUR",
     "CTR-EUR",
@@ -7071,7 +7072,8 @@
     "ZRX-EUR"
   ],
   "preactive_notified_markets": [
-    "TREAD-EUR"
+    "TREAD-EUR",
+    "CT-EUR"
   ],
   "market_status_first_seen": {
     "FUN-EUR": {
@@ -8801,7 +8803,11 @@
     "DRV-EUR": {
       "first_seen": "2026-09-29T17:08:39.602610+02:00",
       "first_status": "trading"
+    },
+    "CT-EUR": {
+      "first_seen": "2026-09-30T10:58:25.943737+02:00",
+      "first_status": "auction"
     }
   },
-  "last_market_poll_at": "2026-09-30T04:28:03.362094+02:00"
+  "last_market_poll_at": "2026-09-30T10:58:25.943737+02:00"
 }
