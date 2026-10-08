@@ -7032,6 +7032,7 @@
     "WAXP-EUR",
     "WCT-EUR",
     "WELL-EUR",
+    "WHUF-EUR",
     "WIF-EUR",
     "WIN-EUR",
     "WLD-EUR",
@@ -7071,7 +7072,8 @@
   ],
   "preactive_notified_markets": [
     "TREAD-EUR",
-    "CT-EUR"
+    "CT-EUR",
+    "WHUF-EUR"
   ],
   "market_status_first_seen": {
     "FUN-EUR": {
@@ -8809,7 +8811,11 @@
     "PNT-EUR": {
       "first_seen": "2026-10-05T16:26:24.631435+02:00",
       "first_status": "trading"
+    },
+    "WHUF-EUR": {
+      "first_seen": "2026-10-08T21:31:08.570711+02:00",
+      "first_status": "auction"
     }
   },
-  "last_market_poll_at": "2026-10-08T15:44:20.035868+02:00"
+  "last_market_poll_at": "2026-10-08T21:31:08.570711+02:00"
 }
