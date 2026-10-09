@@ -15,7 +15,7 @@ import requests
 # CONFIG
 # =========================================================
 
-SCANNER_VERSION = "v2.4-news-dedupe-fast-listing-2026-09-10"
+SCANNER_VERSION = "v2.5-listing-transition-2026-10-09"
 
 BASE_URL = "https://api.bitvavo.com/v2"
 GDELT_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
@@ -155,6 +155,7 @@ def default_state():
         "preactive_notified_markets": [],
         "market_status_first_seen": {},
         "last_market_poll_at": None,
+        "last_market_statuses": {},
     }
 
 
@@ -200,6 +201,7 @@ def load_state():
         state.setdefault("preactive_notified_markets", [])
         state.setdefault("market_status_first_seen", {})
         state.setdefault("last_market_poll_at", None)
+        state.setdefault("last_market_statuses", {})
 
         return state
 
@@ -1112,11 +1114,36 @@ def run_news_mode(state, now):
             f"{len(active_markets)} trading at {now.isoformat()}"
         )
 
+        # Volg statusovergangen expliciet, ook voor markten die gisteren al
+        # als auction in de lijst stonden. Geen dubbele melding na herstart.
+        old_statuses = state.get("last_market_statuses", {})
+        status_transitions = [
+            x for x in all_eur
+            if x.get("status") == "trading"
+            and old_statuses.get(x["market"]) not in (None, "trading")
+        ]
+        for x in status_transitions:
+            print(f"MARKET LIVE TRANSITION: {x['market']} "
+                  f"{old_statuses[x['market']]} -> trading at {now.isoformat()}")
+        state["last_market_statuses"] = {
+            x["market"]: x.get("status", "unknown") for x in all_eur
+        }
+
         new_records = detect_new_eur_market_records(all_eur, state, now)
         if new_records:
             send_preactive_market_alerts(new_records, state, now)
 
         pending = get_pending_listing_alerts(active_markets, state, now)
+        # Een overgang auction -> trading moet ook als listing gelden wanneer
+        # een oudere state de markt al als 'known' bevatte.
+        pending_ids = {x["market"] for x in pending}
+        notified_ids = set(state.get("listing_notified_markets", []))
+        for x in status_transitions:
+            if x["market"] not in pending_ids and x["market"] not in notified_ids:
+                state.setdefault("market_first_seen", {}).setdefault(
+                    x["market"], now.isoformat()
+                )
+                pending.append({"market": x["market"], "asset": x["asset"]})
         if pending:
             print("Pending active listings: " + ", ".join(x["market"] for x in pending))
             send_new_listing_alerts(pending, state, now)
