@@ -1,17 +1,22 @@
-name: Crypto Alerts V6
+name: Crypto Alerts V7
 
 on:
   schedule:
-    # Elke 15 minuten
-    - cron: "7,22,37,52 * * * *"
-      timezone: "Europe/Amsterdam"
-
+    # Iedere 15 minuten, onafhankelijk van vertraging bij de uitvoering.
+    - cron: '7,37 * * * *'
+      timezone: 'Europe/Amsterdam'
+    - cron: '52 * * * *'
+      timezone: 'Europe/Amsterdam'
+    - cron: '22 0-7,9-11,13-15,17-19,21-23 * * *'
+      timezone: 'Europe/Amsterdam'
+    - cron: '22 8,12,16,20 * * *'
+      timezone: 'Europe/Amsterdam'
   workflow_dispatch:
     inputs:
       mode:
-        description: "Welke scanner wil je handmatig draaien?"
+        description: 'Welke scanner wil je handmatig draaien?'
         required: true
-        default: "full"
+        default: 'full'
         type: choice
         options:
           - news
@@ -28,72 +33,56 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-
+          python-version: '3.12'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests pandas numpy
-
       - name: Run scheduled scanner
         if: github.event_name == 'schedule'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SCHEDULE_SLOT: ${{ github.event.schedule }}
         run: |
-          HOUR=$(TZ=Europe/Amsterdam date +%H)
-          MINUTE=$(TZ=Europe/Amsterdam date +%M)
-
-          echo "Amsterdam tijd: $HOUR:$MINUTE"
-
-          # Nieuws iedere 15 minuten
+          echo "Scheduled slot: $SCHEDULE_SLOT"
+          echo "Actual Amsterdam time: $(TZ=Europe/Amsterdam date +%H:%M)"
           NEWS_MODE=true python alert_scanner.py
-
-          # Momentum iedere 30 minuten
-          if [ "$MINUTE" = "07" ] || [ "$MINUTE" = "37" ]; then
+          if [ "$SCHEDULE_SLOT" = '7,37 * * * *' ]; then
             FAST_MODE=true python alert_scanner.py
           fi
-
-          # Volledige Top 5 rond 08:15 / 12:15 / 16:15 / 20:15
-          # De workflow draait om :22 zodat GitHub wat speling heeft.
-          if [ "$MINUTE" = "22" ]; then
-            if [ "$HOUR" = "08" ] || [ "$HOUR" = "12" ] || [ "$HOUR" = "16" ] || [ "$HOUR" = "20" ]; then
-              FORCE_DIGEST=true python alert_scanner.py
-            fi
+          if [ "$SCHEDULE_SLOT" = '22 8,12,16,20 * * *' ]; then
+            FORCE_DIGEST=true python alert_scanner.py
           fi
-
       - name: Run manual scanner
         if: github.event_name == 'workflow_dispatch'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MODE: ${{ inputs.mode }}
         run: |
-          if [ "${{ inputs.mode }}" = "news" ]; then
+          if [ "$MODE" = 'news' ]; then
             NEWS_MODE=true python alert_scanner.py
-          elif [ "${{ inputs.mode }}" = "momentum" ]; then
+          elif [ "$MODE" = 'momentum' ]; then
             FAST_MODE=true python alert_scanner.py
           else
             FORCE_DIGEST=true python alert_scanner.py
           fi
-
       - name: Save scanner state
+        if: always()
         run: |
           if [ -f alert_state.json ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add alert_state.json
-
             if ! git diff --cached --quiet; then
-              git commit -m "Update crypto scanner state"
+              git commit -m 'Update crypto scanner state'
               git pull --rebase origin main
               git push origin main
             fi
