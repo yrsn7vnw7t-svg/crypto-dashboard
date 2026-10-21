@@ -7331,6 +7331,7 @@
     "AVA-EUR",
     "AVAX-EUR",
     "AVNT-EUR",
+    "AXIS-EUR",
     "AXL-EUR",
     "AXS-EUR",
     "AZTEC-EUR",
@@ -8171,7 +8172,8 @@
     "DRV-EUR",
     "CT-EUR",
     "PNT-EUR",
-    "WHUF-EUR"
+    "WHUF-EUR",
+    "AXIS-EUR"
   ],
   "market_first_seen": {
     "CNPY-EUR": "2026-09-10T15:04:24.917605+02:00",
@@ -8181,7 +8183,8 @@
     "DRV-EUR": "2026-09-29T17:08:39.602610+02:00",
     "CT-EUR": "2026-09-30T17:52:13.827047+02:00",
     "PNT-EUR": "2026-10-05T16:26:24.631435+02:00",
-    "WHUF-EUR": "2026-10-09T10:00:33.468289+02:00"
+    "WHUF-EUR": "2026-10-09T10:00:33.468289+02:00",
+    "AXIS-EUR": "2026-10-21T15:57:49.116380+02:00"
   },
   "listing_watch_alerts": {
     "TREAD-EUR:breakout": "2026-09-16T18:59:15.144960+02:00"
@@ -10375,7 +10378,7 @@
       "first_status": "auction"
     }
   },
-  "last_market_poll_at": "2026-10-21T14:28:16.806320+02:00",
+  "last_market_poll_at": "2026-10-21T15:57:49.116380+02:00",
   "last_market_statuses": {
     "FUN-EUR": "trading",
     "CAP-EUR": "trading",
@@ -10466,7 +10469,7 @@
     "TAI-EUR": "trading",
     "XVG-EUR": "trading",
     "BIO-EUR": "trading",
-    "AXIS-EUR": "auction",
+    "AXIS-EUR": "trading",
     "ZKJ-EUR": "trading",
     "DATAIP-EUR": "trading",
     "CAKE-EUR": "trading",
