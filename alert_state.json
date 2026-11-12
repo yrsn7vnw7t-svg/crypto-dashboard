@@ -9696,6 +9696,7 @@
     "KITE-EUR",
     "KMNO-EUR",
     "KNC-EUR",
+    "KNTQ-EUR",
     "KSM-EUR",
     "LAPTOP-EUR",
     "LAYER-EUR",
@@ -10373,7 +10374,8 @@
     "CT-EUR",
     "PNT-EUR",
     "WHUF-EUR",
-    "AXIS-EUR"
+    "AXIS-EUR",
+    "KNTQ-EUR"
   ],
   "market_first_seen": {
     "CNPY-EUR": "2026-09-10T15:04:24.917605+02:00",
@@ -10384,7 +10386,8 @@
     "CT-EUR": "2026-09-30T17:52:13.827047+02:00",
     "PNT-EUR": "2026-10-05T16:26:24.631435+02:00",
     "WHUF-EUR": "2026-10-09T10:00:33.468289+02:00",
-    "AXIS-EUR": "2026-10-21T15:57:49.116380+02:00"
+    "AXIS-EUR": "2026-10-21T15:57:49.116380+02:00",
+    "KNTQ-EUR": "2026-11-12T13:58:41.558645+01:00"
   },
   "listing_watch_alerts": {
     "TREAD-EUR:breakout": "2026-09-16T18:59:15.144960+02:00"
@@ -12581,7 +12584,7 @@
       "first_status": "auction"
     }
   },
-  "last_market_poll_at": "2026-11-12T08:36:39.701532+01:00",
+  "last_market_poll_at": "2026-11-12T13:58:41.558645+01:00",
   "last_market_statuses": {
     "FUN-EUR": "trading",
     "CAP-EUR": "trading",
@@ -12947,7 +12950,7 @@
     "INIT-EUR": "trading",
     "VSN-EUR": "trading",
     "1INCH-EUR": "trading",
-    "KNTQ-EUR": "auction",
+    "KNTQ-EUR": "trading",
     "CTK-EUR": "trading",
     "ASTR-EUR": "trading",
     "PENDLE-EUR": "trading",
