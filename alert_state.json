@@ -10471,6 +10471,7 @@
     "CHIP-EUR",
     "CHR-EUR",
     "CHZ-EUR",
+    "CLEAR-EUR",
     "CNPY-EUR",
     "COMP-EUR",
     "COTI-EUR",
@@ -10814,7 +10815,8 @@
     "CT-EUR",
     "WHUF-EUR",
     "AXIS-EUR",
-    "KNTQ-EUR"
+    "KNTQ-EUR",
+    "CLEAR-EUR"
   ],
   "market_status_first_seen": {
     "FUN-EUR": {
@@ -12564,9 +12566,13 @@
     "KNTQ-EUR": {
       "first_seen": "2026-11-11T16:27:47.765960+01:00",
       "first_status": "auction"
+    },
+    "CLEAR-EUR": {
+      "first_seen": "2026-11-24T12:39:34.106576+01:00",
+      "first_status": "auction"
     }
   },
-  "last_market_poll_at": "2026-11-24T07:18:35.295969+01:00",
+  "last_market_poll_at": "2026-11-24T12:39:34.106576+01:00",
   "last_market_statuses": {
     "FUN-EUR": "trading",
     "CAP-EUR": "trading",
@@ -12777,6 +12783,7 @@
     "ETHFI-EUR": "trading",
     "EUL-EUR": "trading",
     "VELO-EUR": "trading",
+    "CLEAR-EUR": "auction",
     "ADX-EUR": "trading",
     "ARPA-EUR": "trading",
     "YB-EUR": "trading",
