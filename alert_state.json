@@ -10405,6 +10405,7 @@
     "ADX-EUR",
     "AERO-EUR",
     "AEVO-EUR",
+    "AF-EUR",
     "AGI-EUR",
     "AGLD-EUR",
     "AI-EUR",
@@ -10795,6 +10796,7 @@
     "XLM-EUR",
     "XPL-EUR",
     "XRP-EUR",
+    "XTEN-EUR",
     "XTZ-EUR",
     "XVG-EUR",
     "XYO-EUR",
@@ -10824,7 +10826,9 @@
     "WHUF-EUR",
     "AXIS-EUR",
     "KNTQ-EUR",
-    "CLEAR-EUR"
+    "CLEAR-EUR",
+    "XTEN-EUR",
+    "AF-EUR"
   ],
   "market_status_first_seen": {
     "FUN-EUR": {
@@ -12578,9 +12582,17 @@
     "CLEAR-EUR": {
       "first_seen": "2026-11-24T12:39:34.106576+01:00",
       "first_status": "auction"
+    },
+    "XTEN-EUR": {
+      "first_seen": "2026-11-26T13:53:56.005380+01:00",
+      "first_status": "auction"
+    },
+    "AF-EUR": {
+      "first_seen": "2026-11-26T13:53:56.005380+01:00",
+      "first_status": "auction"
     }
   },
-  "last_market_poll_at": "2026-11-26T06:30:20.758770+01:00",
+  "last_market_poll_at": "2026-11-26T13:53:56.005380+01:00",
   "last_market_statuses": {
     "FUN-EUR": "trading",
     "CAP-EUR": "trading",
@@ -12622,6 +12634,7 @@
     "SQD-EUR": "trading",
     "CRV-EUR": "trading",
     "ZKC-EUR": "trading",
+    "XTEN-EUR": "auction",
     "PNUT-EUR": "trading",
     "PUMP-EUR": "trading",
     "SWELL-EUR": "trading",
@@ -12690,6 +12703,7 @@
     "JUP-EUR": "trading",
     "SOL-EUR": "trading",
     "VERONA-EUR": "trading",
+    "AF-EUR": "auction",
     "GRAM-EUR": "trading",
     "GAS-EUR": "trading",
     "MEME-EUR": "trading",
